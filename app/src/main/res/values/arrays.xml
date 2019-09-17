@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender"><item>Gender</item></string-array>
+    <string-array name="psychological_counselling"><item>Psychological Counselling</item></string-array>
+    <string-array name="category_type"><item>Category Type</item></string-array>
+    <string-array name="document_type">Document Type</string-array>
+    <string-array name="select_bank">Select Bank</string-array>
+</resources>

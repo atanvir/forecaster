@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+            android:id="@+id/t1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:src="@drawable/left_menu_logo"
+            android:text="FORECASTER"
+            android:textColor="@color/colorYellow"
+            android:textSize="45sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/t1">
+
+            <LinearLayout
+            android:id="@+id/itemHomes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/home" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/home"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemMyChats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/chat" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/my_chats"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/settings__1_" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/settings"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemAboutApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/f" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/about_the_app"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemShareApp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/share" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/share_the_app"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemContactUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/contact" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="18dp"
+            android:text="@string/contact_us"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+            android:id="@+id/itemTermConditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/accept" />
+
+            <com.forecaster_app.View.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="18dp"
+            android:text="@string/terms_and_conditions"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_medium_large" />
+
+            </LinearLayout>
+
+
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <!---->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

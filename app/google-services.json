@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "577026308351",
+    "firebase_url": "https://forcasterandriod.firebaseio.com",
+    "project_id": "forcasterandriod",
+    "storage_bucket": "forcasterandriod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577026308351:android:ef9c54b81a310b9f",
+        "android_client_info": {
+          "package_name": "com.forecaster_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577026308351-si7lvpq183bpv965h722p7tjb68u45vo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.forecaster_app",
+            "certificate_hash": "08561f48d48529013d401677ccd19c50d668e1b9"
+          }
+        },
+        {
+          "client_id": "577026308351-n49u7jads6fao4ruc1bspbuumt58e9gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWc2EIZ3G4pb5SkqbH990VjcRFTOL3_JE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577026308351-n49u7jads6fao4ruc1bspbuumt58e9gr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pop_up_background">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/pop_round_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/close_ll"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/close_im"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:src="@drawable/close_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </LinearLayout>
+
+
+        <com.forecaster_app.View.AvenirRegularTextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/otp_has_send"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium_large"
+            app:layout_constraintBottom_toTopOf="@+id/first_ed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/close_ll" />
+
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/first_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/edit_text_otp_background2"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            android:maxLength="1"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            app:layout_constraintEnd_toStartOf="@+id/secound_ed"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/secound_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_text_otp_background2"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            android:imeOptions="actionNext"
+            app:layout_constraintBottom_toBottomOf="@+id/first_ed"
+            app:layout_constraintEnd_toStartOf="@+id/third_ed"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/first_ed"
+            app:layout_constraintTop_toTopOf="@+id/first_ed"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/fourth_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_text_otp_background2"
+            android:imeOptions="actionNext"
+            android:maxLength="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintBottom_toBottomOf="@+id/third_ed"
+            app:layout_constraintEnd_toStartOf="@+id/fifth_ed"
+            app:layout_constraintStart_toEndOf="@+id/third_ed"
+            app:layout_constraintTop_toTopOf="@+id/third_ed" />
+
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/third_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_text_otp_background2"
+            android:imeOptions="actionNext"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintBottom_toBottomOf="@+id/secound_ed"
+            app:layout_constraintEnd_toStartOf="@+id/fourth_ed"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/secound_ed"
+            app:layout_constraintTop_toTopOf="@+id/secound_ed"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/fifth_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_text_otp_background2"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:maxLength="1"
+            android:inputType="number"
+            android:textSize="@dimen/dp_18"
+            android:imeOptions="actionNext"
+            app:layout_constraintBottom_toBottomOf="@+id/fourth_ed"
+            app:layout_constraintEnd_toStartOf="@+id/sixth_ed"
+            app:layout_constraintStart_toEndOf="@+id/fourth_ed"
+            app:layout_constraintTop_toTopOf="@+id/fourth_ed" />
+
+
+        <com.forecaster_app.View.AvenirRegularEditText
+            android:id="@+id/sixth_ed"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/edit_text_otp_background2"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:inputType="number"
+            android:maxLength="1"
+            android:imeOptions="actionDone"
+            android:textSize="@dimen/dp_18"
+            app:layout_constraintBottom_toBottomOf="@+id/fifth_ed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fifth_ed"
+            app:layout_constraintTop_toTopOf="@+id/fifth_ed"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+
+        <com.forecaster_app.View.AvenirDemiButton
+            android:id="@+id/verifyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/btngradient"
+            android:text="@string/verify"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secound_ed" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
