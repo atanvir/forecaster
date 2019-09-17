@@ -150,7 +150,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin,"Yes");
-
         init(activity);
         settingDailog();
 
