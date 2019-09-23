@@ -40,7 +40,7 @@
             </LinearLayout>
 
 
-            <com.forecaster_app.View.AvenirDemiTextView
+            <com.forecaster.View.AvenirDemiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_us"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster_app.View.AvenirRegularEditText
+            <com.forecaster.View.AvenirRegularEditText
                 android:id="@+id/email_ed"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_60"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster_app.View.AvenirRegularEditText
+            <com.forecaster.View.AvenirRegularEditText
                 android:id="@+id/concern_ed"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
@@ -177,7 +177,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster_app.View.AvenirRegularEditText
+            <com.forecaster.View.AvenirRegularEditText
                 android:id="@+id/message_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
     </androidx.cardview.widget.CardView>
 
 
-    <com.forecaster_app.View.AvenirBoldButton
+    <com.forecaster.View.AvenirBoldButton
         android:id="@+id/submitBtn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"

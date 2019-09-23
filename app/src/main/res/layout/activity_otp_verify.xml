@@ -40,7 +40,7 @@
         </LinearLayout>
 
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             app:layout_constraintTop_toBottomOf="@+id/close_ll" />
 
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/first_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -77,7 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/secound_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -95,7 +95,7 @@
             app:layout_constraintTop_toTopOf="@+id/first_ed"
             app:layout_constraintVertical_bias="0.0" />
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/fourth_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -112,7 +112,7 @@
             app:layout_constraintTop_toTopOf="@+id/third_ed" />
 
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/third_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -131,7 +131,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/fifth_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -148,7 +148,7 @@
             app:layout_constraintTop_toTopOf="@+id/fourth_ed" />
 
 
-        <com.forecaster_app.View.AvenirRegularEditText
+        <com.forecaster.View.AvenirRegularEditText
             android:id="@+id/sixth_ed"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
@@ -169,7 +169,7 @@
 
 
 
-        <com.forecaster_app.View.AvenirDemiButton
+        <com.forecaster.View.AvenirDemiButton
             android:id="@+id/verifyBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"

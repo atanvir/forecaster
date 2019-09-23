@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
     defaultConfig {
-        applicationId "com.forecaster_app"
+        applicationId "com.forecaster"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -53,12 +53,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.1.0'
     implementation "com.airbnb.android:lottie:3.0.7"
     implementation 'com.github.heetch:Android-country-picker:1.0.6'
-
-
-
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation files('libs/isoparser-1.0.6.jar')
     implementation files('libs/aspectjrt-1.7.3.jar')
-
 
 
 }

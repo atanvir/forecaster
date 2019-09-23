@@ -95,7 +95,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/usersmile" />
 
-                <com.forecaster_app.View.AvenirDemiTextView
+                <com.forecaster.View.AvenirDemiTextView
                     android:id="@+id/username_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,16 +134,14 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView29"
                 app:layout_constraintTop_toTopOf="@+id/imageView29" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/pob_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
                 android:text="Saket, New Delhi"
                 android:textSize="@dimen/text_size_medium_large"
                 app:layout_constraintBottom_toBottomOf="@+id/textView36"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/dob_txt"
                 app:layout_constraintTop_toTopOf="@+id/textView36" />
 
             <ImageView
@@ -167,14 +165,16 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView29"
                 app:layout_constraintTop_toTopOf="@+id/imageView21" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/dob_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
                 android:text="Oct, 20, 1991"
                 android:textSize="@dimen/text_size_medium_large"
                 app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toStartOf="@+id/pob_txt"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView31" />
 
 
@@ -199,7 +199,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView22"
                 app:layout_constraintTop_toTopOf="@+id/imageView22" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/gender_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView22"
                 app:layout_constraintTop_toTopOf="@+id/imageView23" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/maritalStatus_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -84,6 +84,7 @@
     <string name="write_here">Write here...</string>
     <string name="check_internet">Please check your internet connection</string>
     <string name="compressing_video">Compressing Video</string>
+    <string name="select_document_type">Select document type</string>
 
 
 </resources>

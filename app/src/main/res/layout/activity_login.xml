@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content">
 
 
-                    <com.forecaster_app.View.AvenirRegularEditText
+                    <com.forecaster.View.AvenirRegularEditText
                         android:id="@+id/username_ed"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_60"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content">
 
 
-                    <com.forecaster_app.View.AvenirRegularEditText
+                    <com.forecaster.View.AvenirRegularEditText
                         android:id="@+id/pass_ed"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_60"
@@ -121,7 +121,7 @@
             </androidx.cardview.widget.CardView>
 
 
-            <com.forecaster_app.View.AvenirDemiTextView
+            <com.forecaster.View.AvenirDemiTextView
                 android:id="@+id/forgetPasswordText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
 
-            <com.forecaster_app.View.AvenirDemiButton
+            <com.forecaster.View.AvenirDemiButton
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
@@ -170,7 +170,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginBtn">
 
-                <com.forecaster_app.View.AvenirDemiTextView
+                <com.forecaster.View.AvenirDemiTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -178,7 +178,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_medium_large" />
 
-                <com.forecaster_app.View.AvenirDemiTextView
+                <com.forecaster.View.AvenirDemiTextView
                     android:id="@+id/signuptext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

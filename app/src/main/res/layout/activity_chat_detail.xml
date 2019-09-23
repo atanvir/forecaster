@@ -44,7 +44,7 @@
             </LinearLayout>
 
 
-            <com.forecaster_app.View.AvenirDemiTextView
+            <com.forecaster.View.AvenirDemiTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Navin Kumar"
@@ -103,7 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view5">
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView6" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView8"
                 android:layout_width="wrap_content"
 
@@ -151,7 +151,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView7" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -191,7 +191,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/avenirRegularTextView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView11"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -222,7 +222,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView11" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView12" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -268,7 +268,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView13" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView15"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -287,7 +287,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView14" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

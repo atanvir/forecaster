@@ -42,7 +42,7 @@
         </LinearLayout>
 
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView19"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView19">
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/eng_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eng_cl">
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/arabic_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
             app:layout_constraintTop_toBottomOf="@+id/arabic_cl">
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/urdu_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.forecaster_app.View.AvenirBoldButton
+        <com.forecaster.View.AvenirBoldButton
             android:id="@+id/changeBtn"
             android:layout_width="match_parent"
             android:layout_height="52dp"

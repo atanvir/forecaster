@@ -43,7 +43,7 @@
 
 
 
-            <com.forecaster_app.View.AvenirDemiTextView
+            <com.forecaster.View.AvenirDemiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/setting"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6">
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view7">
 
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -237,7 +237,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view13">
 
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view14">
 
 
-        <com.forecaster_app.View.AvenirRegularTextView
+        <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

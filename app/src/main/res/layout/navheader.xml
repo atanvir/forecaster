@@ -61,7 +61,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/home" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -101,7 +101,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/chat" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -143,7 +143,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/settings__1_" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -184,7 +184,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/f" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -225,7 +225,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/share" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -266,7 +266,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/contact" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -307,7 +307,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/accept" />
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -42,7 +42,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/pob_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                     app:layout_constraintTop_toTopOf="@+id/textView8" />
 
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/category_name_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 app:layout_constraintStart_toStartOf="@+id/image_im"
                 app:layout_constraintTop_toTopOf="@+id/image_im">
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/nametxt"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -157,7 +157,7 @@
                     app:layout_constraintVertical_bias="0.0"
                     tools:ignore="RtlCompat" />
 
-                <com.forecaster_app.View.AvenirRegularTextView
+                <com.forecaster.View.AvenirRegularTextView
                     android:id="@+id/datetext"
                     android:layout_width="wrap_content"
 

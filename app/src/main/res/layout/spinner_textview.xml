@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <com.forecaster_app.View.AvenirRegularTextView
+    <com.forecaster.View.AvenirRegularTextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

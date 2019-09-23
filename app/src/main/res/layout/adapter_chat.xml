@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/avenirBoldTextView" />
 
-            <com.forecaster_app.View.AvenirBoldTextView
+            <com.forecaster.View.AvenirBoldTextView
                 android:id="@+id/avenirBoldTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -63,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
 
-            <com.forecaster_app.View.AvenirRegularTextView
+            <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/avenirRegularTextView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.forecaster_app">
+    package="com.forecaster">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -29,26 +29,26 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.forecaster_app"
+            android:authorities="com.forecaster"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name=".Utility.TakeImage"
+        <activity android:name="com.forecaster.Utility.TakeImage"
             android:screenOrientation="portrait"
             />
 
-        <activity android:name="com.forecaster_app.Activity.ChatActivity"
+        <activity android:name="com.forecaster.Activity.ChatActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name="com.forecaster_app.Activity.PaymentManagementActivity"
+        <activity android:name="com.forecaster.Activity.PaymentManagementActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.RequestManagementActivity"
+        <activity android:name="com.forecaster.Activity.RequestManagementActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.CategorySelectionActivity"
+        <activity android:name="com.forecaster.Activity.CategorySelectionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.SplashActivity"
+        <activity android:name="com.forecaster.Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,25 +56,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.forecaster_app.Activity.LoginActivity"
+        <activity android:name="com.forecaster.Activity.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.ProfileManagementActivity"
+        <activity android:name="com.forecaster.Activity.ProfileManagementActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name="com.forecaster_app.Activity.SignupActivity"
+        <activity android:name="com.forecaster.Activity.SignupActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.ChatDetailsActivity"
+        <activity android:name="com.forecaster.Activity.ChatDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.SettingActivity"
+        <activity android:name="com.forecaster.Activity.SettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.ContactUsActivity"
+        <activity android:name="com.forecaster.Activity.ContactUsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.NotificationActivity"
+        <activity android:name="com.forecaster.Activity.NotificationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.ProfileSetupActivity"
+        <activity android:name="com.forecaster.Activity.ProfileSetupActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.forecaster.Activity.DetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster_app.Activity.DetailActivity"
-            android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.forecaster.Firebase.FirebaseMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <!--<meta-data-->
+            <!--android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+            <!--android:value="0" />-->
+
     </application>
 
 </manifest>
