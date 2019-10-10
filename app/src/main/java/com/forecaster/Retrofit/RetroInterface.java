@@ -1,6 +1,8 @@
 package com.forecaster.Retrofit;
 
 
+import com.forecaster.Modal.ChatHistory;
+import com.forecaster.Modal.Chatlist;
 import com.forecaster.Modal.CheckMobileNumber;
 import com.forecaster.Modal.ContactUs;
 import com.forecaster.Modal.ForcasterDetail;
@@ -83,4 +85,10 @@ public interface RetroInterface {
 
     @POST("getNotificationList")
     Call<Notification> getNotificationList(@Body Notification notification);
+
+    @POST("chatListForForecaster")
+    Call<Chatlist> getchatList(@Body Chatlist chatlist);
+
+    @POST("chatHistory")
+    Call<ChatHistory> getchatHistory(@Body ChatHistory history,@Header("token") String token);
 }

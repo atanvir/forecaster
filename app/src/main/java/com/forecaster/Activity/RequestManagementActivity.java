@@ -1,5 +1,6 @@
 package com.forecaster.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +25,10 @@ import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.InternetCheck;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.List;
 
@@ -50,9 +56,7 @@ public class RequestManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_management);
         ButterKnife.bind(this);
-
         new CategorySelectionActivity(this,drawerLayout);
-
         getRequestListApi();
 
 
@@ -86,9 +90,35 @@ public class RequestManagementActivity extends AppCompatActivity {
                         }
                         else if(server_response.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                         {
-                            Toast toast=Toast.makeText(RequestManagementActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER,0,0);
-                            toast.show();
+                           if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                           {
+                                Toast.makeText(RequestManagementActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(RequestManagementActivity.this,LoginActivity.class));
+                                SharedPreferenceWriter.getInstance(RequestManagementActivity.this).clearPreferenceValues();
+                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                       if (!task.isSuccessful()) {
+                                           // Log.w(TAG, "getInstanceId failed", task.getException());
+                                           return;
+                                       }
+
+                                       String auth_token = task.getResult().getToken();
+                                       Log.w("firebaese","token: "+auth_token);
+                                       SharedPreferenceWriter.getInstance(RequestManagementActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                   }
+                               });
+                           }
+                           else
+                           {
+                               Toast toast=Toast.makeText(RequestManagementActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG);
+                               toast.setGravity(Gravity.CENTER,0,0);
+                               toast.show();
+
+                           }
+
+
 
                         }
 

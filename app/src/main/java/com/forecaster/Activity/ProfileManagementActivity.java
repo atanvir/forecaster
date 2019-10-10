@@ -65,6 +65,13 @@ import com.forecaster.Utility.UpdateForcasterBody;
 import com.forecaster.Utility.Validation;
 import com.forecaster.Utility.VideoCompressor.Util;
 import com.forecaster.Utility.VideoCompressor.VideoCompress;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.heetch.countrypicker.Country;
+import com.heetch.countrypicker.CountryPickerCallbacks;
+import com.heetch.countrypicker.CountryPickerDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -136,7 +143,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     private String outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
     Uri audio_uri,video_uri;
     MediaPlayer mediaPlayer;
-    boolean playing;
+    boolean playing=false;
     private Handler handler=new Handler();
     final int PERMISSION_REQUEST_CODE = 200;
     File video;
@@ -150,7 +157,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     private int START_VERIFICATION = 1001;
     String imagePath;
     File profile_image;
-    boolean recording;
+    boolean recording=false;
     List<String> genderlist;
     List<String> categoryList;
     List<String> bankList;
@@ -158,6 +165,12 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     String audioFile;
     int lastplay_position=0;
     boolean pause=false;
+    MediaController mediacontroller;
+    @BindView(R.id.full_screen_video) ImageView full_screen_video_iv;
+    boolean mediacontroller_seekbar=false;
+    SeekBar media_seekbar;
+    @BindView(R.id.countrycode_txt) TextView countrycode_txt;
+    String countrycode="";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -280,6 +293,8 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         save_btn.setOnClickListener(this::OnClick);
         seekBar.setOnSeekBarChangeListener(this);
         pause_iv.setOnClickListener(this::OnClick);
+        full_screen_video_iv.setOnClickListener(this::OnClick);
+       // countrycode_txt.setOnClickListener(this::OnClick);
 
     }
 
@@ -307,6 +322,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                             full_name_ed.setText(server_response.getData().getName());
                             username_ed.setText(server_response.getData().getUsername());
                             email_ed.setText(server_response.getData().getEmail());
+                            countrycode_txt.setText(server_response.getData().getCountryCode());
                             phone_ed.setText(server_response.getData().getMobileNumber());
                             gender_txt.setText(server_response.getData().getGender());
                             dob_ed.setText(server_response.getData().getDob());
@@ -333,18 +349,13 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
                             audio_uri=Uri.parse(server_response.getData().getVoiceRecording());
                             video_uri=Uri.parse(server_response.getData().getUploadedVideo());
-
+                            videoview.setVideoURI(video_uri);
+                            upload_iv.setVisibility(View.GONE);
+                            image_thumnail.setImageBitmap(null);
+                            videoview.setVisibility(View.VISIBLE);
+                            videoview.seekTo(1);
+                            full_screen_video_iv.setVisibility(View.VISIBLE);
                             settingSeekbar();
-
-                            try {
-                                upload_iv.setVisibility(View.GONE);
-                                Bitmap bitmap_thumbnail=retriveVideoFrameFromVideo(server_response.getData().getUploadedVideo());
-                                image_thumnail.setImageBitmap(bitmap_thumbnail);
-
-
-                            } catch (Throwable throwable) {
-                                throwable.printStackTrace();
-                            }
                             dailogHelper.dismissDailog();
 
 
@@ -354,9 +365,31 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                         }
                         else if(server_response.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                         {
-                            dailogHelper.dismissDailog();
-                            Toast.makeText(ProfileManagementActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
+                            if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                            {
+                                Toast.makeText(ProfileManagementActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(ProfileManagementActivity.this,LoginActivity.class));
+                                SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).clearPreferenceValues();
+                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            // Log.w(TAG, "getInstanceId failed", task.getException());
+                                            return;
+                                        }
 
+                                        String auth_token = task.getResult().getToken();
+                                        Log.w("firebaese","token: "+auth_token);
+                                        SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                    }
+                                });
+                            }
+                            else {
+
+                                dailogHelper.dismissDailog();
+                                Toast.makeText(ProfileManagementActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }
@@ -413,16 +446,12 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
             e.printStackTrace();
         }
         seekBar.setMax(300);
-
-        seekBar.setProgress(mediaPlayer.getDuration() / 1000);
+        seekBar.setProgress(mediaPlayer.getDuration() / 100);
         if (mediaPlayer.getDuration() / 1000 < 10) {
             timer_txt.setText("0:0" + mediaPlayer.getDuration() / 1000);
         } else {
             timer_txt.setText("0:" + mediaPlayer.getDuration() / 1000 );
         }
-
-
-
     }
 
 
@@ -520,6 +549,25 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 pauseAudio();
                 break;
 
+            case R.id.full_screen_video:
+                Intent intent=new Intent(ProfileManagementActivity.this,ProfileManagementFullScreenVideoActivity.class);
+                intent.putExtra(GlobalVariables.videouri,String.valueOf(video_uri));
+                startActivity(intent);
+
+                break;
+
+            case R.id.countrycode_txt:
+                CountryPickerDialog countryPicker = new CountryPickerDialog(ProfileManagementActivity.this, new CountryPickerCallbacks() {
+                    @Override
+                    public void onCountrySelected(Country country, int flagResId) {
+                        countrycode_txt.setText("+"+country.getDialingCode());
+                        countrycode=countrycode_txt.getText().toString();
+                    }
+                });
+                countryPicker.show();
+
+                break;
+
 
 
 
@@ -568,12 +616,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
             {
                 profile.setCategoryName(psychological_txt.getText().toString());
             }
-
-            profile.setPricePerQues(Integer.valueOf(price_per_ed.getText().toString()));
-//            profile.setBankName(selectbank_txt.getText().toString());
-//            profile.setAccountHolderName(account_holder_ed.getText().toString());
-//            profile.setAccountNumber(bank_number_ed.getText().toString());
-
+            profile.setPricePerQues(Float.valueOf(price_per_ed.getText().toString()));
             UpdateForcasterBody body=new UpdateForcasterBody(profile);
 
             RequestBody profile_body;
@@ -614,7 +657,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                         ForcasterSetupProfile server_response=response.body();
                         if(server_response.getStatus().equalsIgnoreCase(GlobalVariables.SUCCESS))
                         {
-                            Toast toast=Toast.makeText(ProfileManagementActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG);
+                            Toast toast=Toast.makeText(ProfileManagementActivity.this,getString(R.string.profile_updated_successfully),Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER,0,0);
                             toast.show();
                             Intent intent=new Intent(ProfileManagementActivity.this,CategorySelectionActivity.class);
@@ -624,9 +667,32 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                         }
                         else if(server_response.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                         {
-                            Toast toast=Toast.makeText(ProfileManagementActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER,0,0);
-                            toast.show();
+                            if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                            {
+                                Toast.makeText(ProfileManagementActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(ProfileManagementActivity.this,LoginActivity.class));
+                                SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).clearPreferenceValues();
+                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            // Log.w(TAG, "getInstanceId failed", task.getException());
+                                            return;
+                                        }
+
+                                        String auth_token = task.getResult().getToken();
+                                        Log.w("firebaese","token: "+auth_token);
+                                        SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                    }
+                                });
+                            }
+                            else {
+
+                                Toast toast = Toast.makeText(ProfileManagementActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
 
                         }
 
@@ -656,66 +722,78 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     private boolean checkValidation() {
         boolean ret=true;
 
-        if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+        if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
+        || !Validation.email(email_ed,getString(R.string.please_enter_email))
+        || gender_txt.getText().toString().equalsIgnoreCase("Gender")
+        || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
+        || categorytype_txt.getText().toString().equalsIgnoreCase("Category Type")
+        || psychological_txt.getText().toString().equalsIgnoreCase("Please select")
+        || !Validation.hasText(about_us_ed,getString(R.string.please_enter_about_us))
+        || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
+        )
         {
-            ret=false;
-            gender_txt.setError("Please Select");
-            gender_txt.setFocusable(true);
-            gender_txt.requestFocus();
-        }
-        if(!Validation.hasText(dob_ed)) ret=false;
-        if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
-        {
-            ret=false;
-            categorytype_txt.setError("Please Select");
-            categorytype_txt.setFocusable(true);
-            categorytype_txt.requestFocus();
-        }
-        if(categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling")) {
-            if (psychological_txt.getText().toString().equalsIgnoreCase("Please select")) {
-                ret = false;
-                psychological_txt.setError("Please Select");
+            if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
+            {
+                ret=false;
+                full_name_ed.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
+
+            }
+            else if(!Validation.email(email_ed,getString(R.string.please_enter_email)))
+            {
+                ret=false;
+                email_ed.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
+
+            }else if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+            {
+                ret=false;
+                gender_txt.setError(getString(R.string.please_select));
+                gender_txt.setFocusable(true);
+                gender_txt.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
+
+            }else if(!Validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
+            {
+                ret=false;
+                gender_txt.setError(null);
+                dob_ed.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
+
+            }else if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
+            {
+                ret=false;
+                categorytype_txt.setError(getString(R.string.please_select));
+                categorytype_txt.setFocusable(true);
+                categorytype_txt.requestFocus();
+                psychological_txt.setError(null);
+            }else if(psychological_txt.getText().toString().equalsIgnoreCase("Please select"))
+            {
+                ret=false;
+                categorytype_txt.setError(null);
+                psychological_txt.setError(getString(R.string.please_select));
                 psychological_txt.setFocusable(true);
                 psychological_txt.requestFocus();
-            }
-        }
 
-
-
-        if(selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank"))
-        {
-            ret=false;
-            selectbank_txt.setError("Please select bank");
-            selectbank_txt.setFocusable(true);
-            selectbank_txt.requestFocus();
-        }
-
-        if(!Validation.hasText(price_per_ed)) ret=false;
-        if(!Validation.hasText(account_holder_ed)) ret=false;
-        if(bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
-        {
-            if(!bank_number_ed.getText().toString().isEmpty())
+            }else if(!Validation.hasText(about_us_ed,getString(R.string.please_enter_about_us)))
             {
                 ret=false;
-                bank_number_ed.setError("Please enter account number");
-                bank_number_ed.setFocusable(true);
-                bank_number_ed.requestFocus();
+                about_us_ed.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
 
-            }
-            else if(bank_number_ed.getText().toString().length()!=16)
+            }else if(!Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
             {
                 ret=false;
-                bank_number_ed.setError("Please enter valid account number");
-                bank_number_ed.setFocusable(true);
-                bank_number_ed.requestFocus();
-
+                price_per_ed.requestFocus();
+                psychological_txt.setError(null);
+                categorytype_txt.setError(null);
             }
-
         }
-
-        if(!Validation.email(email_ed)) ret=false;
-
-        if(!Validation.hasText(about_us_ed)) ret=false;
 
         return ret;
 
@@ -894,6 +972,14 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
 
     private void recordingAudio() {
+        if(timer!=null)
+        {
+            timer.cancel();
+            timer.onFinish();
+        }
+        playaudio_iv.setVisibility(View.VISIBLE);
+        pause_iv.setVisibility(View.GONE);
+        mHandler.removeCallbacks(newthread);
         stop_iv.setVisibility(View.VISIBLE);
         recording=true;
         playing=false;
@@ -915,6 +1001,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
+
             mRecorder.prepare();
             mRecorder.start();
         } catch (IOException e) {
@@ -938,10 +1025,21 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
             @Override
             public void onFinish() {
-                stopPlaying();
-                Toast toast=Toast.makeText(ProfileManagementActivity.this,"You can record upto 30 secounds",Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER,0,0);
-                toast.show();
+                if(recording) {
+                    recording=false;
+                    record_audio_iv.pauseAnimation();
+                    stopPlaying();
+                    try {
+                        mRecorder.stop();
+                        mRecorder.release();
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    Toast toast = Toast.makeText(ProfileManagementActivity.this, "You can record upto 30 secounds", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
             }
         }.start();
 
@@ -1072,10 +1170,16 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         try {
             progressbar.setVisibility(View.VISIBLE);
             play_iv.setVisibility(View.GONE);
-            MediaController mediacontroller = new MediaController(ProfileManagementActivity.this);
+            mediacontroller = new MediaController(ProfileManagementActivity.this);
             mediacontroller.setAnchorView(videoview);
             videoview.setMediaController(mediacontroller);
             videoview.setVideoURI(video_uri);
+            final int topContainerId1 = getResources().getIdentifier("mediacontroller_progress", "id", "android");
+            media_seekbar = (SeekBar) mediacontroller.findViewById(topContainerId1);
+            media_seekbar.setOnSeekBarChangeListener(this);
+            mediacontroller_seekbar=true;
+
+
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
@@ -1106,46 +1210,54 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
 
     private void playingAudio() {
-        try {
-            record_audio_iv.playAnimation();
-            stop_iv.setVisibility(View.VISIBLE);
-            pause_iv.setVisibility(View.VISIBLE);
-            playaudio_iv.setVisibility(View.GONE);
-            if(timer!=null) {
-                timer.cancel();
-
-            }
-            recording=false;
-            playing=true;
-            mediaPlayer = new MediaPlayer();
-            if(audioFile!=null) {
-                mediaPlayer.setDataSource(audioFile);
-            }else
-            {
-                mediaPlayer.setDataSource(this,audio_uri);
-            }
-            mediaPlayer.prepare();
-            if(pause)
-            {
-                mediaPlayer.seekTo(lastplay_position);
-            }
-            mediaPlayer.start();
-            seekBar.setProgress(0);
-            seekBar.setMax(mediaPlayer.getDuration());
-            seekBar.setClickable(false);
-            seekUpdation();
-
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    playaudio_iv.setVisibility(View.VISIBLE);
-                    pause_iv.setVisibility(View.GONE);
-                    pause=false;
+        if(!recording)
+        {
+            recording = false;
+            try {
+                record_audio_iv.playAnimation();
+                stop_iv.setVisibility(View.VISIBLE);
+                pause_iv.setVisibility(View.VISIBLE);
+                playaudio_iv.setVisibility(View.GONE);
+                if (timer != null) {
+                    timer.cancel();
+                    timer.onFinish();
 
                 }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+//            recording=false;
+                playing = true;
+                mediaPlayer = new MediaPlayer();
+                if (audioFile != null) {
+                    mediaPlayer.setDataSource(audioFile);
+                } else {
+                    mediaPlayer.setDataSource(this, audio_uri);
+                }
+                mediaPlayer.prepare();
+                if (pause) {
+                    mediaPlayer.seekTo(lastplay_position);
+                }
+                mediaPlayer.start();
+                seekBar.setProgress(0);
+                seekBar.setMax(mediaPlayer.getDuration());
+                seekBar.setClickable(false);
+                seekUpdation();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        record_audio_iv.pauseAnimation();
+                        playaudio_iv.setVisibility(View.VISIBLE);
+                        pause_iv.setVisibility(View.GONE);
+                        pause = false;
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else
+        {
+            Toast.makeText(ProfileManagementActivity.this,getString(R.string.please_stop_recording),Toast.LENGTH_LONG).show();
+
         }
 
     }
@@ -1167,7 +1279,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     }
 
     private void stoppingAudio() {
-
+        recording=false;
         try {
             record_audio_iv.pauseAnimation();
             mRecorder.stop();
@@ -1183,6 +1295,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
             mediaPlayer.release();
             if(timer!=null) {
                 timer.cancel();
+                timer.onFinish();
             }
 
         }catch (Exception e)
@@ -1191,7 +1304,21 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         }
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        videoview.setVideoURI(video_uri);
+        videoview.seekTo(1);
+
+        if( mediacontroller!=null) {
+            videoview.stopPlayback();
+            mediacontroller.hide();
+        }
+        Log.e("resumed","yes");
+    }
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
@@ -1201,8 +1328,13 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 if(selectedVideoPath == null) {
                     Log.e("no video","Selected null");
                 } else {
+                    full_screen_video_iv.setVisibility(View.VISIBLE);
+//                    image_thumnail.setBackgroundColor(getResources().getColor(R.color.white));
+                    videoview.setVisibility(View.VISIBLE);
+                    image_thumnail.setImageBitmap(null);
                     video_uri=Uri.parse(selectedVideoPath);
                     videoview.setVideoURI(video_uri);
+
                     video=new File(video_uri.getPath());
                     videoFile = outputDir+File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
                     VideoCompress.compressVideoLow(video.getPath(),videoFile, new VideoCompress.CompressListener() {
@@ -1381,6 +1513,26 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 timer_txt.setText("0:" + progress / 1000);
             }
         }
+            else if(mediacontroller_seekbar)
+            {
+                Log.e("Progress", String.valueOf(seekBar.getProgress()));
+                if(seekBar.getMax()==progress)
+                {
+                    if(mediacontroller.isShowing()) {
+                        mediacontroller.hide();
+                        Log.e("prepare", String.valueOf(progress));
+                        play_iv.setVisibility(View.VISIBLE);
+                        videoview.stopPlayback();
+                    }
+                }
+                else {
+                    play_iv.setVisibility(View.GONE);
+
+
+                }
+
+        }
+
         else
         {
             if (progress / 10 < 10) {
@@ -1394,11 +1546,27 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        Log.e("Stop", String.valueOf(seekBar.getProgress()));
+        if(mediacontroller_seekbar)
+        {
+            media_seekbar.setProgress(seekBar.getProgress());
+            videoview.seekTo(seekBar.getProgress());
+            videoview.resume();
+        }
+
 
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        Log.e("Stop", String.valueOf(seekBar.getProgress()));
+        if(mediacontroller_seekbar)
+        {
+            media_seekbar.setProgress(seekBar.getProgress());
+            videoview.seekTo(seekBar.getProgress());
+            videoview.resume();
+        }
+
 
     }
 }

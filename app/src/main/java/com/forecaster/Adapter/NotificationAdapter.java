@@ -17,9 +17,11 @@ import com.forecaster.Modal.Data;
 import com.forecaster.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -40,7 +42,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(context).inflate(R.layout.notification_adapter,null,false);
+        View view=LayoutInflater.from(context).inflate(R.layout.notification_adapter,parent,false);
         return new NotificationAdapter.MyViewHolder(view);
     }
 
@@ -51,7 +53,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         if(notification_txt.length>1)
         {
-            holder.notificationtxt.setText(notification_txt[0]+"\n"+"\n"+notification_txt[1]);
+            holder.notificationtxt.setText(notification_txt[0]+notification_txt[1].trim());
         }
         else {
             holder.notificationtxt.setText(data.get(position).getNotiMessage());
@@ -72,17 +74,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             Date endDate=dateFormat.parse(your_format);
             Log.e("endDate", String.valueOf(endDate));
             Date startDate=Calendar.getInstance().getTime();
-//            Date startDate=dateFormat.parse(String.valueOf(c));
+
             long differenceDate=startDate.getTime()-endDate.getTime();
             Log.e("differnce", String.valueOf(differenceDate));
             String[] completeDate=splitted[0].split("-");
+            String date1=completeDate[0];
             String month=completeDate[1];
             String year=completeDate[2];
-            YearMonth  yearMonth=YearMonth.of(Integer.parseInt(year),Integer.parseInt(month));
-            int days_in_months=yearMonth.lengthOfMonth();
 
-            long secounds=1000;    // 1 secound
-            long min=60*secounds;  // 1 min
+
+            int days_in_months=new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date1)).getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            long secounds=1000;     // 1 secound
+            long min=60*secounds;   // 1 min
             long hour=3600000;      // 1 hour
             long day=86400000;      // 1 days
 

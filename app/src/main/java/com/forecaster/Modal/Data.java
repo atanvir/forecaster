@@ -189,6 +189,246 @@ public class Data implements Parcelable {
     @Expose
     private String userType;
 
+    @SerializedName("requestStatus")
+    @Expose
+    private boolean requestStatus;
+    @SerializedName("chatCloseByDreamerStatus")
+    @Expose
+    private boolean chatCloseByDreamerStatus;
+    @SerializedName("chatCloseStatus")
+    @Expose
+    private boolean chatCloseStatus;
+
+    @SerializedName("isSeen")
+    @Expose
+    private boolean isSeen;
+
+    @SerializedName("recieverId")
+    @Expose
+    private String recieverId;
+    @SerializedName("lastMessage")
+    @Expose
+    private String lastMessage;
+
+    @SerializedName("event name")
+    @Expose
+    private String event_name;
+
+
+
+    @SerializedName("requestAcceptStatus")
+    @Expose
+    private boolean requestAcceptStatus;
+
+    @SerializedName("senderId")
+    @Expose
+    private String senderId;
+    @SerializedName("receiverId")
+    @Expose
+    private String receiverId;
+
+    @SerializedName("requestAcceptTime")
+    @Expose
+    private Object requestAcceptTime;
+    @SerializedName("requestSendTime")
+    @Expose
+    private Object requestSendTime;
+
+    @SerializedName("message")
+    @Expose
+    private String message;
+
+    @SerializedName("messageType")
+    @Expose
+    private String messageType;
+
+    @SerializedName("time")
+    @Expose
+    private String time;
+    @SerializedName("localTime")
+    @Expose
+    private String localTime;
+    @SerializedName("isDelete")
+    @Expose
+    private boolean isDelete;
+
+    @SerializedName("media")
+    @Expose
+    private String media;
+
+    @SerializedName("Data")
+    @Expose
+    private  String Data;
+
+
+    public String getData() {
+        return Data;
+    }
+
+    public void setData(String data) {
+        Data = data;
+    }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getLocalTime() {
+        return localTime;
+    }
+
+    public void setLocalTime(String localTime) {
+        this.localTime = localTime;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
+
+    public boolean isRequestAcceptStatus() {
+        return requestAcceptStatus;
+    }
+
+    public void setRequestAcceptStatus(boolean requestAcceptStatus) {
+        this.requestAcceptStatus = requestAcceptStatus;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public Object getRequestAcceptTime() {
+        return requestAcceptTime;
+    }
+
+    public void setRequestAcceptTime(Object requestAcceptTime) {
+        this.requestAcceptTime = requestAcceptTime;
+    }
+
+    public Object getRequestSendTime() {
+        return requestSendTime;
+    }
+
+    public void setRequestSendTime(Object requestSendTime) {
+        this.requestSendTime = requestSendTime;
+    }
+
+    public String getEvent_name() {
+        return event_name;
+    }
+
+    public void setEvent_name(String event_name) {
+        this.event_name = event_name;
+    }
+
+    public static Creator<Data> getCREATOR() {
+        return CREATOR;
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
+
+    public boolean isRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(boolean requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public boolean isChatCloseByDreamerStatus() {
+        return chatCloseByDreamerStatus;
+    }
+
+    public void setChatCloseByDreamerStatus(boolean chatCloseByDreamerStatus) {
+        this.chatCloseByDreamerStatus = chatCloseByDreamerStatus;
+    }
+
+    public boolean isChatCloseStatus() {
+        return chatCloseStatus;
+    }
+
+    public void setChatCloseStatus(boolean chatCloseStatus) {
+        this.chatCloseStatus = chatCloseStatus;
+    }
+
+    public boolean isSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(boolean seen) {
+        isSeen = seen;
+    }
+
+    public String getRecieverId() {
+        return recieverId;
+    }
+
+    public void setRecieverId(String recieverId) {
+        this.recieverId = recieverId;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
     public String getNotiTo() {
         return notiTo;
     }
@@ -237,20 +477,30 @@ public class Data implements Parcelable {
         createdAt = in.readString();
         voiceNote = in.readString();
         dreamerData = in.readParcelable(DreamerData.class.getClassLoader());
-
+        roomId=in.readString();
+        senderId=in.readString();
+        receiverId=in.readString();
     }
 
-    public static final Creator<Data> CREATOR = new Creator<Data>() {
-        @Override
-        public Data createFromParcel(Parcel in) {
-            return new Data(in);
-        }
+    public Data(String roomId, String senderId, String receiverId,String message,String messageType,String createdAt) {
+        this.roomId = roomId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message=message;
+        this.messageType=messageType;
+        this.createdAt=createdAt;
+    }
 
-        @Override
-        public Data[] newArray(int size) {
-            return new Data[size];
-        }
-    };
+    public Data(String roomId, String senderId, String receiverId,String message,String messageType,String createdAt,String media) {
+        this.roomId = roomId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message=message;
+        this.messageType=messageType;
+        this.createdAt=createdAt;
+        this.media=media;
+    }
+
 
     public String getUserId() {
         return userId;
@@ -650,6 +900,9 @@ public class Data implements Parcelable {
         dest.writeString(this.createdAt);
         dest.writeString(this.voiceNote);
         dest.writeParcelable(this.dreamerData,flags);
+        dest.writeString(this.roomId);
+        dest.writeString(this.senderId);
+        dest.writeString(this.receiverId);
 
     }
 }

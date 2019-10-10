@@ -2,11 +2,13 @@ package com.forecaster.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +20,10 @@ import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
 import com.forecaster.Utility.Validation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,8 +117,32 @@ public class ContactUsActivity extends AppCompatActivity {
 
                     }else if(server_resposne.getStatus().equalsIgnoreCase("FAILURE"))
                     {
-                        dailogHelper.dismissDailog();
-                        Toast.makeText(ContactUsActivity.this,server_resposne.getResponseMessage(),Toast.LENGTH_LONG).show();
+                        if(server_resposne.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                        {
+                            Toast.makeText(ContactUsActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                            finish();
+                            startActivity(new Intent(ContactUsActivity.this,LoginActivity.class));
+                            SharedPreferenceWriter.getInstance(ContactUsActivity.this).clearPreferenceValues();
+                            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        // Log.w(TAG, "getInstanceId failed", task.getException());
+                                        return;
+                                    }
+
+                                    String auth_token = task.getResult().getToken();
+                                    Log.w("firebaese","token: "+auth_token);
+                                    SharedPreferenceWriter.getInstance(ContactUsActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            dailogHelper.dismissDailog();
+                            Toast.makeText(ContactUsActivity.this,server_resposne.getResponseMessage(),Toast.LENGTH_LONG).show();
+
+                        }
 
 
                     }

@@ -302,7 +302,7 @@
             </androidx.cardview.widget.CardView>
 
             <ImageView
-                android:id="@+id/imageView30"
+                android:id="@+id/recorded_audio_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -316,16 +316,16 @@
                 />
 
             <TextView
-                android:id="@+id/textView41"
+                android:id="@+id/recorded_voice_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Recorded voice"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView30"
-                app:layout_constraintStart_toEndOf="@+id/imageView30"
-                app:layout_constraintTop_toTopOf="@+id/imageView30" />
+                app:layout_constraintBottom_toBottomOf="@+id/recorded_audio_iv"
+                app:layout_constraintStart_toEndOf="@+id/recorded_audio_iv"
+                app:layout_constraintTop_toTopOf="@+id/recorded_audio_iv" />
 
             <ImageView
                 android:id="@+id/stop_iv"
@@ -333,8 +333,8 @@
                 android:layout_height="@dimen/dp_15"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/stop"
-                app:layout_constraintStart_toStartOf="@+id/imageView30"
-                app:layout_constraintTop_toBottomOf="@+id/imageView30" />
+                app:layout_constraintStart_toStartOf="@+id/recorded_audio_iv"
+                app:layout_constraintTop_toBottomOf="@+id/recorded_audio_iv" />
 
 
             <SeekBar

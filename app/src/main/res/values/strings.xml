@@ -10,7 +10,7 @@
     <string name="email_id">Email Id</string>
     <string name="phone_number">Phone Number</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="agree_to_term">Agree to terms &amp; conditions</string>
+    <string name="agree_to_term">Agree to Terms &amp; Conditions</string>
     <string name="sign_up">Sign Up</string>
     <string name="password_reset_information">We need your registered phone number to send password reset information.</string>
     <string name="submit">Submit</string>
@@ -19,7 +19,7 @@
     <string name="profile_management">Profile Management</string>
     <string name="date_of_birth">Date Of Birth</string>
     <string name="record_your_voice">Record your voice</string>
-    <string name="upload_video">Upload Video</string>
+        <string name="upload_video">Upload Video</string>
     <string name="about_us">About Us</string>
     <string name="about_us_desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,when an unknown printer took a gallery of type and scrambled it to make</string>
     <string name="price_per_questions">Price Per Questions</string>
@@ -85,6 +85,41 @@
     <string name="check_internet">Please check your internet connection</string>
     <string name="compressing_video">Compressing Video</string>
     <string name="select_document_type">Select document type</string>
+    <string name="full_name_validation">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW XYZ</string>
+    <string name="please_enter_otp">Please enter otp</string>
+    <string name="please_select">Please Select</string>
+    <string name="please_enter_dob">Please enter Date of birth</string>
+    <string name="please_enter_ppq">Please enter price per question</string>
+    <string name="please_enter_holder_name">Please enter account holder name</string>
+    <string name="please_record_audio_first">Please record audio first</string>
+    <string name="please_stop_recording">Please stop recording first</string>
+    <string name="please_enter_fullname">Please enter full name</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="please_enter_about_us">Please enter about us</string>
+    <string name="invalid">Invalid!</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="use_password">Use password</string>
+    <string name="back">Back</string>
+    <string name="abc"><center>2</center> \n ABC</string>
+    <string name="delete">Delete</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="please_enter_oldpass">Please enter old password</string>
+    <string name="please_enter_newpass">Please enter new password</string>
+    <string name="please_enter_confirm_password">Please enter confirm password</string>
+    <string name="other_device_logged_in">Same user has been logged in another device</string>
+    <string name="touch_id">Touch id</string>
+    <string name="create_passcode">Create passcode</string>
+    <string name="fingerprint_configured">Fingerprint configured</string>
+    <string name="create_your_passcode">CREATE YOUR PASSCODE</string>
+    <string name="please_reenter_confirm_password">Please re-enter confirm passcode</string>
+    <string name="confirm_password_not_match">Confirm passcode does d match</string>
+    <string name="use_passcode">Use passcode</string>
+    <string name="password_not_match">Password not matched</string>
+    <string name="login_successfull">Login Sucessful</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="just_now">Just now</string>
+    <string name="ok">Ok</string>
 
 
 </resources>

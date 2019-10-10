@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -43,6 +44,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.heetch.countrypicker.Country;
 import com.heetch.countrypicker.CountryPickerCallbacks;
 import com.heetch.countrypicker.CountryPickerDialog;
@@ -68,7 +71,8 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.conpass_ed) EditText conpass_ed;
     @BindView(R.id.countrycode_txt) TextView countrycode_txt;
     EditText first_ed,secound_ed,third_ed,fourth_ed,fifth_ed,sixth_ed;
-    long clickcount=0;
+    long clickcount11=0;
+    int clickcount=0;
     private String verificationCode;
     FirebaseAuth auth;
     String countrycode="";
@@ -263,27 +267,46 @@ public class SignupActivity extends AppCompatActivity {
 
                     }else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
+                   if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                    {
+                        Toast.makeText(SignupActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                        finish();
+                        startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                        SharedPreferenceWriter.getInstance(SignupActivity.this).clearPreferenceValues();
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                if (!task.isSuccessful()) {
+                                    // Log.w(TAG, "getInstanceId failed", task.getException());
+                                    return;
+                                }
+
+                                String auth_token = task.getResult().getToken();
+                                Log.w("firebaese","token: "+auth_token);
+                                SharedPreferenceWriter.getInstance(SignupActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                            }
+                        });
+                    }
+                    else {
+
+
                         dailogHelper.dismissDailog();
-                        Toast.makeText(SignupActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
-                        if(server_response.getResponseMessage().equalsIgnoreCase("Username already exist"))
-                        {
+                        Toast.makeText(SignupActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                        if (server_response.getResponseMessage().equalsIgnoreCase("Username already exist")) {
                             username_ed.setError(server_response.getResponseMessage());
                             username_ed.setFocusable(true);
                             username_ed.requestFocus();
-                        }
-                        else if(server_response.getResponseMessage().equalsIgnoreCase("Email already exist"))
-                        {
+                        } else if (server_response.getResponseMessage().equalsIgnoreCase("Email already exist")) {
                             email_ed.setError(server_response.getResponseMessage());
                             email_ed.setFocusable(true);
                             email_ed.requestFocus();
 
-                        }
-                        else if(server_response.getResponseMessage().equalsIgnoreCase("Mobile number already exist"))
-                        {
+                        } else if (server_response.getResponseMessage().equalsIgnoreCase("Mobile number already exist")) {
                             phone_ed.setError(server_response.getResponseMessage());
                             phone_ed.requestFocus();
                             phone_ed.requestFocus();
                         }
+                    }
 
 
 
@@ -337,6 +360,12 @@ public class SignupActivity extends AppCompatActivity {
                     verifyVerificationCode(first_ed.getText().toString()+secound_ed.getText().toString()+third_ed.getText().toString()+fourth_ed.getText().toString()+fifth_ed.getText().toString()+sixth_ed.getText().toString().trim());
 
 
+                }
+                else
+                {
+                    Toast toast=Toast.makeText(SignupActivity.this,getString(R.string.please_enter_otp),Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
             }
         });
@@ -542,7 +571,7 @@ public class SignupActivity extends AppCompatActivity {
         public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
             Log.d("Code Sent", "onCodeSent:" + verificationId);
             verificationCode = verificationId;
-            Toast.makeText(SignupActivity.this,"Otp send successfully",Toast.LENGTH_LONG).show();
+            //Toast.makeText(SignupActivity.this,"Otp send successfully",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -561,7 +590,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.e("aa gya","yes");
+                            //Log.e("aa gya","yes");
                             RetroInterface api_service=RetrofitInit.getConnect().createConnection();
                             Signup signup=new Signup();
                             signup.setUsername(username_ed.getText().toString().trim());
@@ -591,8 +620,30 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                         else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                                         {
-                                            dailogHelper.dismissDailog();
-                                            Toast.makeText(SignupActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
+                                            if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                                            {
+                                                Toast.makeText(SignupActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                                finish();
+                                                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                                                SharedPreferenceWriter.getInstance(SignupActivity.this).clearPreferenceValues();
+                                                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                        if (!task.isSuccessful()) {
+                                                            // Log.w(TAG, "getInstanceId failed", task.getException());
+                                                            return;
+                                                        }
+
+                                                        String auth_token = task.getResult().getToken();
+                                                        Log.w("firebaese","token: "+auth_token);
+                                                        SharedPreferenceWriter.getInstance(SignupActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                dailogHelper.dismissDailog();
+                                                Toast.makeText(SignupActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                                            }
 
                                         }
                                     }
@@ -654,12 +705,12 @@ public class SignupActivity extends AppCompatActivity {
     private boolean checkValidation2() {
         boolean ret=true;
 
-        if(!Validation.hasText(first_ed)) ret=false;
-        if(!Validation.hasText(secound_ed)) ret=false;
-        if(!Validation.hasText(third_ed)) ret=false;
-        if(!Validation.hasText(fourth_ed)) ret=false;
-        if(!Validation.hasText(fifth_ed)) ret=false;
-        if(!Validation.hasText(sixth_ed)) ret=false;
+        if(!Validation.hasText(first_ed,true)) ret=false;
+        if(!Validation.hasText(secound_ed,true)) ret=false;
+        if(!Validation.hasText(third_ed,true)) ret=false;
+        if(!Validation.hasText(fourth_ed,true)) ret=false;
+        if(!Validation.hasText(fifth_ed,true)) ret=false;
+        if(!Validation.hasText(sixth_ed,true)) ret=false;
 
 
 
@@ -668,19 +719,45 @@ public class SignupActivity extends AppCompatActivity {
 
     private boolean checkValidation() {
         boolean ret=true;
-        if(!Validation.hasText(full_name_ed)) ret=false;
-        if(!Validation.hasText(username_ed)) ret=false;
-        if(!Validation.email(email_ed)) ret=false;
-        if(!Validation.isPhoneNumber(phone_ed,true)) ret=false;
-        if(!Validation.hasText(pass_ed)) ret=false;
-        if(!Validation.hasText(conpass_ed) || !conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim()))
+
+        if(!Validation.hasText(full_name_ed,"Please enter full name")
+        || !Validation.hasText(username_ed,"Please enter username")
+        || !Validation.email(email_ed,"Please enter email id")
+        || !Validation.isPhoneNumber(phone_ed,true)
+        || !Validation.hasText(pass_ed,"Please enter password")
+        || !Validation.hasText(conpass_ed,"Please enter confirm password")
+        || !conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim())
+        || clickcount%2==0)
         {
-            if(!Validation.hasText(conpass_ed))
+            if(!Validation.hasText(full_name_ed,"Please enter full name"))
             {
                 ret=false;
-                conpass_ed.setError("Please enter confirm password");
+                full_name_ed.requestFocus();
+            }
+            else if(!Validation.hasText(username_ed,"Please enter username"))
+            {
+                ret=false;
+                username_ed.requestFocus();
+            }
+            else if(!Validation.email(email_ed,"Please enter email id"))
+            {
+                ret=false;
+                email_ed.requestFocus();
+            }
+            else if(!Validation.isPhoneNumber(phone_ed,true))
+            {
+                ret=false;
+                phone_ed.requestFocus();
+            }
+            else if(!Validation.hasText(pass_ed,"Please enter password"))
+            {
+                ret=false;
+                pass_ed.requestFocus();
+            }
+            else if(!Validation.hasText(conpass_ed,"Please enter confirm password"))
+            {
+                ret=false;
                 conpass_ed.requestFocus();
-                conpass_ed.setFocusable(true);
 
             }
             else if(!conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim()))
@@ -688,19 +765,18 @@ public class SignupActivity extends AppCompatActivity {
                 ret=false;
                 conpass_ed.setError("Confirm password does not match");
                 conpass_ed.requestFocus();
-                conpass_ed.setFocusable(true);
+            }
 
+            else if(clickcount%2==0)
+            {
+                ret=false;
+                Toast.makeText(SignupActivity.this,"Please check the term and conditions check box",Toast.LENGTH_LONG).show();
 
             }
 
         }
-        if(clickcount%2==0)
-        {
-            ret=false;
-            Toast.makeText(SignupActivity.this,"Please check the term and conditions check box",Toast.LENGTH_LONG).show();
 
 
-        }
 
         return ret;
     }

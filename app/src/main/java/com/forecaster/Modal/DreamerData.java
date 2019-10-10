@@ -26,6 +26,8 @@ public class DreamerData implements Parcelable {
     @Expose
     private String maritalStatus;
 
+
+
     protected DreamerData(Parcel in) {
         profilePic = in.readString();
         name = in.readString();

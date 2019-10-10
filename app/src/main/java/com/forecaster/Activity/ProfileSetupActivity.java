@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -63,12 +64,17 @@ import com.forecaster.Utility.TakeImage;
 import com.forecaster.Utility.Validation;
 import com.forecaster.Utility.VideoCompressor.Util;
 import com.forecaster.Utility.VideoCompressor.VideoCompress;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -166,11 +172,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     boolean pause=false;
     private ProgressDailogHelper dailogHelper;
     @BindView(R.id.main_cl) ConstraintLayout main_cl;
-
-
-
-
-
+    @BindView(R.id.full_screen_video) ImageView full_screen_video_iv;
+    MediaController mediacontroller;
+    SeekBar media_seekbar;
+    boolean mediacontroller_seekbar=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -205,6 +210,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
             }
         };
+
     }
 
     private void spinnerClick() {
@@ -302,6 +308,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         forcaster_name_txt.setText(SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).getString(GlobalVariables.forcaster_name));
         dailogHelper=new ProgressDailogHelper(this,"");
         seekbar.setOnSeekBarChangeListener(this);
+        full_screen_video_iv.setOnClickListener(this::OnClick);
     }
 
     @Override
@@ -415,6 +422,28 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             case R.id.pause_ll:
                 pauseAudio();
                 break;
+
+            case R.id.full_screen_video:
+//                ForcasterSetupProfile setupProfile=new ForcasterSetupProfile();
+//                setupProfile.setProfilePic(imagePath);
+//                setupProfile.setGender(gender_txt.getText().toString());
+//                setupProfile.setDob(dob_ed.getText().toString());
+//                setupProfile.setCategoryName(categorytype_txt.getText().toString());
+//                setupProfile.setPsychological_extra(psychological_txt.getText().toString());
+//                setupProfile.setDocumentType(documenttype_txt.getText().toString());
+//                setupProfile.setAttachedDocument(String.valueOf(attach_document));
+//                setupProfile.setVoiceRecording(String.valueOf(audio));
+//                setupProfile.setUploadedVideo(String.valueOf(videoUri));
+//                setupProfile.setAboutUs(about_us_ed.getText().toString());
+//                setupProfile.setPricePerQues(Integer.valueOf(price_per_ed.getText().toString()));
+//                setupProfile.setBankName(selectbank_txt.getText().toString());
+//                setupProfile.setAccountHolderName(account_holder_ed.getText().toString());
+//                setupProfile.setAccountNumber(bank_number_ed.getText().toString());
+                Intent intent1=new Intent(ProfileSetupActivity.this,FullScreenVideoActivity.class);
+                intent1.putExtra(GlobalVariables.videouri,videoUri.toString());
+                startActivity(intent1);
+
+                break;
         }
 
     }
@@ -444,95 +473,152 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     private boolean checkValidation() {
         boolean ret=true;
 
-        if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+        if(profile_image==null
+        || gender_txt.getText().toString().equalsIgnoreCase("Gender")
+        || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
+        || categorytype_txt.getText().toString().equalsIgnoreCase("Category Type")
+        || categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling")
+        || documenttype_txt.getText().toString().equalsIgnoreCase("Document Type")
+        || attach_document==null
+        || audio==null
+        || video==null
+        || !Validation.hasText(about_us_ed,"Please write about yourself")
+        || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
+        || selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank")
+        || !Validation.hasText2(account_holder_ed,getString(R.string.please_enter_holder_name))
+        || bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
         {
-            ret=false;
-            gender_txt.setError("Please Select");
-            gender_txt.setFocusable(true);
-            gender_txt.requestFocus();
-        }
-        if(!Validation.hasText(dob_ed)) ret=false;
-        if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
-        {
-            ret=false;
-            categorytype_txt.setError("Please Select");
-            categorytype_txt.setFocusable(true);
-            categorytype_txt.requestFocus();
-        }
-        if(categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling")) {
-            if (psychological_txt.getText().toString().equalsIgnoreCase("Please select")) {
-                ret = false;
-                psychological_txt.setError("Please Select");
-                psychological_txt.setFocusable(true);
-                psychological_txt.requestFocus();
-            }
-        }
-        if(documenttype_txt.getText().toString().equalsIgnoreCase("Document Type"))
-        {
-            ret=false;
-            documenttype_txt.setError("Please Select");
-            documenttype_txt.setFocusable(true);
-            documenttype_txt.requestFocus();
-        }
-        if(attach_document==null)
-        {
-            ret=false;
-            attach_doc_txt.setError("Please attach document");
-            attach_doc_txt.setFocusable(true);
-            attach_doc_txt.requestFocus();
-        }
-        if(audio==null)
-        {
-            ret=false;
-            record_audio_txt.setError("Please record you voice");
-            record_audio_txt.setFocusable(true);
-            record_audio_txt.requestFocus();
-
-        }
-        if(video==null)
-        {
-            ret=false;
-            Toast.makeText(ProfileSetupActivity.this,"Please upload video",Toast.LENGTH_LONG).show();
-        }
-
-        if(selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank"))
-        {
-            ret=false;
-            selectbank_txt.setError("Please select bank");
-            selectbank_txt.setFocusable(true);
-            selectbank_txt.requestFocus();
-        }
-
-        if(!Validation.hasText(price_per_ed)) ret=false;
-        if(!Validation.hasText(account_holder_ed)) ret=false;
-        if(bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
-        {
-            if(!bank_number_ed.getText().toString().isEmpty())
+             if(profile_image==null)
             {
-                ret=false;
-                bank_number_ed.setError("Please enter account number");
-                bank_number_ed.setFocusable(true);
-                bank_number_ed.requestFocus();
-
-            }
-            else if(bank_number_ed.getText().toString().length()!=16)
-            {
-                ret=false;
-                bank_number_ed.setError("Please enter valid account number");
-                bank_number_ed.setFocusable(true);
-                bank_number_ed.requestFocus();
-
-            }
-
-        }
-
-
-        if(profile_image==null)
-        {
             ret=false;
             Toast.makeText(ProfileSetupActivity.this,"Please Upload Profile Photo",Toast.LENGTH_LONG).show();
+            }
+            else if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+            {
+                ret=false;
+                gender_txt.requestFocusFromTouch();
+                gender_txt.setError("Please Select");
+                gender_txt.setFocusable(true);
+                gender_txt.requestFocus();
+            }
+            else if(!Validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
+            {
+                gender_txt.setError(null);
+                ret=false;
+                dob_ed.requestFocusFromTouch();
+                dob_ed.setFocusableInTouchMode(true);
+                dob_ed.setFocusable(true);
+
+            }
+            else if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
+            {
+                ret=false;
+                categorytype_txt.requestFocusFromTouch();
+                categorytype_txt.setError("Please Select");
+                categorytype_txt.setFocusable(true);
+                categorytype_txt.requestFocus();
+            }
+            else if(categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling"))
+            {
+                ret=false;
+                if (psychological_txt.getText().toString().equalsIgnoreCase("Please select")) {
+                    ret = false;
+                    categorytype_txt.setError(null);
+                    psychological_txt.requestFocusFromTouch();
+                    psychological_txt.setError("Please Select");
+                    psychological_txt.setFocusable(true);
+                }
+            }
+            else if(documenttype_txt.getText().toString().equalsIgnoreCase("Document Type"))
+            {
+                categorytype_txt.setError(null);
+                ret=false;
+                documenttype_txt.requestFocusFromTouch();
+                documenttype_txt.setError("Please Select");
+                documenttype_txt.setFocusable(true);
+            }
+            else if(attach_document==null)
+            {
+                documenttype_txt.setError(null);
+                ret=false;
+                attach_doc_txt.requestFocusFromTouch();
+                attach_doc_txt.setError("Please attach document");
+                attach_doc_txt.setFocusable(true);
+            }
+            else if(audio==null)
+            {
+                attach_doc_txt.setError(null);
+                ret=false;
+                record_audio_txt.setError("Please record you voice");
+                record_audio_txt.setFocusable(true);
+                record_audio_txt.requestFocusFromTouch();
+
+            }
+            else if(video==null)
+            {
+                ret=false;
+                Toast.makeText(ProfileSetupActivity.this,"Please upload video",Toast.LENGTH_LONG).show();
+            }
+
+            else if(!Validation.hasText(about_us_ed,"Please write about yourself"))
+            {
+                ret=false;
+                about_us_ed.requestFocusFromTouch();
+
+            }
+
+            else if(!Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
+            {
+                ret=false;
+                price_per_ed.requestFocusFromTouch();
+
+            }
+            else if(selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank"))
+            {
+                ret=false;
+                selectbank_txt.setError("Please select bank");
+                selectbank_txt.setFocusable(true);
+                selectbank_txt.requestFocusFromTouch();
+            }
+
+
+            else if(!Validation.hasText(account_holder_ed,getString(R.string.please_enter_holder_name)))
+            {
+                ret=false;
+                account_holder_ed.requestFocusFromTouch();
+
+            }else if(bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
+            {
+                if(bank_number_ed.getText().toString().isEmpty())
+                {
+                    ret=false;
+                    bank_number_ed.setError("Please enter account number");
+                    bank_number_ed.setFocusable(true);
+                    bank_number_ed.requestFocusFromTouch();
+
+                }
+                else if(bank_number_ed.getText().toString().length()!=16)
+                {
+                    ret=false;
+                    bank_number_ed.setError("Please enter valid account number");
+                    bank_number_ed.setFocusable(true);
+                    bank_number_ed.requestFocusFromTouch();
+
+                }
+            }
+
+
+        }else
+        {
+            gender_txt.clearFocus();
+            gender_txt.setError(null);
+            categorytype_txt.setError(null);
+            categorytype_txt.clearFocus();
+            documenttype_txt.setError(null);
+
+
+
         }
-        if(!Validation.hasText(about_us_ed)) ret=false;
 
         return ret;
 
@@ -543,7 +629,6 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         RetroInterface api_service= RetrofitInit.getConnect().createConnection();
         ForcasterSetupProfile profile=new ForcasterSetupProfile();
         profile.setForecasterId(SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).getString(GlobalVariables._id));
-        //profile.setForecasterId("5d6e0ec0e9ee7170b6ce2e6b");
         profile.setGender(gender_txt.getText().toString());
         profile.setDob(dob_ed.getText().toString());
         if(categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.psychological_counselling)))
@@ -557,7 +642,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
         }
         profile.setAboutUs(about_us_ed.getText().toString().trim());
-        profile.setPricePerQues(Integer.valueOf(price_per_ed.getText().toString().trim()));
+        profile.setPricePerQues(Float.valueOf(price_per_ed.getText().toString().trim()));
         profile.setBankName(selectbank_txt.getText().toString());
         profile.setAccountHolderName(account_holder_ed.getText().toString().trim());
         profile.setAccountNumber(bank_number_ed.getText().toString());
@@ -579,8 +664,28 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         RequestBody audio_body=RequestBody.create(MediaType.parse("*/*"),audio);
         MultipartBody.Part voiceRecording=MultipartBody.Part.createFormData("voiceRecording",audio.getName(),audio_body);
 
-        RequestBody attachDocumentBody=RequestBody.create(MediaType.parse("application/pdf"),attach_document);
-        MultipartBody.Part attachedDocument=MultipartBody.Part.createFormData("attachedDocument",attach_document.getName(),attachDocumentBody);
+        RequestBody attachDocumentBody;
+        MultipartBody.Part attachedDocument = null;
+
+
+        if(documenttype_txt.getText().toString().equalsIgnoreCase(documentlist.get(1)))
+       {
+           attachDocumentBody=RequestBody.create(MediaType.parse("application/pdf"),attach_document);
+           attachedDocument=MultipartBody.Part.createFormData("attachedDocument",attach_document.getName(),attachDocumentBody);
+       }
+        else if(documenttype_txt.getText().toString().equalsIgnoreCase(documentlist.get(2)))
+        {
+            attachDocumentBody=RequestBody.create(MediaType.parse("image/jpeg"),attach_document);
+            attachedDocument=MultipartBody.Part.createFormData("attachedDocument",attach_document.getName(),attachDocumentBody);
+
+        }
+        else if(documenttype_txt.getText().toString().equalsIgnoreCase(documentlist.get(3)))
+        {
+            attachDocumentBody=RequestBody.create(MediaType.parse("*/*"),attach_document);
+            attachedDocument=MultipartBody.Part.createFormData("attachedDocument",attach_document.getName(),attachDocumentBody);
+
+        }
+
 
 
         Call<ForcasterSetupProfile> call=api_service.forecasterSetupProfile(prfpic,attachedDocument,voiceRecording,uploadVideo,body.getBody());
@@ -602,8 +707,31 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                     }
                     else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
+                        if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                        {
+                            Toast.makeText(ProfileSetupActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                            finish();
+                            startActivity(new Intent(ProfileSetupActivity.this,LoginActivity.class));
+                            SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).clearPreferenceValues();
+                            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        // Log.w(TAG, "getInstanceId failed", task.getException());
+                                        return;
+                                    }
+
+                                    String auth_token = task.getResult().getToken();
+                                    Log.w("firebaese","token: "+auth_token);
+                                    SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                }
+                            });
+                        }
+                        else
+                        {
+
                         Toast.makeText(ProfileSetupActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
-                    }
+                    }}
 
                 }
             }
@@ -669,10 +797,9 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("*/*");
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            String[] mimetypes = {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","text/plain"};
+            String[] mimetypes = {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.google-apps.document","application/vnd.google-apps.spreadsheet","text/plain"};
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
         }
 
         startActivityForResult(Intent.createChooser(intent,"ChooseFile"), PICKFILE_REQUEST_CODE);
@@ -701,6 +828,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
             if(timer!=null) {
                 timer.cancel();
+                timer.onFinish();
             }
 
         }catch (Exception e)
@@ -709,57 +837,68 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         }
 
         mic_im.pauseAnimation();
+       // attach_doc_txt.setText(audio.getName());
 
 
     }
 
     private void playingAudio() {
-        try {
+        if(!recording)
+        {
+
+        if (fileName == null) {
+            Toast toast = Toast.makeText(ProfileSetupActivity.this, getString(R.string.please_record_audio_first), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+            try {
 
 
-
-            mic_im.playAnimation();
+                mic_im.playAnimation();
 //            stop_ll.setVisibility(View.VISIBLE);
-            pause_ll.setVisibility(View.VISIBLE);
-            playaudio_ll.setVisibility(View.GONE);
-            if(timer!=null) {
-                timer.cancel();
-
-            }
-            recording=false;
-            playing=true;
-            mPlayer = new MediaPlayer();
-            if(fileName!=null) {
-                mPlayer.setDataSource(fileName);
-                mPlayer.prepare();
-            }
-
-            if(pause)
-            {
-                mPlayer.seekTo(lastplay_position);
-            }
-            mPlayer.start();
-            seekbar.setProgress(0);
-            seekbar.setMax(mPlayer.getDuration());
-            seekbar.setClickable(false);
-            seekUpdation();
-
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    playaudio_ll.setVisibility(View.VISIBLE);
-                    pause_ll.setVisibility(View.GONE);
-                    pause=false;
-                    mic_im.pauseAnimation();
-                    mic_im.setProgress(0);
+                pause_ll.setVisibility(View.VISIBLE);
+                playaudio_ll.setVisibility(View.GONE);
+                if (timer != null) {
+                    timer.cancel();
 
                 }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+                recording = false;
+                playing = true;
+                mPlayer = new MediaPlayer();
+                if (fileName != null) {
+                    mPlayer.setDataSource(fileName);
+                    mPlayer.prepare();
+                }
+
+                if (pause) {
+                    mPlayer.seekTo(lastplay_position);
+                }
+                mPlayer.start();
+                seekbar.setProgress(0);
+                seekbar.setMax(mPlayer.getDuration());
+                seekbar.setClickable(false);
+                seekUpdation();
+
+                mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        playaudio_ll.setVisibility(View.VISIBLE);
+                        pause_ll.setVisibility(View.GONE);
+                        pause = false;
+                        mic_im.pauseAnimation();
+                        mic_im.setProgress(0);
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-
+        }else
+        {
+            Toast.makeText(ProfileSetupActivity.this,getString(R.string.please_stop_recording),Toast.LENGTH_LONG).show();
+        }
     }
 
     Runnable runnable = new Runnable() {
@@ -784,10 +923,17 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     protected void onResume() {
         super.onResume();
         main_cl.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        videoview.setVideoURI(videoUri);
+        videoview.seekTo(1);
 
-
-
+        if(mediacontroller!=null) {
+            videoview.stopPlayback();
+            mediacontroller.hide();
+        }
+        Log.e("resumed","yes");
     }
+
+
 
     private boolean checkingPermissionAudio() {
         boolean ret = true;
@@ -816,14 +962,22 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     }
 
     private void recordingAudio() {
+        if(timer!=null)
+        {
+            timer.cancel();
+            timer.onFinish();
+        }
+
+
+        mHandler.removeCallbacks(newthread);
+
 
         recording=true;
         playing=false;
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        /**In the lines below, we create a directory VoiceRecorderSimplifiedCoding/Audios in the phone storage
-         * and the audios are being stored in the Audios folder **/
+
         File root = android.os.Environment.getExternalStorageDirectory();
         File file = new File(root.getAbsolutePath() + "/VoiceRecorderSimplifiedCoding/Audios");
 
@@ -835,8 +989,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             file.delete();
             file.mkdirs();
         }
-               fileName =  root.getAbsolutePath() + "/VoiceRecorderSimplifiedCoding/Audios/" +
-                String.valueOf(System.currentTimeMillis() + ".mp3");
+
+        fileName =  root.getAbsolutePath() + "/VoiceRecorderSimplifiedCoding/Audios/" + String.valueOf(System.currentTimeMillis() + ".mp3");
         Log.d("filename",fileName);
         mRecorder.setOutputFile(fileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
@@ -852,12 +1006,13 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
         stopPlaying();
         lastProgress = 0;
-        seekbar.setProgress(lastProgress);
-        seekbar.setMax(300);
         lastposition=0;
-        seekUpdation2();
         mic_im.setProgress(0);
         mic_im.playAnimation();
+        seekbar.setProgress(0);
+        seekbar.setMax(300);
+        seekUpdation2();
+
 
 
 
@@ -865,14 +1020,34 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         timer=new CountDownTimer(31500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
+//                if(recording)
+//                {
+//
+//
+//                long sec=(millisUntilFinished/1000)+1;
+//                timer_txt.setText("0:"+sec);
+//                Log.e("timer_count", String.valueOf(millisUntilFinished));
+//                }
 
             }
 
             @Override
             public void onFinish() {
+                if(recording)
+                {
+                recording=false;
+                mic_im.pauseAnimation();
                 stopPlaying();
+                try {
+                    mRecorder.stop();
+                    mRecorder.release();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                Log.e("timer_stop","yes");
                 Toast.makeText(ProfileSetupActivity.this,"You can record upto 30 secounds",Toast.LENGTH_LONG).show();
+                }
             }
         }.start();
 
@@ -907,34 +1082,44 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
 
     private void settingThumbnail() {
-        play_im.setVisibility(View.GONE);
 
-        try {
-            MediaController mediacontroller = new MediaController(ProfileSetupActivity.this);
-            mediacontroller.setAnchorView(videoview);
-            videoview.setMediaController(mediacontroller);
-            videoview.setVideoURI(videoUri);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
 
-        }
+            play_im.setVisibility(View.GONE);
+            try {
+                mediacontroller = new MediaController(ProfileSetupActivity.this);
+                mediacontroller.setAnchorView(videoview);
+                videoview.setMediaController(mediacontroller);
+                videoview.setVideoURI(videoUri);
+                videoview.seekTo(1);
+                final int topContainerId1 = getResources().getIdentifier("mediacontroller_progress", "id", "android");
+                media_seekbar = (SeekBar) mediacontroller.findViewById(topContainerId1);
+                media_seekbar.setOnSeekBarChangeListener(this);
+                mediacontroller_seekbar=true;
 
-        videoview.requestFocus();
-        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            public void onPrepared(MediaPlayer mp) {
-                videoview.start();
-
-            }
-        });
-
-        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            public void onCompletion(MediaPlayer mp) {
-                play_im.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
 
             }
-        });
+
+            videoview.requestFocus();
+            videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                public void onPrepared(MediaPlayer mp) {
+//                mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+
+                    videoview.start();
+
+                }
+            });
+
+            videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                public void onCompletion(MediaPlayer mp) {
+                    play_im.setVisibility(View.VISIBLE);
+
+                }
+            });
+
     }
 
     private boolean checkingPermission() {
@@ -1047,6 +1232,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         });
 
     }
+
 
     private void BankSpinner() {
         bankList = new ArrayList<>();
@@ -1254,6 +1440,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 //                           tv_progress.setText(String.valueOf(percent) + "%");
                            dialog.setMax((int) percent);
                            dialog.show();
+                           full_screen_video_iv.setVisibility(View.VISIBLE);
 
 
 
@@ -1283,6 +1470,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 if (isGoogleDriveUri(data.getData()))
                 {
                     selectedFilePath =getDriveFilePath(data.getData(),this);
+                    documenttype_txt.setError(null);
                 }
                 else
                 {
@@ -1293,6 +1481,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 attach_doc_txt.setText(file.getName());
 
                 attach_document=new File(file.getPath());
+                documenttype_txt.setError(null);
                 Log.e("data", String.valueOf(data.getData()));
 
 
@@ -1319,7 +1508,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 }
             }
         } else if (requestCode == 1 && resultCode == RESULT_CANCELED) {
-            finish();
+//            finish();
 
 
         }
@@ -1750,7 +1939,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                     boolean readAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
 
                     if (cameraAccepted && writeAccepted && readAccepted) {
-                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
                         if(SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).getString("Camera").equalsIgnoreCase("Yes"))
                         {
                             profileBottomLayout();
@@ -1777,7 +1966,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
                     }else {
 
-                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -1791,12 +1980,12 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
                     if(audioaccepted && readAccepted && writeAccepted)
                     {
-                        Toast.makeText(ProfileSetupActivity.this,"Recording Started",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ProfileSetupActivity.this,"Recording Started",Toast.LENGTH_LONG).show();
                         recordingAudio();
                     }
                     else
                     {
-                        Toast.makeText(ProfileSetupActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(ProfileSetupActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -1837,8 +2026,28 @@ public static Locale getSystemLocale(Configuration config){
                 timer_txt.setText("0:" + progress / 1000);
             }
         }
+
+        else if(mediacontroller_seekbar)
+        {
+            Log.e("Progress", String.valueOf(seekBar.getProgress()));
+            if(seekBar.getMax()==progress)
+            {
+                if(mediacontroller.isShowing()) {
+                    mediacontroller.hide();
+                    Log.e("prepare", String.valueOf(progress));
+                    play_im.setVisibility(View.VISIBLE);
+                    videoview.stopPlayback();
+                }
+            }
+            else {
+                play_im.setVisibility(View.GONE);
+            }
+        }
+
+
         else
         {
+            Log.e("timer", String.valueOf(progress));
             if (progress / 10 < 10) {
                 timer_txt.setText("0:0" + progress / 10);
             } else {
@@ -1850,11 +2059,25 @@ public static Locale getSystemLocale(Configuration config){
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        Log.e("Start", String.valueOf(seekBar.getProgress()));
+        if(mediacontroller_seekbar)
+        {
+            media_seekbar.setProgress(seekBar.getProgress());
+            videoview.seekTo(seekBar.getProgress());
+            videoview.resume();
+        }
 
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        Log.e("Stop", String.valueOf(seekBar.getProgress()));
+        if(mediacontroller_seekbar)
+        {
+            media_seekbar.setProgress(seekBar.getProgress());
+            videoview.seekTo(seekBar.getProgress());
+            videoview.resume();
+        }
 
     }
 }

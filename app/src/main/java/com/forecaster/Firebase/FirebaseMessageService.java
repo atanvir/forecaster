@@ -6,10 +6,6 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
@@ -19,7 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.forecaster.Activity.ChatActivity;
+import com.forecaster.Activity.ChatDetailsActivity;
 import com.forecaster.Activity.NotificationActivity;
 import com.forecaster.R;
 import com.forecaster.Utility.NotificationUtils;
@@ -27,11 +23,11 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class FirebaseMessageService extends FirebaseMessagingService {
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -41,22 +37,42 @@ public class FirebaseMessageService extends FirebaseMessagingService {
 
         if(NotificationUtils.isAppIsInBackground(getApplicationContext()))
         {
-            Intent intent=new Intent("FCM");
-            intent.putExtra("FCM","Yes");
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-            Intent push=new Intent(this,NotificationActivity.class);
-            sendNotification((dataMap.get("title")==null?"Boushra":dataMap.get("title")), dataMap.get("body"),push);
+            if(Objects.requireNonNull(remoteMessage.getData().get("type")).equalsIgnoreCase("chat"))
+            {
+                Intent intent = new Intent("FCM");
+                intent.putExtra("FCM", "Yes");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                Intent push = new Intent(this, ChatDetailsActivity.class);
+                sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
 
+            }else {
+                Intent intent = new Intent("FCM");
+                intent.putExtra("FCM", "Yes");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                Intent push = new Intent(this, NotificationActivity.class);
+                sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
+            }
 
         }
         else
         {
-            Intent push=new Intent(this,NotificationActivity.class);
-            push.putExtra("FCM","Yes");
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(push);
-            sendNotification((dataMap.get("title")==null?"Boushra":dataMap.get("title")), dataMap.get("body"),push);
+            if(Objects.requireNonNull(remoteMessage.getData().get("type")).equalsIgnoreCase("chat"))
+            {
+                Intent intent = new Intent("FCM");
+                intent.putExtra("FCM", "Yes");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                Intent push = new Intent(this, ChatDetailsActivity.class);
+                sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
 
+            }
+            else {
 
+                Intent push = new Intent(this, NotificationActivity.class);
+                push.putExtra("FCM", "Yes");
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(push);
+                sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
+
+            }
 
         }
 

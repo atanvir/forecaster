@@ -48,4 +48,14 @@ public class GlobalVariables {
     public static String bankName="bankName";
     public static String uploadedVideo="uploadedVideo";
     public static String forcaster_name="forcaster_name";
+    public static String videouri="videouri";
+    public static String invalidoken="Invalid Token";
+    public static String touchid="touchid";
+    public static String old_passcode="old_passcode";
+    public static String roomId="roomId";
+    public static String senderId="senderId";
+    public static String receiverId="receiverId";
+    public static String message="message";
+    public static String messageType="messageType";
+
 }

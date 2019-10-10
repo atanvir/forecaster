@@ -1,5 +1,8 @@
 package com.forecaster.Activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,10 +15,13 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.forecaster.Modal.CheckMobileNumber;
 import com.forecaster.Modal.ForgotPassword;
@@ -46,6 +53,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.heetch.countrypicker.Country;
 import com.heetch.countrypicker.CountryPickerCallbacks;
 import com.heetch.countrypicker.CountryPickerDialog;
@@ -74,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     String countrycode="";
     private ProgressDailogHelper dailogHelper;
     int clickcount3=0,clickcount2=0;
+    @BindView(R.id.constraintLayout) ConstraintLayout constraintLayout;
 
 
     @Override
@@ -184,11 +194,8 @@ public class LoginActivity extends AppCompatActivity {
                 CountryPickerDialog countryPicker = new CountryPickerDialog(LoginActivity.this, new CountryPickerCallbacks() {
                     @Override
                     public void onCountrySelected(Country country, int flagResId) {
-                        //country.toString();
                         countrycode_txt.setText("+"+country.getDialingCode());
                         countrycode=countrycode_txt.getText().toString();
-
-
                         // TODO handle callback
                     }
                 });
@@ -244,13 +251,35 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                                 {
-                                    dailogHelper.dismissDailog();
-                                    if(server_response.getResponseMessage().equalsIgnoreCase("Mobile number is not registered"))
+                                    if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
                                     {
-                                        phone_ed.setError(server_response.getResponseMessage());
-                                        phone_ed.requestFocus();
-                                        phone_ed.setFocusable(true);
+                                        Toast.makeText(LoginActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                        finish();
+                                        startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+                                        SharedPreferenceWriter.getInstance(LoginActivity.this).clearPreferenceValues();
+                                        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    // Log.w(TAG, "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
 
+                                                String auth_token = task.getResult().getToken();
+                                                Log.w("firebaese","token: "+auth_token);
+                                                SharedPreferenceWriter.getInstance(LoginActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                            }
+                                        });
+                                    }
+                                    else {
+
+                                        dailogHelper.dismissDailog();
+                                        if (server_response.getResponseMessage().equalsIgnoreCase("Mobile number is not registered")) {
+                                            phone_ed.setError(server_response.getResponseMessage());
+                                            phone_ed.requestFocus();
+                                            phone_ed.setFocusable(true);
+
+                                        }
                                     }
 
 
@@ -323,7 +352,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
             Log.d("Code Sent", "onCodeSent:" + verificationId);
             verificationCode = verificationId;
-            Toast.makeText(LoginActivity.this,"Otp send successfully",Toast.LENGTH_LONG).show();
+            //Toast.makeText(LoginActivity.this,"Otp send successfully",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -359,10 +388,16 @@ public class LoginActivity extends AppCompatActivity {
              if(checkValidation2())
             {
               dailogHelper.showDailog();
-              dialog.dismiss();
-              verifyVerificationCode(first_ed.getText().toString().trim()+secound_ed.getText().toString().trim()+third_ed.getText().toString().trim()+fourth_ed.getText().toString().trim()+fifth_ed.getText().toString().trim()+sixth_ed.getText().toString().trim());
+//              dialog.dismiss();
+              verifyVerificationCode(first_ed.getText().toString().trim()+secound_ed.getText().toString().trim()+third_ed.getText().toString().trim()+fourth_ed.getText().toString().trim()+fifth_ed.getText().toString().trim()+sixth_ed.getText().toString().trim(),dialog);
 
             }
+             else
+             {
+                 Toast toast=Toast.makeText(LoginActivity.this, getString(R.string.please_enter_otp), Toast.LENGTH_SHORT);
+                 toast.setGravity(Gravity.CENTER,0,0);
+                 toast.show();
+             }
 
             }
         });
@@ -370,28 +405,44 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void verifyVerificationCode(String otp) {
+    private void verifyVerificationCode(String otp, Dialog dialog) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCode, otp);
-        signInWithPhoneAuthCredential(credential);
+        signInWithPhoneAuthCredential(credential,dialog);
 
     }
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential,Dialog dialog) {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            dialog.dismiss();
                             Log.e("here it is:","yes");
                             dailogHelper.dismissDailog();
                             changePasswordPop();
                         }
                         else {
+
+                            first_ed.setText("");
+                            sixth_ed.clearFocus();
+                            first_ed.requestFocus();
+                            first_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
+                            secound_ed.setText("");
+                            secound_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
+                            third_ed.setText("");
+                            third_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
+                            fourth_ed.setText("");
+                            fourth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
+                            fifth_ed.setText("");
+                            fifth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
+                            sixth_ed.setText("");
+                            sixth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
                             dailogHelper.dismissDailog();
                             String message = "Somthing is wrong, we will fix it soon...";
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
+                                message = "Invalid otp entered...";
                                 Toast.makeText(LoginActivity.this,message,Toast.LENGTH_LONG).show();
                             }
                         }
@@ -440,11 +491,30 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
 
                                 }
-                                else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
-                                {
-                                    dailogHelper.dismissDailog();
-                                    dialog.dismiss();
-                                    Toast.makeText(LoginActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
+                                else if(server_response.getStatus().equalsIgnoreCase("FAILURE")) {
+                                    if (server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken)) {
+                                        Toast.makeText(LoginActivity.this, getString(R.string.other_device_logged_in), Toast.LENGTH_LONG).show();
+                                        finish();
+                                        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                        SharedPreferenceWriter.getInstance(LoginActivity.this).clearPreferenceValues();
+                                        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    // Log.w(TAG, "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
+
+                                                String auth_token = task.getResult().getToken();
+                                                Log.w("firebaese", "token: " + auth_token);
+                                                SharedPreferenceWriter.getInstance(LoginActivity.this).writeStringValue(GlobalVariables.deviceToken, auth_token);
+                                            }
+                                        });
+                                    } else {
+                                        dailogHelper.dismissDailog();
+                                        dialog.dismiss();
+                                        Toast.makeText(LoginActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
 
@@ -547,29 +617,29 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkValidationPassword() {
         boolean ret=true;
 
-        if(!Validation.hasText(newpass_ed)) ret=false;
-        if(!Validation.hasText(confirm_pass_ed) && !confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim()))
+        if(!Validation.hasText(newpass_ed,"Please enter new password")
+        || !Validation.hasText(confirm_pass_ed,"Please enter confirm password")
+        || !confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim())
+        )
         {
-            if(!Validation.hasText(confirm_pass_ed))
+            if(!Validation.hasText(newpass_ed,"Please enter new password"))
             {
                 ret=false;
-
-
-
-            }else if(!confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim()))
+                newpass_ed.requestFocus();
+            }
+            else if(!Validation.hasText(confirm_pass_ed,"Please enter confirm password"))
+            {
+                ret=false;
+                confirm_pass_ed.requestFocus();
+            }
+            else if(!confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim()))
             {
                 ret=false;
                 confirm_pass_ed.setError("Confirm password does not match");
-                confirm_pass_ed.setFocusable(true);
                 confirm_pass_ed.requestFocus();
-
-
             }
 
-
-
         }
-
 
         return ret;
     }
@@ -733,12 +803,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkValidation2() {
         boolean ret=true;
-        if(!Validation.hasText(first_ed)) ret=false;
-        if(!Validation.hasText(secound_ed)) ret=false;
-        if(!Validation.hasText(third_ed)) ret=false;
-        if(!Validation.hasText(fourth_ed)) ret=false;
-        if(!Validation.hasText(fifth_ed)) ret=false;
-        if(!Validation.hasText(sixth_ed)) ret=false;
+        if(!Validation.hasText(first_ed,true)) ret=false;
+        if(!Validation.hasText(secound_ed,true)) ret=false;
+        if(!Validation.hasText(third_ed,true)) ret=false;
+        if(!Validation.hasText(fourth_ed,true)) ret=false;
+        if(!Validation.hasText(fifth_ed,true)) ret=false;
+        if(!Validation.hasText(sixth_ed,true)) ret=false;
 
         return ret;
     }
@@ -759,18 +829,15 @@ public class LoginActivity extends AppCompatActivity {
                  if(response.isSuccessful())
                  {
                      Login server_response=response.body();
-                     if(server_response.getStatus().equalsIgnoreCase("SUCCESS"))
-                     {
+                     if(server_response.getStatus().equalsIgnoreCase("SUCCESS")) {
                          dailogHelper.dismissDailog();
-                         Toast.makeText(LoginActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
+                         Toast.makeText(LoginActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
                          setPreferences(server_response);
                          Intent intent=new Intent(LoginActivity.this,CategorySelectionActivity.class);
                          finish();
                          startActivity(intent);
 
-
-
-                     }else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
+                     } else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                      {
                          if(server_response.getResponseMessage().equalsIgnoreCase("Please complete your profile first"))
                          {
@@ -780,9 +847,29 @@ public class LoginActivity extends AppCompatActivity {
                              finish();
                              startActivity(intent);
                          }
-                         dailogHelper.dismissDailog();
-                         Toast.makeText(LoginActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
+                         else if (server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken)) {
+                             Toast.makeText(LoginActivity.this, getString(R.string.other_device_logged_in), Toast.LENGTH_LONG).show();
+                             finish();
+                             startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                             SharedPreferenceWriter.getInstance(LoginActivity.this).clearPreferenceValues();
+                             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                     if (!task.isSuccessful()) {
+                                         // Log.w(TAG, "getInstanceId failed", task.getException());
+                                         return;
+                                     }
 
+                                     String auth_token = task.getResult().getToken();
+                                     Log.w("firebaese", "token: " + auth_token);
+                                     SharedPreferenceWriter.getInstance(LoginActivity.this).writeStringValue(GlobalVariables.deviceToken, auth_token);
+                                 }
+                             });
+                         }
+                         else {
+                             dailogHelper.dismissDailog();
+                             Toast.makeText(LoginActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                         }
                      }
 
                  }
@@ -845,12 +932,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkValidation() {
         boolean ret=true;
+        if(!Validation.hasText(username_ed,"Please enter user name")
+        || !Validation.hasText(pass_ed,"Please enter password"))
+        {
+            if(!Validation.hasText(username_ed,"Please enter user name"))
+            {
+                ret=false;
+                username_ed.requestFocus();
 
-        if(!Validation.hasText(username_ed)) ret=false;
-        if(!Validation.hasText(pass_ed)) ret=false;
+            }else if(!Validation.hasText(pass_ed,"Please enter password"))
+            {
+                ret=false;
+                pass_ed.requestFocus();
 
-
-
+            }
+        }
 
         return ret;
     }

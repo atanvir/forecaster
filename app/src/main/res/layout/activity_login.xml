@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/textView"
@@ -62,8 +63,8 @@
                         android:layout_height="@dimen/dp_60"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/Username"
-                        android:inputType="text"
                         android:imeOptions="actionNext"
+                        android:inputType="text"
                         android:textColorHint="#123"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +105,12 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_60"
                         android:background="@drawable/edit_text_background"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
                         android:drawableRight="@drawable/un_view_icon"
+                        android:hint="@string/password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
                         android:paddingRight="@dimen/dp_10"
                         android:textColorHint="#123"
-                        android:imeOptions="actionDone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -159,13 +160,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="64dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginBottom="64dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginBtn">

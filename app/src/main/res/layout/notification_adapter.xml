@@ -16,14 +16,18 @@
 
         <com.forecaster.View.AvenirRegularTextView
             android:id="@+id/notificationtxt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
-            android:text="@string/new_request_from_dreamer"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="Dreamer is waiting for you \nin sd"
             android:textColor="@color/black"
-            android:textSize="@dimen/dp_15"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintBottom_toTopOf="@+id/view7"
+            app:layout_constraintEnd_toStartOf="@+id/timing_txt"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,14 +36,15 @@
             android:id="@+id/timing_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:text="11:10 AM"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small"
 
+            android:textSize="@dimen/dp_12"
             app:layout_constraintBottom_toBottomOf="@+id/notificationtxt"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/notificationtxt"
             app:layout_constraintTop_toTopOf="@+id/notificationtxt" />
 
 

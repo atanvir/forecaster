@@ -138,6 +138,8 @@
             android:layout_height="@dimen/dp_60"
             android:background="@drawable/edit_text_background"
             android:hint="@string/full_name"
+            android:textColor="@color/black"
+            android:digits="@string/full_name_validation"
             android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -180,7 +182,8 @@
             android:layout_height="@dimen/dp_60"
             android:background="@drawable/edit_text_background"
             android:hint="@string/Username"
-                android:editable="false"
+            android:editable="false"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -222,6 +225,7 @@
             android:layout_height="@dimen/dp_60"
             android:background="@drawable/edit_text_background"
             android:hint="@string/email_id"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -258,26 +262,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.forecaster.View.AvenirRegularEditText
-            android:id="@+id/phone_ed"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:background="@drawable/edit_text_background"
-            android:hint="@string/phone_number"
-            android:editable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textColorHint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            android:inputType="number"
+                <com.forecaster.View.AvenirRegularTextView
+                    android:id="@+id/countrycode_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:text="+91"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_18"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/phone_ed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            />
+                <com.forecaster.View.AvenirRegularEditText
+                    android:id="@+id/phone_ed"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_60"
+                    android:background="@drawable/edit_text_background"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/phone_number"
+                    android:inputType="number"
+                    android:textColorHint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/countrycode_txt"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -375,6 +392,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="@string/date_of_birth"
             android:editable="false"
+            android:textColor="@color/black"
             android:focusableInTouchMode="true"
             android:focusable="true"
             android:textColorHint="@color/black"
@@ -422,6 +440,7 @@
                         android:text="@string/category_type"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/dp_18"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -483,6 +502,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/psychological_counselling"
                         android:textSize="@dimen/dp_18"
+                        android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
@@ -616,7 +636,7 @@
             <ImageView
             android:id="@+id/image_thumnail"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
+            android:layout_height="@dimen/dp_200"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:scaleType="fitXY"
@@ -629,14 +649,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
-            <RelativeLayout
+
+            <ImageView
+                android:id="@+id/full_screen_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/zoom_in"
+                android:elevation="@dimen/dp_2"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/image_thumnail"
+                app:layout_constraintTop_toTopOf="@+id/image_thumnail" />
+
+
+            <LinearLayout
+            android:id="@+id/videoview_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_200"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar">
@@ -644,15 +681,20 @@
 
             <VideoView
             android:id="@+id/videoview"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
-            android:scaleType="fitCenter"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:visibility="gone"
+            android:elevation="@dimen/dp_2"
             android:src="@drawable/img_one"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            />
-            </RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+
+                />
+            </LinearLayout>
 
 
             <ImageView
@@ -754,6 +796,7 @@
             android:textColorHint="@color/black"
             android:textColor="@color/black"
             android:textSize="@dimen/dp_18"
+            android:maxLength="400"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -771,6 +814,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textSize="16dp"
+                android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp"
                 android:text="@string/price_per_questions"
@@ -807,6 +851,8 @@
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/price_per_questions"
                         android:inputType="number"
+                        android:maxLength="5"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

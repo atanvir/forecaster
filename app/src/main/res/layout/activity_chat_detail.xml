@@ -45,6 +45,7 @@
 
 
             <com.forecaster.View.AvenirDemiTextView
+                android:id="@+id/username_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Navin Kumar"
@@ -52,12 +53,12 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_large"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                app:layout_constraintEnd_toStartOf="@+id/profile_iv"
                 app:layout_constraintStart_toEndOf="@+id/back_ll"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView10"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_iv"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:layout_marginEnd="16dp"
@@ -78,232 +79,28 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintBottom_toTopOf="@+id/chatRV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar5" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar5"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRV"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/splash_bg"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar5">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/splash_bg"
-            app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view5">
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="72dp"
-                android:layout_marginRight="72dp"
-                android:background="@drawable/chat_background"
-                android:padding="@dimen/dp_20"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Today 10:10 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintEnd_toEndOf="@+id/avenirRegularTextView6"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView6" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar5"
+        app:layout_constraintVertical_bias="1.0">
 
 
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView8"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                android:layout_marginTop="16dp"
-                android:background="@drawable/chat_background"
-                android:padding="@dimen/dp_20"
-                android:text="Lorem Ipsum is simply"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_medium"
-                app:layout_constraintStart_toStartOf="@+id/avenirRegularTextView6"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView7" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Today 10:12 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintEnd_toEndOf="@+id/avenirRegularTextView8"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView8" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/progressbackground"
-                android:padding="@dimen/dp_25"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView9">
-
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/audio_bar"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/avenirRegularTextView10"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.forecaster.View.AvenirRegularTextView
-                    android:id="@+id/avenirRegularTextView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="0:23"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView11"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:text="Today 10:15 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/chat_background"
-                android:padding="@dimen/dp_20"
-                android:textSize="@dimen/text_size_medium"
-                android:text="Lorem Ipsum is simply dum"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView11" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Today 10:18 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintEnd_toEndOf="@+id/avenirRegularTextView12"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView12" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/chat_background2"
-                android:padding="@dimen/dp_20"
-                android:textSize="@dimen/text_size_medium"
-                android:text="Lorem Ipsum is simply dum"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView13" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:id="@+id/avenirRegularTextView15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/chat_background2"
-                android:padding="@dimen/dp_20"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. printing and typesetting industry ."
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView14" />
-
-
-            <com.forecaster.View.AvenirRegularTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="32dp"
-                android:text="Today 10:19 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/avenirRegularTextView15"
-                app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView15" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -312,12 +109,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3">
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/message_ed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -330,34 +126,38 @@
             android:hint="@string/enter_your_message"
             android:paddingLeft="@dimen/dp_20"
             android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
             android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView12"
+            app:layout_constraintEnd_toStartOf="@+id/mic_iv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="@dimen/dp_25"
-            android:layout_height="@dimen/dp_25"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/mic_iv"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            app:lottie_loop="true"
+
             android:src="@drawable/microphone_black_shape"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView5"
-            app:layout_constraintStart_toEndOf="@+id/editText6"
+            app:layout_constraintEnd_toStartOf="@+id/send_iv"
+            app:layout_constraintStart_toEndOf="@+id/message_ed"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView5"
+            android:id="@+id/send_iv"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/green_circle_shape"
             android:foregroundGravity="center"
-            android:paddingLeft="@dimen/dp_7"
+            android:padding="@dimen/dp_8"
+            android:paddingLeft="@dimen/dp_12"
             android:src="@drawable/icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

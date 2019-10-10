@@ -4,9 +4,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-feature android:name="android.hardware.fingerprint"
+        android:required="true"/>
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -40,7 +47,7 @@
             android:screenOrientation="portrait"
             />
 
-        <activity android:name="com.forecaster.Activity.ChatActivity"
+        <activity android:name="com.forecaster.Activity.ChatListingActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="com.forecaster.Activity.PaymentManagementActivity"
             android:screenOrientation="portrait" />
@@ -55,14 +62,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name="com.forecaster.Activity.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.ProfileManagementActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name="com.forecaster.Activity.ProfileManagementActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name="com.forecaster.Activity.SignupActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name="com.forecaster.Activity.ChatDetailsActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.forecaster.Activity.SettingActivity"
@@ -73,9 +83,22 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.forecaster.Activity.ProfileSetupActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
             />
         <activity android:name="com.forecaster.Activity.DetailActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activity.FullScreenVideoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.ProfileManagementFullScreenVideoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.FingerprintActivity"
+            android:screenOrientation="portrait">
+
+
+
+        </activity>
+        <activity android:name=".Activity.PinActivity" />
+
 
         <service
             android:name="com.forecaster.Firebase.FirebaseMessageService"
@@ -87,9 +110,9 @@
 
 
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
+        <!--<meta-data-->
+            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
+            <!--android:resource="@color/colorAccent" />-->
         <!--<meta-data-->
             <!--android:name="com.google.firebase.messaging.default_notification_channel_id"-->
             <!--android:value="0" />-->

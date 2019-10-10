@@ -41,6 +41,8 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     @BindView(R.id.play_iv) ImageView play_iv;
     @BindView(R.id.timer_txt) TextView timer_txt;
     @BindView(R.id.pause_iv) ImageView pause_iv;
+    @BindView(R.id.recorded_audio_iv) ImageView recorded_audio_iv;
+    @BindView(R.id.recorded_voice_txt) TextView recorded_voice_txt;
     MediaPlayer mediaPlayer;
     MediaRecorder mRecorder;
     boolean recording;
@@ -50,6 +52,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     private Handler handler=new Handler();
     int medialast_position=0;
     boolean pause=false;
+    ArrayList<Data> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     private void settingDetails() {
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null) {
-            ArrayList<Data> data = bundle.getParcelableArrayList("RequestManagement");
+                data = bundle.getParcelableArrayList("RequestManagement");
                 Glide.with(this).load(data.get(0).getDreamerData().getProfilePic()).into(profile_iv);
                 username_txt.setText(data.get(0).getDreamerData().getName());
                 pob_txt.setText(data.get(0).getDreamerData().getBirthPlace());
@@ -91,22 +94,41 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     }
 
     private void settingSekkbar(ArrayList<Data> data) {
-        audio_uri= Uri.parse(data.get(0).getVoiceNote());
-        try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(this, Uri.parse(data.get(0).getVoiceNote()));
-            mediaPlayer.prepare();
+        if(audio_uri!=null) {
+            seekBar.setVisibility(View.VISIBLE);
+            stop_iv.setVisibility(View.VISIBLE);
+            play_iv.setVisibility(View.VISIBLE);
+            recorded_audio_iv.setVisibility(View.VISIBLE);
+            recorded_voice_txt.setVisibility(View.VISIBLE);
+            timer_txt.setVisibility(View.VISIBLE);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            audio_uri = Uri.parse(data.get(0).getVoiceNote());
+            try {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(this, Uri.parse(data.get(0).getVoiceNote()));
+                mediaPlayer.prepare();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            seekBar.setMax(300);
+
+            seekBar.setProgress(mediaPlayer.getDuration() / 1000);
+            if (mediaPlayer.getDuration() / 1000 < 10) {
+                timer_txt.setText("0:0" + mediaPlayer.getDuration() / 1000);
+            } else {
+                timer_txt.setText("0:" + mediaPlayer.getDuration() / 1000);
+            }
         }
-        seekBar.setMax(300);
+        else
+        {
+            seekBar.setVisibility(View.GONE);
+            stop_iv.setVisibility(View.GONE);
+            play_iv.setVisibility(View.GONE);
+            recorded_audio_iv.setVisibility(View.GONE);
+            recorded_voice_txt.setVisibility(View.GONE);
+            timer_txt.setVisibility(View.GONE);
 
-        seekBar.setProgress(mediaPlayer.getDuration() / 1000);
-        if (mediaPlayer.getDuration() / 1000 < 10) {
-            timer_txt.setText("0:0" + mediaPlayer.getDuration() / 1000);
-        } else {
-            timer_txt.setText("0:" + mediaPlayer.getDuration() / 1000 );
         }
 
     }
@@ -125,8 +147,8 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
 
             case R.id.chat_btn:
                 Intent intent1=new Intent(DetailActivity.this,ChatDetailsActivity.class);
+                intent1.putExtra("chat_details", data.get(0));
                 finish();
-                intent1.putExtra("DetailActivity","Yes");
                 startActivity(intent1);
                 break;
                 
@@ -142,6 +164,9 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
                 pauseAudio();
                 break;
         }
+    }
+
+    private void settingModalValues() {
     }
 
     private void pauseAudio() {

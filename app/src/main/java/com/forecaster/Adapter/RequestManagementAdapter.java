@@ -62,7 +62,7 @@ public class RequestManagementAdapter extends RecyclerView.Adapter<RequestManage
         try {
             Date date = sdf.parse(server_format);
             System.out.println(date);
-            String your_format = new SimpleDateFormat("dd-MM-yy HH:mm").format(date);
+            String your_format = new SimpleDateFormat("dd-MM-yy hh:mm aa").format(date);
             System.out.println(your_format);
             String[] splitted = your_format.split(" ");
 

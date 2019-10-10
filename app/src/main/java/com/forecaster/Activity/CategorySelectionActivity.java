@@ -1,28 +1,19 @@
 package com.forecaster.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -40,7 +31,11 @@ import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.InternetCheck;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +98,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         {
             NavigationView navigationView=  activity.findViewById(R.id.nav_view);
             mDrawerLayout= activity.findViewById(R.id.drawer);
-//            toolbar= activity.findViewById(R.id.toolbar);
             burger= activity.findViewById(R.id.burger);
             itemHomes=activity.findViewById(R.id.itemHomes);
             itemMyChats=activity.findViewById(R.id.itemMyChats);
@@ -123,7 +117,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             itemSettings.setOnClickListener(this);
             itemTermConditions.setOnClickListener(this);
             itemShareApp.setOnClickListener(this);
-//            dailogHelper=new ProgressDailogHelper(this,"");
 
 
         }
@@ -146,6 +139,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         init(activity);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,7 +147,15 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin,"Yes");
         init(activity);
         settingDailog();
-
+        onlineStatus = SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getBoolean(GlobalVariables.onlineStatus);
+        if(onlineStatus)
+        {
+            onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.on));
+        }
+        else
+        {
+            onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.off));
+        }
     }
 
     private void settingDailog() {
@@ -227,7 +229,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
 
          else if(view == itemMyChats)
          {
-             Intent intent=new Intent(context,ChatActivity.class);
+             Intent intent=new Intent(context, ChatListingActivity.class);
              context.startActivity(intent);
          }
 
@@ -274,9 +276,17 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         }
                         else if(server_resposne.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                         {
-                            Toast toast=Toast.makeText(CategorySelectionActivity.this,server_resposne.getResponseMessage(),Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER,0,0);
-                            toast.show();
+                            if(server_resposne.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                            {
+                                Toast.makeText(CategorySelectionActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(CategorySelectionActivity.this,LoginActivity.class));
+                            }
+                            else {
+                                Toast toast = Toast.makeText(CategorySelectionActivity.this, server_resposne.getResponseMessage(), Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
                         }
                     }
                 }
@@ -327,9 +337,30 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         context.startActivity(intent);
                     }else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
-                        dailogHelper.dismissDailog();
-                        Toast.makeText(CategorySelectionActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
-                    }
+                        if (server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken)) {
+                            Toast.makeText(CategorySelectionActivity.this, getString(R.string.other_device_logged_in), Toast.LENGTH_LONG).show();
+                            finish();
+                            startActivity(new Intent(CategorySelectionActivity.this, LoginActivity.class));
+                            SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).clearPreferenceValues();
+                            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        // Log.w(TAG, "getInstanceId failed", task.getException());
+                                        return;
+                                    }
+
+                                    String auth_token = task.getResult().getToken();
+                                    Log.w("firebaese", "token: " + auth_token);
+                                    SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.deviceToken, auth_token);
+                                }
+                            });
+                        }
+                        else {
+                            dailogHelper.dismissDailog();
+                            Toast.makeText(CategorySelectionActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+
+                        }}
 
                 }
             }

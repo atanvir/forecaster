@@ -33,7 +33,7 @@ public class ForcasterSetupProfile {
     private String aboutUs;
     @SerializedName("pricePerQues")
     @Expose
-    private Integer pricePerQues;
+    private Float pricePerQues;
     @SerializedName("bankName")
     @Expose
     private String bankName;
@@ -75,6 +75,20 @@ public class ForcasterSetupProfile {
     @SerializedName("email")
     @Expose
     private  String email;
+
+
+    @SerializedName("Psychological_extra")
+    @Expose
+    private String Psychological_extra;
+
+
+    public String getPsychological_extra() {
+        return Psychological_extra;
+    }
+
+    public void setPsychological_extra(String psychological_extra) {
+        Psychological_extra = psychological_extra;
+    }
 
     public String getEmail() {
         return email;
@@ -198,11 +212,11 @@ public class ForcasterSetupProfile {
         this.aboutUs = aboutUs;
     }
 
-    public Integer getPricePerQues() {
+    public Float getPricePerQues() {
         return pricePerQues;
     }
 
-    public void setPricePerQues(Integer pricePerQues) {
+    public void setPricePerQues(Float pricePerQues) {
         this.pricePerQues = pricePerQues;
     }
 

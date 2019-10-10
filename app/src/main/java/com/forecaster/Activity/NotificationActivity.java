@@ -2,8 +2,11 @@ package com.forecaster.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -21,6 +24,10 @@ import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.InternetCheck;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.List;
 
@@ -74,6 +81,26 @@ public class NotificationActivity extends AppCompatActivity {
 
                        }else if(server_response.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                        {
+                           if(server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken))
+                           {
+                               Toast.makeText(NotificationActivity.this,getString(R.string.other_device_logged_in),Toast.LENGTH_LONG).show();
+                               finish();
+                               startActivity(new Intent(NotificationActivity.this,LoginActivity.class));
+                               SharedPreferenceWriter.getInstance(NotificationActivity.this).clearPreferenceValues();
+                               FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                       if (!task.isSuccessful()) {
+                                           // Log.w(TAG, "getInstanceId failed", task.getException());
+                                           return;
+                                       }
+
+                                       String auth_token = task.getResult().getToken();
+                                       Log.w("firebaese","token: "+auth_token);
+                                       SharedPreferenceWriter.getInstance(NotificationActivity.this).writeStringValue(GlobalVariables.deviceToken,auth_token);
+                                   }
+                               });
+                           }
 
 
                        }
