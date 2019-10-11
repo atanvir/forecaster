@@ -42,9 +42,7 @@ public class ChatListingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         dailogHelper=new ProgressDailogHelper(this,"");
-
         getchatListApi();
-
 
     }
 

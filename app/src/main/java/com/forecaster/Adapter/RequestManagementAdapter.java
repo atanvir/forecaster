@@ -49,7 +49,6 @@ public class RequestManagementAdapter extends RecyclerView.Adapter<RequestManage
     public void onBindViewHolder(@NonNull RequestManagementAdapter.MyViewHolder holder, int position) {
         holder.nametxt.setText(managementList.get(position).getDreamerData().getName());
         Glide.with(context).load(managementList.get(position).getDreamerData().getProfilePic()).into(holder.image_im);
-        holder.pob_tv.setText(managementList.get(position).getDreamerData().getBirthPlace());
 
 
         String getDate = managementList.get(position).getCreatedAt();
@@ -89,7 +88,6 @@ public class RequestManagementAdapter extends RecyclerView.Adapter<RequestManage
         @BindView(R.id.datetext) TextView datetxt;
         @BindView(R.id.image_im) CircleImageView image_im;
         @BindView(R.id.constraintLayout) ConstraintLayout constraintLayout;
-        @BindView(R.id.pob_tv) TextView pob_tv;
         @BindView(R.id.category_name_txt) TextView category_name_txt;
 
         public MyViewHolder(@NonNull View itemView) {

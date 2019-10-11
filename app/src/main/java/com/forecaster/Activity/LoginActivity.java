@@ -1,8 +1,12 @@
 package com.forecaster.Activity;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,17 +18,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,12 +77,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener {
     @BindView(R.id.signuptext) TextView signuptext;
     @BindView(R.id.forgetPasswordText) TextView forgetPasswordText;
     @BindView(R.id.loginBtn) Button loginBtn;
     @BindView(R.id.username_ed) EditText username_ed;
     @BindView(R.id.pass_ed) EditText pass_ed;
+    @BindView(R.id.scrollview) ScrollView scrollview;
     ProgressDialog dailog;
     EditText first_ed,secound_ed,third_ed,fourth_ed,fifth_ed,sixth_ed;
     EditText newpass_ed,confirm_pass_ed;
@@ -84,6 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDailogHelper dailogHelper;
     int clickcount3=0,clickcount2=0;
     @BindView(R.id.constraintLayout) ConstraintLayout constraintLayout;
+    int height;
+    int width;
 
 
     @Override
@@ -145,15 +157,14 @@ public class LoginActivity extends AppCompatActivity {
         forgetPasswordText.setOnClickListener(this::OnClick);
         loginBtn.setOnClickListener(this::OnClick);
         dailogHelper=new ProgressDailogHelper(this,"");
+        constraintLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     @OnClick()
-    void OnClick(View view)
-    {
-        switch (view.getId())
-        {
+    void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.signuptext:
-                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -165,15 +176,14 @@ public class LoginActivity extends AppCompatActivity {
                 break;
 
             case R.id.loginBtn:
-                if(checkValidation())
-                {
-                    loginApi();
-                }
+                if (checkValidation()) {
+                loginApi();
+             }
 
-                break;
+        break;
 
 
-        }
+    }
     }
 
     private void forgetPasswordDailog() {
@@ -831,14 +841,18 @@ public class LoginActivity extends AppCompatActivity {
                      Login server_response=response.body();
                      if(server_response.getStatus().equalsIgnoreCase("SUCCESS")) {
                          dailogHelper.dismissDailog();
-                         Toast.makeText(LoginActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
+                         LayoutInflater  layoutInflater= (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                          setPreferences(server_response);
                          Intent intent=new Intent(LoginActivity.this,CategorySelectionActivity.class);
                          finish();
                          startActivity(intent);
 
+
+
+
                      } else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                      {
+
                          if(server_response.getResponseMessage().equalsIgnoreCase("Please complete your profile first"))
                          {
                              Intent intent=new Intent(LoginActivity.this,ProfileSetupActivity.class);
@@ -949,5 +963,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return ret;
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        constraintLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        height=constraintLayout.getHeight();
+        width=constraintLayout.getWidth();
+
+
     }
 }

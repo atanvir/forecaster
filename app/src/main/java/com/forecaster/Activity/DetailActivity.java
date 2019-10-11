@@ -31,7 +31,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
     @BindView(R.id.profile_iv)  CircleImageView profile_iv;
     @BindView(R.id.username_txt) TextView username_txt;
-    @BindView(R.id.pob_txt) TextView pob_txt;
     @BindView(R.id.dob_txt) TextView dob_txt;
     @BindView(R.id.gender_txt) TextView gender_txt;
     @BindView(R.id.maritalStatus_txt) TextView maritalStatus_txt;
@@ -82,7 +81,6 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
                 data = bundle.getParcelableArrayList("RequestManagement");
                 Glide.with(this).load(data.get(0).getDreamerData().getProfilePic()).into(profile_iv);
                 username_txt.setText(data.get(0).getDreamerData().getName());
-                pob_txt.setText(data.get(0).getDreamerData().getBirthPlace());
                 dob_txt.setText(data.get(0).getDreamerData().getDob());
                 gender_txt.setText(data.get(0).getDreamerData().getGender());
                 maritalStatus_txt.setText(data.get(0).getDreamerData().getMaritalStatus());
@@ -148,7 +146,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
             case R.id.chat_btn:
                 Intent intent1=new Intent(DetailActivity.this,ChatDetailsActivity.class);
                 intent1.putExtra("chat_details", data.get(0));
-                finish();
+                Log.e("datac",data.get(0).toString());
                 startActivity(intent1);
                 break;
                 

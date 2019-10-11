@@ -3,6 +3,8 @@ package com.forecaster.Modal;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -68,6 +70,10 @@ public class Data implements Parcelable {
     @SerializedName("deviceType")
     @Expose
     private String deviceType;
+
+    @SerializedName("forecasterId")
+    @Expose
+    private String forecasterId;
 
 
 
@@ -260,6 +266,25 @@ public class Data implements Parcelable {
     @Expose
     private  String Data;
 
+    @SerializedName("chatList")
+    @Expose
+    private ChatList chatList;
+
+    public String getForecasterId() {
+        return forecasterId;
+    }
+
+    public void setForecasterId(String forecasterId) {
+        this.forecasterId = forecasterId;
+    }
+
+    public ChatList getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(ChatList chatList) {
+        this.chatList = chatList;
+    }
 
     public String getData() {
         return Data;
@@ -480,6 +505,8 @@ public class Data implements Parcelable {
         roomId=in.readString();
         senderId=in.readString();
         receiverId=in.readString();
+        chatList=in.readParcelable(Chatlist.class.getClassLoader());
+        forecasterId=in.readString();
     }
 
     public Data(String roomId, String senderId, String receiverId,String message,String messageType,String createdAt) {
@@ -891,6 +918,12 @@ public class Data implements Parcelable {
         return 0;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return this.forecasterId+""+"Sender id:"+this.chatList.getSenderId()+"Room id:"+this.chatList.getRoomId();
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
@@ -903,6 +936,8 @@ public class Data implements Parcelable {
         dest.writeString(this.roomId);
         dest.writeString(this.senderId);
         dest.writeString(this.receiverId);
+        dest.writeParcelable(this.chatList,flags);
+        dest.writeString(this.forecasterId);
 
     }
 }

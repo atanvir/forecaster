@@ -157,7 +157,6 @@ public class ChatDetailsActivity extends AppCompatActivity {
             object.put("roomId", chatData.getRoomId());
             Log.e("roomId",chatData.getRoomId());
             mSocket.emit("room join", object);
-            Log.e("sendData", String.valueOf(object));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,6 +181,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
     };
 
     private Emitter.Listener onConnect = args -> runOnUiThread(() -> {
+        Log.e("connected","yes");
 
     });
 
@@ -191,6 +191,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("onDisconnect","yes");
 
                 }
             });
@@ -203,6 +204,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("onConnectError","yes");
+
                     // DialogFactory.showLog("ERROR CONNECT", "ERROR CONNECT");
                     //Toast.makeText(ChatDetailsActivity.this, "NETWORK ERROR", Toast.LENGTH_SHORT).show();
                 }
@@ -229,6 +232,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("room join","yes");
 
                 }
             });
@@ -294,6 +298,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("onConnectError","yes");
                     String server_data = args[0].toString();
                     Log.e("data",server_data);
                     JSONObject data = null;
@@ -616,11 +621,22 @@ public class ChatDetailsActivity extends AppCompatActivity {
                         res.put("Data", mFileUploadManager.getData());
                         res.put("Size", mFileUploadManager.getFileSize());
                         res.put("roomId", room_id);
-                        res.put("senderId",chatData.getReceiverId());
-                        res.put("receiverId",chatData.getSenderId());
+                        if(chatData.getChatList()!=null)
+                        {
+                            res.put("receiverId",chatData.getChatList().getSenderId());
+                            res.put("senderId",chatData.getForecasterId());
+                        }
+                        else
+                        {
+                            res.put("senderId",chatData.getReceiverId());
+                            res.put("receiverId",chatData.getSenderId());
+                        }
+
+
                         res.put("message","Attach voice");
                         res.put("messageType","Media");
                         jsonArr.put(res);
+                        Log.e("media_data", String.valueOf(jsonArr));
                         mSocket.emit("uploadFileStart", jsonArr);
 
                     } catch (JSONException e) {
@@ -676,19 +692,23 @@ public class ChatDetailsActivity extends AppCompatActivity {
                     JSONArray jsonArr = new JSONArray();
                     JSONObject res = new JSONObject();
 
-
-
                     try {
                         res.put("Name", mFileUploadManager.getFileName());
                         res.put("Data", mFileUploadManager.getData());
                         res.put("Size", mFileUploadManager.getBytesRead());
                         res.put("roomId", room_id);
-                        res.put("senderId", chatData.getReceiverId());
-                        res.put("receiverId", chatData.getSenderId());
+                        if(chatData.getChatList()!=null)
+                        {
+                            res.put("senderId", chatData.getForecasterId());
+                            res.put("receiverId", chatData.getChatList().getSenderId());
+                        }
+                        else
+                        {
+                            res.put("senderId", chatData.getReceiverId());
+                            res.put("receiverId", chatData.getSenderId());
+                        }
                         res.put("message","Attach voice");
-
                         res.put("messageType", "Media");
-
                         jsonArr.put(res);
                         // This will trigger server 'uploadFileChuncks' function
                         mSocket.emit("uploadFileChuncks", jsonArr);
@@ -863,10 +883,22 @@ public class ChatDetailsActivity extends AppCompatActivity {
         try {
             JSONObject object=new JSONObject();
             object.put(GlobalVariables.roomId,chatData.getRoomId());
-            object.put(GlobalVariables.senderId,chatData.getReceiverId());
-            object.put(GlobalVariables.receiverId,chatData.getSenderId());
+
+            if(chatData.getChatList()!=null)
+            {
+                object.put(GlobalVariables.receiverId,chatData.getChatList().getSenderId());
+                object.put(GlobalVariables.senderId,chatData.getForecasterId());
+
+            }
+            else
+            {
+                object.put(GlobalVariables.senderId,chatData.getReceiverId());
+                object.put(GlobalVariables.receiverId,chatData.getSenderId());
+            }
             object.put(GlobalVariables.message,message);
             object.put(GlobalVariables.messageType,"Text");
+
+            Log.e("message", String.valueOf(object));
             mSocket.emit("message",object);
 
 

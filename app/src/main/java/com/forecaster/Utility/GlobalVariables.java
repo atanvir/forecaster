@@ -58,4 +58,5 @@ public class GlobalVariables {
     public static String message="message";
     public static String messageType="messageType";
 
+    public static String url="url";
 }

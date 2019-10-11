@@ -107,7 +107,7 @@
     <string name="please_enter_newpass">Please enter new password</string>
     <string name="please_enter_confirm_password">Please enter confirm password</string>
     <string name="other_device_logged_in">Same user has been logged in another device</string>
-    <string name="touch_id">Touch id</string>
+    <string name="touch_id">Touch-ID</string>
     <string name="create_passcode">Create passcode</string>
     <string name="fingerprint_configured">Fingerprint configured</string>
     <string name="create_your_passcode">CREATE YOUR PASSCODE</string>

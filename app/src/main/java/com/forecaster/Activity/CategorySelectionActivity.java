@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -36,6 +37,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.logging.SocketHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,11 +120,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             itemSettings.setOnClickListener(this);
             itemTermConditions.setOnClickListener(this);
             itemShareApp.setOnClickListener(this);
-
-
         }
-
-
 
     }
 
@@ -144,16 +143,14 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin,"Yes");
+
+        SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin, "Yes");
         init(activity);
         settingDailog();
         onlineStatus = SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getBoolean(GlobalVariables.onlineStatus);
-        if(onlineStatus)
-        {
+        if (onlineStatus) {
             onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.on));
-        }
-        else
-        {
+        } else {
             onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.off));
         }
     }
@@ -182,7 +179,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
              finish();
              context.startActivity(intent);
 
-
          }else if (view == burger){
              if(!mDrawerLayout.isDrawerOpen(GravityCompat.START))
                  mDrawerLayout.openDrawer(GravityCompat.START);
@@ -205,6 +201,20 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
              Intent intent=new Intent(CategorySelectionActivity.this, RequestManagementActivity.class);
              finish();
              startActivity(intent);
+         }
+         else if(view ==itemAboutApp)
+         {
+             Intent intent=new Intent(CategorySelectionActivity.this, WebviewAcitivity.class);
+             intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs");
+             startActivity(intent);
+
+         }
+
+         else if(view==itemTermConditions)
+         {
+             Intent intent=new Intent(CategorySelectionActivity.this,WebviewAcitivity.class);
+             intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms");
+             startActivity(intent);
 
          }
          else if(view ==paymentmtLL)
@@ -218,7 +228,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
              Intent intent=new Intent(CategorySelectionActivity.this,ProfileManagementActivity.class);
              finish();
              startActivity(intent);
-
          }
          else if(view == notificationLL)
          {
@@ -271,8 +280,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         if(server_resposne.getStatus().equalsIgnoreCase(GlobalVariables.SUCCESS))
                         {
                             setPrefrences(server_resposne.getData());
-
-
                         }
                         else if(server_resposne.getStatus().equalsIgnoreCase(GlobalVariables.FAILURE))
                         {
@@ -290,6 +297,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         }
                     }
                 }
+
 
                 @Override
                 public void onFailure(Call<UpdateStatus> call, Throwable t) {
@@ -309,7 +317,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
     }
 
     private void setPrefrences(Data data) {
-
+//        SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.onlineStatus,data.getOnlineStatus());
         SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeBooleanValue(GlobalVariables.onlineStatus,data.getOnlineStatus());
 
 
@@ -335,7 +343,8 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         dailogHelper.dismissDailog();
                         Intent intent=new Intent(context,SettingActivity.class);
                         context.startActivity(intent);
-                    }else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
+                    }
+                    else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
                         if (server_response.getResponseMessage().equalsIgnoreCase(GlobalVariables.invalidoken)) {
                             Toast.makeText(CategorySelectionActivity.this, getString(R.string.other_device_logged_in), Toast.LENGTH_LONG).show();
@@ -346,7 +355,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                                 @Override
                                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
                                     if (!task.isSuccessful()) {
-                                        // Log.w(TAG, "getInstanceId failed", task.getException());
                                         return;
                                     }
 
@@ -359,7 +367,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         else {
                             dailogHelper.dismissDailog();
                             Toast.makeText(CategorySelectionActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
-
                         }}
 
                 }
@@ -367,6 +374,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
 
             @Override
             public void onFailure(Call<Setting> call, Throwable t) {
+                Toast.makeText(CategorySelectionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

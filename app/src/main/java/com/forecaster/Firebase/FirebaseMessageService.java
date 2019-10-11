@@ -85,6 +85,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         int notificationId = 1;
+
         String channelId = "channel-01";
         String channelName = "Channel Name";
         int importance = NotificationManager.IMPORTANCE_HIGH;
