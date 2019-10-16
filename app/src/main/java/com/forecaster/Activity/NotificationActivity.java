@@ -22,6 +22,7 @@ import com.forecaster.Retrofit.RetroInterface;
 import com.forecaster.Retrofit.RetrofitInit;
 import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.InternetCheck;
+import com.forecaster.Utility.NotificationUtils;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,6 +52,7 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
+        NotificationUtils.clearNotifications(this);
         new CategorySelectionActivity(this,drawer);
         dailogHelper=new ProgressDailogHelper(this,"");
         getNotificationListApi();

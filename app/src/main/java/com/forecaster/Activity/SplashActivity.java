@@ -125,11 +125,24 @@ public class SplashActivity extends AppCompatActivity {
                                         if (fcm != null) {
                                             Log.e("fcm", fcm);
                                             Log.e("type",getIntent().getStringExtra("type"));
-                                            if(getIntent().getStringExtra("type").equalsIgnoreCase("chat"))
-                                            {
-                                                Intent intent=new Intent(SplashActivity.this,ChatListingActivity.class);
-                                                startActivity(intent);
+                                            if (getIntent().getStringExtra("title").equalsIgnoreCase("Oops! Chat Off")) {
 
+                                                Intent intent = new Intent(SplashActivity.this, NotificationActivity.class);
+                                                intent.putExtra("FCM", "Yes");
+                                                startActivity(intent);
+                                            }
+
+
+                                            else if(getIntent().getStringExtra("type").equalsIgnoreCase("chat"))
+                                            {
+                                                Intent intent=new Intent(SplashActivity.this,ChatDetailsActivity.class);
+                                                intent.putExtra("FCM","Yes");
+                                                intent.putExtra(GlobalVariables.roomId,getIntent().getStringExtra("roomId"));
+                                                intent.putExtra(GlobalVariables.receiverId,getIntent().getStringExtra("receiverId"));
+                                                intent.putExtra(GlobalVariables.senderId,getIntent().getStringExtra("senderId"));
+                                                intent.putExtra(GlobalVariables.name,getIntent().getStringExtra("name"));
+                                                intent.putExtra(GlobalVariables.profile,getIntent().getStringExtra("profile"));
+                                                startActivity(intent);
                                             }
                                             else {
 

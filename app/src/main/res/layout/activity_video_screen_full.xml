@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/play_iv"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:elevation="@dimen/dp_3"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/play" />
 
-
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </VideoView>
 
 
 
-</RelativeLayout>
+
+        <VideoView
+            android:layout_gravity="center"
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+        </VideoView>
+        <ImageView
+            android:id="@+id/play_iv"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="@dimen/dp_3"
+            android:layout_gravity="center"
+            android:src="@drawable/play" />
+
+
+    </FrameLayout>
+
+</LinearLayout>

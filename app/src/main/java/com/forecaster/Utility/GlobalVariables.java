@@ -57,6 +57,8 @@ public class GlobalVariables {
     public static String receiverId="receiverId";
     public static String message="message";
     public static String messageType="messageType";
+    public static String profile="profile";
 
     public static String url="url";
+    public static String type="type";
 }

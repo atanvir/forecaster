@@ -13,10 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.forecaster.Modal.Data;
 import com.forecaster.Modal.PaymentManagement;
 import com.forecaster.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +29,9 @@ import butterknife.ButterKnife;
 public class PaymentManagementAdapter extends RecyclerView.Adapter<PaymentManagementAdapter.MyViewHolder> {
 
     private Context context;
-    private List<PaymentManagement> managementList;
+    private List<Data> managementList;
 
-    public PaymentManagementAdapter(Context context,List<PaymentManagement> managementList)
+    public PaymentManagementAdapter(Context context,List<Data> managementList)
     {
       this.context=context;
       this.managementList=managementList;
@@ -52,8 +57,25 @@ public class PaymentManagementAdapter extends RecyclerView.Adapter<PaymentManage
         {
             holder.linearLayout.setBackgroundColor(context.getColor(R.color.grey));
         }
-        holder.datetext.setText(managementList.get(position).getDate());
-        holder.categorytxt.setText(managementList.get(position).getCategory_type());
+        holder.nametxt.setText(managementList.get(position).getDreamerData().getName());
+        String getDate = managementList.get(position).getCreatedAt();
+        String server_format = getDate;    //server comes format ?
+        String server_format1 = "2019-04-04T13:27:36.591Z";    //server comes format ?
+        String myFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        try {
+            Date date = sdf.parse(server_format);
+            System.out.println(date);
+            String your_format = new SimpleDateFormat("dd-MMM-yy").format(date);
+            System.out.println(your_format);
+            holder.datetext.setText(your_format);
+        } catch (Exception e) {
+            System.out.println(e.toString()); //date format error
+        }
+        holder.categorytxt.setText(managementList.get(position).getCategoryName());
+        holder.pricetxt.setText(managementList.get(position).getAmount()+" SAR");
     }
 
     @Override
@@ -63,14 +85,11 @@ public class PaymentManagementAdapter extends RecyclerView.Adapter<PaymentManage
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.datetext)
-        TextView datetext;
-
-        @BindView(R.id.categorytxt)
-        TextView categorytxt;
-
-        @BindView(R.id.linearLayout)
-        LinearLayout linearLayout;
+        @BindView(R.id.datetext) TextView datetext;
+        @BindView(R.id.categorytxt) TextView categorytxt;
+        @BindView(R.id.linearLayout) LinearLayout linearLayout;
+        @BindView(R.id.pricetxt) TextView pricetxt;
+        @BindView(R.id.nametxt) TextView nametxt;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

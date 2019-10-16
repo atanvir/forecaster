@@ -375,7 +375,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             @Override
             public void onFailure(Call<Setting> call, Throwable t) {
                 Toast.makeText(CategorySelectionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 

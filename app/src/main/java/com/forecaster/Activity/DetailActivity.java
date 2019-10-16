@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.forecaster.Modal.Data;
+import com.forecaster.Modal.RequestManagement;
 import com.forecaster.R;
 
 import java.io.IOException;
@@ -146,6 +147,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
             case R.id.chat_btn:
                 Intent intent1=new Intent(DetailActivity.this,ChatDetailsActivity.class);
                 intent1.putExtra("chat_details", data.get(0));
+                intent1.putExtra("DetailActivity","Yes");
                 Log.e("datac",data.get(0).toString());
                 startActivity(intent1);
                 break;
@@ -199,6 +201,13 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(DetailActivity.this, RequestManagementActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void playingAudio() {

@@ -1408,7 +1408,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                    Log.e("no video","Selected null");
                } else {
                    videoUri=Uri.parse(selectedVideoPath);
-                   videoview.setVideoURI(videoUri);
+
                    video=new File(videoUri.getPath());
                    videoFile = outputDir+File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
                    VideoCompress.compressVideoLow(video.getPath(),videoFile, new VideoCompress.CompressListener() {
@@ -1423,6 +1423,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                            {
                                dialog.dismiss();
                            }
+                           full_screen_video_iv.setVisibility(View.VISIBLE);
+                           videoview.setVideoURI(videoUri);
 
                            Util.writeFile(ProfileSetupActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
                          //  Util.writeFile(ProfileSetupActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");
@@ -1432,6 +1434,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
                        @Override
                        public void onFail() {
+                           if(dialog.isShowing())
+                           {
+                               dialog.dismiss();
+                           }
                            Util.writeFile(ProfileSetupActivity.this, "Failed Compress!!!" + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
                        }
 
