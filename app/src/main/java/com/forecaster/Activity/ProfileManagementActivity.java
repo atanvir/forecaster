@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -170,6 +172,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     boolean mediacontroller_seekbar=false;
     SeekBar media_seekbar;
     @BindView(R.id.countrycode_txt) TextView countrycode_txt;
+    @BindView(R.id.scrollView2) ScrollView scrollView2;
     String countrycode="";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,10 +190,36 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         dialog.setCancelable(false);
         dialog.setTitle("Please wait ...!");
         dialog.setMessage("Compressing video");
-
-
         datePickerClick();
         spinnerClick();
+        scrollView2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN: {
+                        if (mediacontroller != null) {
+                            videoview.stopPlayback();
+                            play_iv.setVisibility(View.VISIBLE);
+                            videoview.clearFocus();
+                            mediacontroller.hide();
+
+                        }
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        if (mediacontroller != null) {
+                            videoview.stopPlayback();
+                            play_iv.setVisibility(View.VISIBLE);
+                            videoview.clearFocus();
+                            mediacontroller.hide();
+
+                        }
+                    }
+                }
+
+                return false;
+            }
+        });
+
 
 
 
@@ -1279,28 +1308,34 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
     }
 
     private void stoppingAudio() {
-        recording=false;
-        try {
-            record_audio_iv.pauseAnimation();
-            mRecorder.stop();
-            mRecorder.release();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try
-        {
-            recording=false;
-            playing=false;
-            mediaPlayer.release();
-            if(timer!=null) {
-                timer.cancel();
-                timer.onFinish();
+        if(playing) {
+            try {
+                playaudio_iv.setVisibility(View.VISIBLE);
+                pause_iv.setVisibility(View.GONE);
+                record_audio_iv.pauseAnimation();
+                mRecorder.stop();
+                mRecorder.release();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            try {
+                recording=false;
+                recording = false;
+                playing = false;
+                mediaPlayer.release();
+                if (timer != null) {
+                    timer.cancel();
+                    timer.onFinish();
+                }
 
-        }catch (Exception e)
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else
         {
-            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -1333,7 +1368,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                     videoview.setVisibility(View.VISIBLE);
                     image_thumnail.setImageBitmap(null);
                     video_uri=Uri.parse(selectedVideoPath);
-                    videoview.setVideoURI(video_uri);
+
 
                     video=new File(video_uri.getPath());
                     videoFile = outputDir+File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
@@ -1349,6 +1384,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                             {
                                 dialog.dismiss();
                             }
+                            videoview.setVideoURI(video_uri);
 
                             Util.writeFile(ProfileManagementActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
                             //  Util.writeFile(ProfileSetupActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");

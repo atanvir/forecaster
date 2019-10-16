@@ -120,6 +120,7 @@
     <string name="yesterday">Yesterday</string>
     <string name="just_now">Just now</string>
     <string name="ok">Ok</string>
+    <string name="please_play_audio_first">Please play audio first</string>
 
 
 </resources>

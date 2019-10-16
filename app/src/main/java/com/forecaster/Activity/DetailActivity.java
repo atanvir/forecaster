@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,6 +87,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
                 gender_txt.setText(data.get(0).getDreamerData().getGender());
                 maritalStatus_txt.setText(data.get(0).getDreamerData().getMaritalStatus());
                 question_txt.setText(data.get(0).getQuestion());
+                audio_uri=Uri.parse(data.get(0).getVoiceNote());
                 settingSekkbar(data);
         }
 
@@ -265,25 +267,30 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
 
 
     private void stoppingAudio() {
-        try {
-            mRecorder.stop();
-            mRecorder.release();
+        if(playing) {
+            try {
+                play_iv.setVisibility(View.VISIBLE);
+                pause_iv.setVisibility(View.GONE);
+                mRecorder.stop();
+                mRecorder.release();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try
-        {
-            recording=false;
-            playing=false;
-            mediaPlayer.release();
-            if(timer!=null) {
-                timer.cancel();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            try {
+                recording = false;
+                playing = false;
+                mediaPlayer.release();
+                if (timer != null) {
+                    timer.cancel();
+                }
 
-        }catch (Exception e)
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else
         {
-            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
         }
     }
 

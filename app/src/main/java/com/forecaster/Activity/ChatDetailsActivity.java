@@ -465,7 +465,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
                 break;
 
             case R.id.send_iv:
-                if(!message_ed.getText().toString().isEmpty())
+                if(!message_ed.getText().toString().trim().isEmpty())
                 {
                     sendMessage(message_ed.getText().toString());
                 }

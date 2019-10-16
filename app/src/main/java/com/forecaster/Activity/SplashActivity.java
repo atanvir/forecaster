@@ -121,7 +121,8 @@ public class SplashActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     if(SharedPreferenceWriter.getInstance(SplashActivity.this).getString(GlobalVariables.islogin).equalsIgnoreCase("Yes"))
-                                    {fcm = getIntent().getStringExtra("body");
+                                    {
+                                        fcm = getIntent().getStringExtra("body");
                                         if (fcm != null) {
                                             Log.e("fcm", fcm);
                                             Log.e("type",getIntent().getStringExtra("type"));
