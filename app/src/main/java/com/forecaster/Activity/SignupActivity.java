@@ -478,9 +478,7 @@ public class SignupActivity extends AppCompatActivity {
                 {
                     fourth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
                 }
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -490,36 +488,28 @@ public class SignupActivity extends AppCompatActivity {
         fifth_ed.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s!=null && s.length()==1) {
                     fifth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background));
                     sixth_ed.requestFocus();
-
                 }
                 else
                 {
                     fifth_ed.setBackground(getDrawable(R.drawable.edit_text_otp_background2));
                 }
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
         sixth_ed.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -701,7 +691,6 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
     private boolean checkValidation2() {
         boolean ret=true;
 
@@ -720,26 +709,26 @@ public class SignupActivity extends AppCompatActivity {
     private boolean checkValidation() {
         boolean ret=true;
 
-        if(!Validation.hasText(full_name_ed,"Please enter full name")
-        || !Validation.hasText(username_ed,"Please enter username")
-        || !Validation.email(email_ed,"Please enter email id")
+        if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
+        || !Validation.hasText(username_ed,getString(R.string.pls_enter_username))
+        || !Validation.email(email_ed,getString(R.string.please_enter_email))
         || !Validation.isPhoneNumber(phone_ed,true)
-        || !Validation.hasText(pass_ed,"Please enter password")
-        || !Validation.hasText(conpass_ed,"Please enter confirm password")
+        || !Validation.hasText(pass_ed,getString(R.string.pls_enter_pass))
+        || !Validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password))
         || !conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim())
         || clickcount%2==0)
         {
-            if(!Validation.hasText(full_name_ed,"Please enter full name"))
+            if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
             {
                 ret=false;
                 full_name_ed.requestFocus();
             }
-            else if(!Validation.hasText(username_ed,"Please enter username"))
+            else if(!Validation.hasText(username_ed,getString(R.string.pls_enter_username)))
             {
                 ret=false;
                 username_ed.requestFocus();
             }
-            else if(!Validation.email(email_ed,"Please enter email id"))
+            else if(!Validation.email(email_ed,getString(R.string.please_enter_email)))
             {
                 ret=false;
                 email_ed.requestFocus();
@@ -749,12 +738,12 @@ public class SignupActivity extends AppCompatActivity {
                 ret=false;
                 phone_ed.requestFocus();
             }
-            else if(!Validation.hasText(pass_ed,"Please enter password"))
+            else if(!Validation.hasText(pass_ed,getString(R.string.pls_enter_pass)))
             {
                 ret=false;
                 pass_ed.requestFocus();
             }
-            else if(!Validation.hasText(conpass_ed,"Please enter confirm password"))
+            else if(!Validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password)))
             {
                 ret=false;
                 conpass_ed.requestFocus();
@@ -763,21 +752,17 @@ public class SignupActivity extends AppCompatActivity {
             else if(!conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim()))
             {
                 ret=false;
-                conpass_ed.setError("Confirm password does not match");
+                conpass_ed.setError(getString(R.string.confirm_password_not_match));
                 conpass_ed.requestFocus();
             }
 
             else if(clickcount%2==0)
             {
                 ret=false;
-                Toast.makeText(SignupActivity.this,"Please check the term and conditions check box",Toast.LENGTH_LONG).show();
+                Toast.makeText(SignupActivity.this,getString(R.string.please_check_terms_conditions),Toast.LENGTH_LONG).show();
 
             }
-
         }
-
-
-
         return ret;
     }
 

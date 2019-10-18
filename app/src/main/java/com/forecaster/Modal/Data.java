@@ -270,6 +270,7 @@ public class Data implements Parcelable {
     @Expose
     private ChatList chatList;
 
+
     public String getForecasterId() {
         return forecasterId;
     }

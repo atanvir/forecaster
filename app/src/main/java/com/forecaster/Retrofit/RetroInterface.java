@@ -13,6 +13,7 @@ import com.forecaster.Modal.Logout;
 import com.forecaster.Modal.Notification;
 import com.forecaster.Modal.RequestManagement;
 import com.forecaster.Modal.Setting;
+import com.forecaster.Modal.Setting2;
 import com.forecaster.Modal.Signup;
 import com.forecaster.Modal.UpdateStatus;
 
@@ -42,7 +43,7 @@ public interface RetroInterface {
 
 
     @POST("updateForecasterSettings")
-    Call<Setting> updateForecasterSettings(@Body Setting setting,@Header("token") String token);
+    Call<Setting2> updateForecasterSettings(@Body Setting setting, @Header("token") String token);
 
     @POST("contactUs")
     Call<ContactUs> contactUs(@Body ContactUs contactUs,@Header("token") String token);

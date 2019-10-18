@@ -106,6 +106,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="65dp"
                     android:text="Sammer"
+                    android:layout_marginStart="65dp"
                     android:textAlignment="textStart"
                     android:gravity="center"
 

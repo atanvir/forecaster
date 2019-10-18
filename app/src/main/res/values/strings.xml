@@ -19,12 +19,11 @@
     <string name="profile_management">Profile Management</string>
     <string name="date_of_birth">Date Of Birth</string>
     <string name="record_your_voice">Record your voice</string>
-        <string name="upload_video">Upload Video</string>
+    <string name="upload_video">Upload Video</string>
     <string name="about_us">About Us</string>
     <string name="about_us_desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,when an unknown printer took a gallery of type and scrambled it to make</string>
     <string name="price_per_questions">Price Per Questions</string>
     <string name="save">Save</string>
-
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="contact_us">Contact Us</string>
     <string name="share_the_app">Share The App</string>
@@ -120,6 +119,24 @@
     <string name="yesterday">Yesterday</string>
     <string name="just_now">Just now</string>
     <string name="ok">Ok</string>
+    <string name="enter_user_name">Please enter user name</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="enter_new_pass">Please enter new password</string>
+    <string name="enter_confirm_pass">Please enter confirm password</string>
+    <string name="pass_not_match">Confirm password does not match</string>
+    <string name="psycho_counseling">Psychological Counselling</string>
+    <string name="write_about_yourself">Please write about yourself</string>
+    <string name="select_bank">Select Bank</string>
+    <string name="enter_profile_photo">Please Upload Profile Photo</string>
+    <string name="pls_attach_doc">Please attach document</string>
+    <string name="pls_record_your_voice">Please record you voice</string>
+    <string name="pls_upload_video">Please upload video</string>
+    <string name="pls_select_bank">Please select bank</string>
+    <string name="plz_enter_accnt_nmbr">Please enter account number</string>
+    <string name="pls_enter_valid_accnum">Please enter valid account number</string>
+    <string name="pls_enter_username">Please enter username</string>
+    <string name="pls_enter_pass">Please enter password</string>
+    <string name="please_check_terms_conditions">Please check the term and conditions check box</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.fingerprint.FingerprintManager;
@@ -39,6 +40,7 @@ import com.forecaster.Modal.ForgotPassword;
 import com.forecaster.Modal.Login;
 import com.forecaster.Modal.Logout;
 import com.forecaster.Modal.Setting;
+import com.forecaster.Modal.Setting2;
 import com.forecaster.R;
 import com.forecaster.Retrofit.RetroInterface;
 import com.forecaster.Retrofit.RetrofitInit;
@@ -50,6 +52,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +76,7 @@ public class SettingActivity extends AppCompatActivity {
     EditText oldpass_ed,newpass_ed,confirm_pass_ed;
     Dialog fingerprint_popup;
 
-    ProgressDialog dailog;
+    ProgressDialog dialog;
     String laguague;
     int clickcount3=0,clickcount2=0,clickcount4=0,clickcount5=0;
     FingerprintManager fingerprintManager;
@@ -991,19 +995,57 @@ public class SettingActivity extends AppCompatActivity {
         setting.setForecasterId(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables._id));
         setting.setLanguage(language);
         setting.setNotificationStatus(notificationStatus);
-        setting.setLangCode("en");;
-        Call<Setting> call=api_service.updateForecasterSettings(setting,SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.jwtToken));
-        call.enqueue(new Callback<Setting>() {
+        if(language.equalsIgnoreCase("english"))
+        {
+            setting.setLangCode("en");
+        }else if(language.equalsIgnoreCase("arabic"))
+            setting.setLangCode("ar");
+        else
+            setting.setLangCode("ur");
+
+        Call<Setting2> call=api_service.updateForecasterSettings(setting,SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.jwtToken));
+        call.enqueue(new Callback<Setting2>() {
             @Override
-            public void onResponse(Call<Setting> call, Response<Setting> response) {
+            public void onResponse(Call<Setting2> call, Response<Setting2> response) {
                 if(response.isSuccessful())
                 {
-                    Setting server_response=response.body();
+
+
+                    Locale locale=null;
+
+                    if(response.body().getData().getLanguage().equalsIgnoreCase("arabic"))
+                    {
+                        locale = new Locale("ar");
+
+                    }else if(response.body().getData().getLanguage().equalsIgnoreCase("english"))
+                    {
+                        locale = new Locale("en");
+                    }
+                    else if(response.body().getData().getLanguage().equalsIgnoreCase("urdu"))
+                    {
+                        locale = new Locale("ur");
+
+                    }
+
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getBaseContext().getResources().updateConfiguration(config,
+                    getBaseContext().getResources().getDisplayMetrics());
+
+                    Intent intent=new Intent(SettingActivity.this, SettingActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+
+                    Setting2 server_response=response.body();
+
+
                     if(server_response.getStatus().equalsIgnoreCase("SUCCESS"))
                     {
                         dailogHelper.dismissDailog();
                        // Toast.makeText(SettingActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
-                        setPreferences(server_response);
+//                        setPreferences(server_response);
                     }
                     else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
@@ -1037,7 +1079,7 @@ public class SettingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Setting> call, Throwable t) {
+            public void onFailure(Call<Setting2> call, Throwable t) {
 
             }
         });

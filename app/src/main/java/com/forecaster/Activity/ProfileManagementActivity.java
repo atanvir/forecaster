@@ -724,10 +724,10 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
         if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
         || !Validation.email(email_ed,getString(R.string.please_enter_email))
-        || gender_txt.getText().toString().equalsIgnoreCase("Gender")
+        || gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender))
         || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
-        || categorytype_txt.getText().toString().equalsIgnoreCase("Category Type")
-        || psychological_txt.getText().toString().equalsIgnoreCase("Please select")
+        || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type))
+        || psychological_txt.getText().toString().equalsIgnoreCase(getString(R.string.please_select))
         || !Validation.hasText(about_us_ed,getString(R.string.please_enter_about_us))
         || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
         )
@@ -747,7 +747,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 psychological_txt.setError(null);
                 categorytype_txt.setError(null);
 
-            }else if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+            }else if(gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender)))
             {
                 ret=false;
                 gender_txt.setError(getString(R.string.please_select));
@@ -764,14 +764,14 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 psychological_txt.setError(null);
                 categorytype_txt.setError(null);
 
-            }else if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
+            }else if(categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type)))
             {
                 ret=false;
                 categorytype_txt.setError(getString(R.string.please_select));
                 categorytype_txt.setFocusable(true);
                 categorytype_txt.requestFocus();
                 psychological_txt.setError(null);
-            }else if(psychological_txt.getText().toString().equalsIgnoreCase("Please select"))
+            }else if(psychological_txt.getText().toString().equalsIgnoreCase(getString(R.string.please_select)))
             {
                 ret=false;
                 categorytype_txt.setError(null);

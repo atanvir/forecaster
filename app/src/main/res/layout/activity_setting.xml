@@ -35,7 +35,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/back_btn"
+                    android:src="@drawable/backbitmap"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/right_arrow"
+            android:src="@drawable/rightbitmap"
             app:layout_constraintBottom_toBottomOf="@+id/avenirRegularTextView16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avenirRegularTextView16" />
@@ -209,6 +209,7 @@
             android:layout_marginEnd="14dp"
             android:layout_marginRight="14dp"
             android:src="@drawable/off"
+            android:paddingStart = "10dp"
             android:paddingLeft="@dimen/dp_10"
             app:layout_constraintBottom_toBottomOf="@+id/avenirRegularTextView200"
             app:layout_constraintEnd_toEndOf="parent"
@@ -261,7 +262,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/right_arrow"
+            android:src="@drawable/rightbitmap"
             app:layout_constraintBottom_toBottomOf="@+id/avenirRegularTextView24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avenirRegularTextView24" />
@@ -312,7 +313,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/right_arrow"
+            android:src="@drawable/rightbitmap"
             app:layout_constraintBottom_toBottomOf="@+id/avenirRegularTextView25"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avenirRegularTextView25" />

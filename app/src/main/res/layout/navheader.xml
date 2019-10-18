@@ -39,7 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="50dp"
+                android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginStart="15dp"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -50,6 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 android:paddingTop="@dimen/dp_8"
+                android:paddingEnd = "8dp"
+                android:paddingStart = "8dp"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
                 android:paddingLeft="@dimen/dp_8"
@@ -65,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/home"
             android:textColor="@color/colorWhite"
@@ -78,8 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
-
+            android:layout_marginStart="8dp"
             android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -89,6 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+                android:paddingEnd = "8dp"
+                android:paddingStart = "8dp"
                 android:paddingTop="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
@@ -105,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/my_chats"
             android:textColor="@color/colorWhite"
@@ -119,7 +126,8 @@
 
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
-
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
@@ -130,9 +138,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp_8"
+                android:paddingEnd = "8dp"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
                 android:paddingLeft="@dimen/dp_8"
+                android:paddingStart = "8dp"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
 
@@ -147,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+                android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/settings"
             android:textColor="@color/colorWhite"
@@ -161,7 +171,9 @@
 
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
             android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -173,6 +185,8 @@
                 android:paddingTop="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
+                android:paddingEnd = "8dp"
+                android:paddingStart = "8dp"
                 android:paddingLeft="@dimen/dp_8"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
@@ -188,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+                android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/about_the_app"
             android:textColor="@color/colorWhite"
@@ -199,9 +213,10 @@
 
             <View
             android:layout_width="match_parent"
-
+                android:layout_marginStart="8dp"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
@@ -214,6 +229,8 @@
                 android:paddingTop="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
+                android:paddingEnd = "8dp"
+                android:paddingStart = "8dp"
                 android:paddingLeft="@dimen/dp_8"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
@@ -229,7 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+                android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/share_the_app"
             android:textColor="@color/colorWhite"
@@ -240,8 +257,9 @@
 
             <View
             android:layout_width="match_parent"
-
+                android:layout_marginStart="8dp"
             android:layout_height="1dp"
+                android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:background="@color/colorWhite"
@@ -255,6 +273,8 @@
                 android:paddingTop="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
+                android:paddingEnd = "8dp"
+                android:paddingStart = "8dp"
                 android:paddingLeft="@dimen/dp_8"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
@@ -270,7 +290,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+                android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/contact_us"
             android:textColor="@color/colorWhite"
@@ -281,9 +301,10 @@
 
             <View
             android:layout_width="match_parent"
-
+                android:layout_marginStart="8dp"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
@@ -296,7 +317,9 @@
                 android:paddingTop="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_8"
+                android:paddingStart = "8dp"
                 android:paddingLeft="@dimen/dp_8"
+                android:paddingEnd = "8dp"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
 
@@ -311,6 +334,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+                android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
             android:text="@string/terms_and_conditions"
             android:textColor="@color/colorWhite"
@@ -323,6 +347,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
             android:layout_marginRight="8dp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"

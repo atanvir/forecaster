@@ -97,7 +97,9 @@
                 android:layout_marginLeft="8dp"
                 android:inputType="number"
                 android:hint="@string/phone_number"
-
+                android:gravity="center|start"
+                android:textDirection="ltr"
+                android:textAlignment="viewStart"
                 android:background="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

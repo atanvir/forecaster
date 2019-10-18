@@ -22,10 +22,7 @@ public class GlobalVariables {
     public static String google="google";
     public static String facebook="facebook";
     public static String device_type="Android";
-
     public static String countryCode="countryCode";
-
-
     public static String password="password";
     public static String deviceToken="deviceToken";
     public static String jwtToken="jwtToken";
@@ -57,6 +54,7 @@ public class GlobalVariables {
     public static String receiverId="receiverId";
     public static String message="message";
     public static String messageType="messageType";
+    public static String langCode="lang_code";
 
     public static String url="url";
 }

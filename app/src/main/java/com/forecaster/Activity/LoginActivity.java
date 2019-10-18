@@ -627,17 +627,17 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
     private boolean checkValidationPassword() {
         boolean ret=true;
 
-        if(!Validation.hasText(newpass_ed,"Please enter new password")
-        || !Validation.hasText(confirm_pass_ed,"Please enter confirm password")
+        if(!Validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass))
+        || !Validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass))
         || !confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim())
         )
         {
-            if(!Validation.hasText(newpass_ed,"Please enter new password"))
+            if(!Validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass)))
             {
                 ret=false;
                 newpass_ed.requestFocus();
             }
-            else if(!Validation.hasText(confirm_pass_ed,"Please enter confirm password"))
+            else if(!Validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass)))
             {
                 ret=false;
                 confirm_pass_ed.requestFocus();
@@ -645,7 +645,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
             else if(!confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim()))
             {
                 ret=false;
-                confirm_pass_ed.setError("Confirm password does not match");
+                confirm_pass_ed.setError(getResources().getString(R.string.pass_not_match));
                 confirm_pass_ed.requestFocus();
             }
 
@@ -946,15 +946,15 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
     private boolean checkValidation() {
         boolean ret=true;
-        if(!Validation.hasText(username_ed,"Please enter user name")
-        || !Validation.hasText(pass_ed,"Please enter password"))
+        if(!Validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name))
+        || !Validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
         {
-            if(!Validation.hasText(username_ed,"Please enter user name"))
+            if(!Validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name)))
             {
                 ret=false;
                 username_ed.requestFocus();
 
-            }else if(!Validation.hasText(pass_ed,"Please enter password"))
+            }else if(!Validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
             {
                 ret=false;
                 pass_ed.requestFocus();

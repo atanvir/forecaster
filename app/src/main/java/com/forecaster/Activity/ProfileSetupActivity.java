@@ -474,30 +474,30 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         boolean ret=true;
 
         if(profile_image==null
-        || gender_txt.getText().toString().equalsIgnoreCase("Gender")
+        || gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender))
         || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
-        || categorytype_txt.getText().toString().equalsIgnoreCase("Category Type")
-        || categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling")
-        || documenttype_txt.getText().toString().equalsIgnoreCase("Document Type")
+        || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type))
+        || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.psycho_counseling))
+        || documenttype_txt.getText().toString().equalsIgnoreCase(getString(R.string.document_type))
         || attach_document==null
         || audio==null
         || video==null
-        || !Validation.hasText(about_us_ed,"Please write about yourself")
+        || !Validation.hasText(about_us_ed,getString(R.string.write_about_yourself))
         || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
-        || selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank")
+        || selectbank_txt.getText().toString().equalsIgnoreCase(getString(R.string.select_bank))
         || !Validation.hasText2(account_holder_ed,getString(R.string.please_enter_holder_name))
         || bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
         {
              if(profile_image==null)
             {
             ret=false;
-            Toast.makeText(ProfileSetupActivity.this,"Please Upload Profile Photo",Toast.LENGTH_LONG).show();
+            Toast.makeText(ProfileSetupActivity.this,getString(R.string.enter_profile_photo),Toast.LENGTH_LONG).show();
             }
-            else if(gender_txt.getText().toString().equalsIgnoreCase("Gender"))
+            else if(gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender)))
             {
                 ret=false;
                 gender_txt.requestFocusFromTouch();
-                gender_txt.setError("Please Select");
+                gender_txt.setError(getString(R.string.please_select));
                 gender_txt.setFocusable(true);
                 gender_txt.requestFocus();
             }
@@ -510,31 +510,31 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 dob_ed.setFocusable(true);
 
             }
-            else if(categorytype_txt.getText().toString().equalsIgnoreCase("Category Type"))
+            else if(categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type)))
             {
                 ret=false;
                 categorytype_txt.requestFocusFromTouch();
-                categorytype_txt.setError("Please Select");
+                categorytype_txt.setError((getString(R.string.please_select)));
                 categorytype_txt.setFocusable(true);
                 categorytype_txt.requestFocus();
             }
-            else if(categorytype_txt.getText().toString().equalsIgnoreCase("Psychological Counselling"))
+            else if(categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.psycho_counseling)))
             {
                 ret=false;
-                if (psychological_txt.getText().toString().equalsIgnoreCase("Please select")) {
+                if (psychological_txt.getText().toString().equalsIgnoreCase(getString(R.string.please_select))) {
                     ret = false;
                     categorytype_txt.setError(null);
                     psychological_txt.requestFocusFromTouch();
-                    psychological_txt.setError("Please Select");
+                    psychological_txt.setError(getString(R.string.please_select));
                     psychological_txt.setFocusable(true);
                 }
             }
-            else if(documenttype_txt.getText().toString().equalsIgnoreCase("Document Type"))
+            else if(documenttype_txt.getText().toString().equalsIgnoreCase(getString(R.string.document_type)))
             {
                 categorytype_txt.setError(null);
                 ret=false;
                 documenttype_txt.requestFocusFromTouch();
-                documenttype_txt.setError("Please Select");
+                documenttype_txt.setError(getString(R.string.please_select));
                 documenttype_txt.setFocusable(true);
             }
             else if(attach_document==null)
@@ -542,14 +542,14 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 documenttype_txt.setError(null);
                 ret=false;
                 attach_doc_txt.requestFocusFromTouch();
-                attach_doc_txt.setError("Please attach document");
+                attach_doc_txt.setError(getString(R.string.pls_attach_doc));
                 attach_doc_txt.setFocusable(true);
             }
             else if(audio==null)
             {
                 attach_doc_txt.setError(null);
                 ret=false;
-                record_audio_txt.setError("Please record you voice");
+                record_audio_txt.setError(getString(R.string.pls_record_your_voice));
                 record_audio_txt.setFocusable(true);
                 record_audio_txt.requestFocusFromTouch();
 
@@ -557,10 +557,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             else if(video==null)
             {
                 ret=false;
-                Toast.makeText(ProfileSetupActivity.this,"Please upload video",Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileSetupActivity.this,getString(R.string.pls_upload_video),Toast.LENGTH_LONG).show();
             }
 
-            else if(!Validation.hasText(about_us_ed,"Please write about yourself"))
+            else if(!Validation.hasText(about_us_ed,getString(R.string.write_about_yourself)))
             {
                 ret=false;
                 about_us_ed.requestFocusFromTouch();
@@ -573,10 +573,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 price_per_ed.requestFocusFromTouch();
 
             }
-            else if(selectbank_txt.getText().toString().equalsIgnoreCase("Select Bank"))
+            else if(selectbank_txt.getText().toString().equalsIgnoreCase(getString(R.string.select_bank)))
             {
                 ret=false;
-                selectbank_txt.setError("Please select bank");
+                selectbank_txt.setError(getString(R.string.pls_select_bank));
                 selectbank_txt.setFocusable(true);
                 selectbank_txt.requestFocusFromTouch();
             }
@@ -592,7 +592,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 if(bank_number_ed.getText().toString().isEmpty())
                 {
                     ret=false;
-                    bank_number_ed.setError("Please enter account number");
+                    bank_number_ed.setError(getString(R.string.plz_enter_accnt_nmbr));
+
                     bank_number_ed.setFocusable(true);
                     bank_number_ed.requestFocusFromTouch();
 
@@ -600,7 +601,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 else if(bank_number_ed.getText().toString().length()!=16)
                 {
                     ret=false;
-                    bank_number_ed.setError("Please enter valid account number");
+                    bank_number_ed.setError(getString(R.string.pls_enter_valid_accnum));
                     bank_number_ed.setFocusable(true);
                     bank_number_ed.requestFocusFromTouch();
 
@@ -1155,7 +1156,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private void PsychologicalSpinner() {
         psychologicalList = new ArrayList<>();
-        psychologicalList.add("Please select");
+        psychologicalList.add(getString(R.string.please_select));
         psychologicalList.add("Self Development Counselling");
         psychologicalList.add("Family Counselling");
         psychologicalList.add("Psychological Counselling");
@@ -1236,7 +1237,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private void BankSpinner() {
         bankList = new ArrayList<>();
-        bankList.add("Please select");
+        bankList.add(getString(R.string.please_select));
         bankList.add("State Bank Of India");
         bankList.add("Punjab National Bank");
         bankList.add("ICIC Bank");
@@ -1280,7 +1281,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private void DocumentSpinner() {
         documentlist = new ArrayList<>();
-        documentlist.add("Please select");
+        documentlist.add(getString(R.string.please_select));
         documentlist.add("PDF");
         documentlist.add("JPEG");
         documentlist.add("WORD");
@@ -1320,7 +1321,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private void CategorySpinner() {
         categoryList = new ArrayList<>();
-        categoryList.add("Please select");
+        categoryList.add(getString(R.string.please_select));
         categoryList.add("Dreamer");
         categoryList.add("Psychological Counselling");
 
@@ -1360,7 +1361,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private void GenderSpinner() {
         genderlist = new ArrayList<>();
-        genderlist.add("Please select");
+        genderlist.add(getString(R.string.please_select));
         genderlist.add("Male");
         genderlist.add("Female");
 

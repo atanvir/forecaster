@@ -33,7 +33,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/back_btn"
+                android:src="@drawable/backbitmap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -282,6 +282,8 @@
                 android:background="@drawable/green_circle_shape"
                 android:src="@drawable/microphone_white_shape"
                 android:paddingLeft="@dimen/dp_6"
+                android:paddingEnd = "6dp"
+                android:paddingStart = "6dp"
                 android:padding="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_6"
                 app:layout_constraintStart_toStartOf="@+id/cardView4"
