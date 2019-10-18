@@ -270,6 +270,17 @@ public class Data implements Parcelable {
     @Expose
     private ChatList chatList;
 
+    @SerializedName("amount")
+    @Expose
+    private String amount;
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public String getForecasterId() {
         return forecasterId;
@@ -508,6 +519,14 @@ public class Data implements Parcelable {
         receiverId=in.readString();
         chatList=in.readParcelable(Chatlist.class.getClassLoader());
         forecasterId=in.readString();
+    }
+
+    public Data(String roomId, String senderId, String receiverId,String name,String profilePic) {
+        this.roomId = roomId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.name=name;
+        this.profilePic=profilePic;
     }
 
     public Data(String roomId, String senderId, String receiverId,String message,String messageType,String createdAt) {
@@ -919,11 +938,11 @@ public class Data implements Parcelable {
         return 0;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return this.forecasterId+""+"Sender id:"+this.chatList.getSenderId()+"Room id:"+this.chatList.getRoomId();
-    }
+    //@NonNull
+//    @Override
+//    public String toString() {
+//        return this.forecasterId+""+"Sender id:"+this.chatList.getSenderId()+"Room id:"+this.chatList.getRoomId();
+//    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

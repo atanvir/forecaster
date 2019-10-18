@@ -27,6 +27,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -128,6 +130,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     @BindView(R.id.dob_ed) EditText dob_ed;
     @BindView(R.id.pause_ll) LinearLayout pause_ll;
     @BindView(R.id.timer_txt) TextView timer_txt;
+    @BindView(R.id.scrollView2) ScrollView scrollView2;
     final int PERMISSION_REQUEST_CODE = 200;
     final int PERMISSION_REQUEST_CODE2 = 400;
     public static final String DOCUMENTS_DIR = "documents";
@@ -190,6 +193,34 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         dialog.setTitle(getString(R.string.please_wait));
         dialog.setMessage(getString(R.string.compressing_video));
         dialog.setCancelable(false);
+        scrollView2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN: {
+                        if (mediacontroller != null) {
+                            videoview.stopPlayback();
+                            play_im.setVisibility(View.VISIBLE);
+                            videoview.clearFocus();
+                            mediacontroller.hide();
+
+                        }
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        if (mediacontroller != null) {
+                            videoview.stopPlayback();
+                            play_im.setVisibility(View.VISIBLE);
+                            videoview.clearFocus();
+                            mediacontroller.hide();
+
+                        }
+                    }
+
+                }
+
+                return false;
+            }
+        });
 
 
 
@@ -811,33 +842,36 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
 
     private void stoppingAudio() {
-        try {
-            playaudio_ll.setVisibility(View.VISIBLE);
-            pause_ll.setVisibility(View.GONE);
-            mRecorder.stop();
-            mRecorder.release();
+        if(playing) {
+            try {
+                playaudio_ll.setVisibility(View.VISIBLE);
+                pause_ll.setVisibility(View.GONE);
+                mRecorder.stop();
+                mRecorder.release();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try
-        {
-            recording=false;
-            playing=false;
-            timer_txt.setText(mPlayer.getDuration()/100);
-            mPlayer.release();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                recording = false;
+                playing = false;
+                timer_txt.setText(mPlayer.getDuration() / 100);
+                mPlayer.release();
 
-            if(timer!=null) {
-                timer.cancel();
-                timer.onFinish();
+                if (timer != null) {
+                    timer.cancel();
+                    timer.onFinish();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        }catch (Exception e)
+            mic_im.pauseAnimation();
+        }else
         {
-            e.printStackTrace();
+            Toast.makeText(context1, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
         }
-
-        mic_im.pauseAnimation();
        // attach_doc_txt.setText(audio.getName());
 
 
@@ -1409,7 +1443,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                    Log.e("no video","Selected null");
                } else {
                    videoUri=Uri.parse(selectedVideoPath);
-                   videoview.setVideoURI(videoUri);
+
                    video=new File(videoUri.getPath());
                    videoFile = outputDir+File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
                    VideoCompress.compressVideoLow(video.getPath(),videoFile, new VideoCompress.CompressListener() {
@@ -1424,6 +1458,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                            {
                                dialog.dismiss();
                            }
+                           full_screen_video_iv.setVisibility(View.VISIBLE);
+                           videoview.setVideoURI(videoUri);
 
                            Util.writeFile(ProfileSetupActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
                          //  Util.writeFile(ProfileSetupActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");
@@ -1433,6 +1469,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
                        @Override
                        public void onFail() {
+                           if(dialog.isShowing())
+                           {
+                               dialog.dismiss();
+                           }
                            Util.writeFile(ProfileSetupActivity.this, "Failed Compress!!!" + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
                        }
 

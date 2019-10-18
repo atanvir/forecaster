@@ -138,6 +138,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.9">
         <com.forecaster.View.AvenirRegularTextView
+            android:id="@+id/nametxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sameer Kumar"
@@ -174,6 +175,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1.1">
         <com.forecaster.View.AvenirRegularTextView
+            android:id="@+id/pricetxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="200SAR"

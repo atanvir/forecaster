@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forecaster.Adapter.ChatListingAdapter;
-import com.forecaster.Modal.Chatlist;
+import com.forecaster.Modal.ChatList;
 import com.forecaster.Modal.Data;
 import com.forecaster.R;
 import com.forecaster.Retrofit.RetroInterface;
@@ -50,13 +50,13 @@ public class ChatListingActivity extends AppCompatActivity {
         if(new InternetCheck(this).isConnect())
         {
             dailogHelper.showDailog();
-            Chatlist chatlist=new Chatlist();
+            ChatList chatlist=new ChatList();
             chatlist.setForecasterId(SharedPreferenceWriter.getInstance(ChatListingActivity.this).getString(GlobalVariables._id));
             RetroInterface api_service= RetrofitInit.getConnect().createConnection();
-            Call<Chatlist> call= api_service.getchatList(chatlist);
-            call.enqueue(new Callback<Chatlist>() {
+            Call<ChatList> call= api_service.getchatList(chatlist);
+            call.enqueue(new Callback<ChatList>() {
                 @Override
-                public void onResponse(Call<Chatlist> call, Response<Chatlist> response) {
+                public void onResponse(Call<ChatList> call, Response<ChatList> response) {
                     if(response.isSuccessful())
                     {
                         dailogHelper.dismissDailog();
@@ -75,7 +75,7 @@ public class ChatListingActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Chatlist> call, Throwable t) {
+                public void onFailure(Call<ChatList> call, Throwable t) {
 
                 }
             });

@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.forecaster.Modal.Data;
+import com.forecaster.Modal.RequestManagement;
 import com.forecaster.R;
 
 import java.io.IOException;
@@ -85,6 +87,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
                 gender_txt.setText(data.get(0).getDreamerData().getGender());
                 maritalStatus_txt.setText(data.get(0).getDreamerData().getMaritalStatus());
                 question_txt.setText(data.get(0).getQuestion());
+                audio_uri=Uri.parse(data.get(0).getVoiceNote());
                 settingSekkbar(data);
         }
 
@@ -146,6 +149,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
             case R.id.chat_btn:
                 Intent intent1=new Intent(DetailActivity.this,ChatDetailsActivity.class);
                 intent1.putExtra("chat_details", data.get(0));
+                intent1.putExtra("DetailActivity","Yes");
                 Log.e("datac",data.get(0).toString());
                 startActivity(intent1);
                 break;
@@ -199,6 +203,13 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(DetailActivity.this, RequestManagementActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void playingAudio() {
@@ -256,25 +267,30 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
 
 
     private void stoppingAudio() {
-        try {
-            mRecorder.stop();
-            mRecorder.release();
+        if(playing) {
+            try {
+                play_iv.setVisibility(View.VISIBLE);
+                pause_iv.setVisibility(View.GONE);
+                mRecorder.stop();
+                mRecorder.release();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try
-        {
-            recording=false;
-            playing=false;
-            mediaPlayer.release();
-            if(timer!=null) {
-                timer.cancel();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            try {
+                recording = false;
+                playing = false;
+                mediaPlayer.release();
+                if (timer != null) {
+                    timer.cancel();
+                }
 
-        }catch (Exception e)
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else
         {
-            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
         }
     }
 

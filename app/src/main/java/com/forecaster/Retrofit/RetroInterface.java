@@ -2,7 +2,7 @@ package com.forecaster.Retrofit;
 
 
 import com.forecaster.Modal.ChatHistory;
-import com.forecaster.Modal.Chatlist;
+import com.forecaster.Modal.ChatList;
 import com.forecaster.Modal.CheckMobileNumber;
 import com.forecaster.Modal.ContactUs;
 import com.forecaster.Modal.ForcasterDetail;
@@ -11,6 +11,7 @@ import com.forecaster.Modal.ForgotPassword;
 import com.forecaster.Modal.Login;
 import com.forecaster.Modal.Logout;
 import com.forecaster.Modal.Notification;
+import com.forecaster.Modal.PaymentManagement;
 import com.forecaster.Modal.RequestManagement;
 import com.forecaster.Modal.Setting;
 import com.forecaster.Modal.Setting2;
@@ -88,8 +89,11 @@ public interface RetroInterface {
     Call<Notification> getNotificationList(@Body Notification notification);
 
     @POST("chatListForForecaster")
-    Call<Chatlist> getchatList(@Body Chatlist chatlist);
+    Call<ChatList> getchatList(@Body ChatList chatlist);
 
     @POST("chatHistory")
     Call<ChatHistory> getchatHistory(@Body ChatHistory history,@Header("token") String token);
+
+    @POST("getForecasterTransactionList")
+    Call<PaymentManagement> getForecasterTransactionList(@Body PaymentManagement payment, @Header("token") String token);
 }

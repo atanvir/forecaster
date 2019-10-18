@@ -39,11 +39,13 @@ import com.bumptech.glide.Glide;
 import com.forecaster.Adapter.ChatAdapter;
 import com.forecaster.Modal.ChatHistory;
 import com.forecaster.Modal.Data;
+import com.forecaster.Modal.RequestManagement;
 import com.forecaster.R;
 import com.forecaster.Retrofit.RetroInterface;
 import com.forecaster.Retrofit.RetrofitInit;
 import com.forecaster.Utility.GlobalVariables;
 import com.forecaster.Utility.InternetCheck;
+import com.forecaster.Utility.NotificationUtils;
 import com.forecaster.Utility.ProgressDailogHelper;
 import com.forecaster.Utility.SharedPreferenceWriter;
 import com.forecaster.Utility.socketFileUploader.FileUploadManager;
@@ -81,7 +83,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class ChatDetailsActivity extends AppCompatActivity {
-    private String DetailActivity;
+
     @BindView(R.id.chatRV) RecyclerView chatRV;
     @BindView(R.id.send_iv) ImageView send_iv;
     @BindView(R.id.message_ed) EditText message_ed;
@@ -105,6 +107,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
     private final String SEND_MEDIA="media";
     final int PERMISSION_REQUEST_CODE2 = 400;
     private HashMap<String, String> media_path = new HashMap<>();
+    String fcm="";
+    String DetailActivity="";
 
 
 
@@ -130,8 +134,27 @@ public class ChatDetailsActivity extends AppCompatActivity {
         dailogHelper=new ProgressDailogHelper(this,"");
         send_iv.setOnClickListener(this::OnClick);
         dataList=new ArrayList<>();
-        username_txt.setText(chatData.getDreamerData().getName());
-        Glide.with(this).load(chatData.getDreamerData().getProfilePic()).into(profile_iv);
+        fcm=getIntent().getStringExtra("FCM");
+        DetailActivity=getIntent().getStringExtra("DetailActivity");
+
+        if(fcm!=null) {
+
+            if (fcm.equalsIgnoreCase("YES")) {
+                NotificationUtils.clearNotifications(this);
+                chatData=new Data(getIntent().getStringExtra(GlobalVariables.roomId),
+                        getIntent().getStringExtra(GlobalVariables.senderId),
+                        getIntent().getStringExtra(GlobalVariables.receiverId),
+                        getIntent().getStringExtra(GlobalVariables.name),
+                        getIntent().getStringExtra(GlobalVariables.profile));
+
+                username_txt.setText(chatData.getName());
+                Glide.with(this).load(chatData.getProfilePic()).into(profile_iv);
+            }
+            }
+        else {
+            username_txt.setText(chatData.getDreamerData().getName());
+            Glide.with(this).load(chatData.getDreamerData().getProfilePic()).into(profile_iv);
+        }
         mic_iv.setOnClickListener(this::OnClick);
 
     }
@@ -142,14 +165,12 @@ public class ChatDetailsActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
         mSocket.on(Socket.EVENT_CONNECT, onConnect);
         mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.on("room join", onLogin);
         mSocket.on("message", onNewMessage);
-
         mSocket.connect();
 
         try {
@@ -164,6 +185,14 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
 
     private Emitter.Listener onFileUpload=new Emitter.Listener() {
         @Override
@@ -214,16 +243,17 @@ public class ChatDetailsActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
 
         mSocket.disconnect();
         mSocket.off(Socket.EVENT_CONNECT, onConnect);
         mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
         mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off("message", onNewMessage);
         mSocket.off("room join", onLogin);
+        mSocket.off("message", onNewMessage);
+
     }
 
     private Emitter.Listener onLogin = new Emitter.Listener() {
@@ -233,6 +263,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.e("room join","yes");
+
 
                 }
             });
@@ -247,6 +278,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
             RetroInterface api_service=RetrofitInit.getConnect().createConnection();
             ChatHistory history=new ChatHistory();
             history.setRoomId(chatData.getRoomId());
+            Log.e("new_id",chatData.getRoomId());
             Call<ChatHistory> call=api_service.getchatHistory(history,SharedPreferenceWriter.getInstance(ChatDetailsActivity.this).getString(GlobalVariables.jwtToken));
             call.enqueue(new Callback<ChatHistory>() {
                 @Override
@@ -278,7 +310,8 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ChatHistory> call, Throwable t) {
-
+                    Log.e("error",t.getMessage());
+                    Toast.makeText(ChatDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -432,7 +465,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
                 break;
 
             case R.id.send_iv:
-                if(!message_ed.getText().toString().isEmpty())
+                if(!message_ed.getText().toString().trim().isEmpty())
                 {
                     sendMessage(message_ed.getText().toString());
                 }
@@ -912,7 +945,15 @@ public class ChatDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(chatData!=null) {
+        if(DetailActivity!=null)
+        {
+            Intent intent=new Intent(ChatDetailsActivity.this,RequestManagementActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+         else if(chatData!=null) {
 
                 Intent intent = new Intent(ChatDetailsActivity.this, ChatListingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -923,7 +964,7 @@ public class ChatDetailsActivity extends AppCompatActivity {
         else {
             Intent intent = new Intent(ChatDetailsActivity.this, DetailActivity.class);
             startActivity(intent);
-            finish();
+
         }
     }
 }

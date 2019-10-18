@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.VideoView;
 
@@ -20,10 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProfileManagementFullScreenVideoActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
-    @BindView(R.id.videoView)
-    VideoView videoView;
-    @BindView(R.id.play_iv)
-    ImageView play_iv;
+    @BindView(R.id.videoView) VideoView videoView;
+    @BindView(R.id.play_iv) ImageView play_iv;
+    @BindView(R.id.progressbar) ProgressBar progressbar;
     String videouri_str;
     Uri videouri;
     MediaController mediacontroller;
@@ -65,6 +65,8 @@ public class ProfileManagementFullScreenVideoActivity extends AppCompatActivity 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.play_iv:
+                progressbar.setVisibility(View.VISIBLE);
+                play_iv.setVisibility(View.GONE);
                 playingVideo();
                 break;
         }
@@ -92,6 +94,7 @@ public class ProfileManagementFullScreenVideoActivity extends AppCompatActivity 
         videoView.requestFocus();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
+                progressbar.setVisibility(View.GONE);
                 mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
                 play_iv.setVisibility(View.GONE);
                 videoView.start();

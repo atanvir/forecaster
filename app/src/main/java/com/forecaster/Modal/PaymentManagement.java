@@ -1,27 +1,67 @@
 package com.forecaster.Modal;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class PaymentManagement {
-    private String date;
-    private String category_type;
 
-    public String getDate() {
-        return date;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("response_message")
+    @Expose
+    private String responseMessage;
+    @SerializedName("Data")
+    @Expose
+    private List<Data> data = null;
+
+    @SerializedName("langCode")
+    @Expose
+    private String langCode;
+
+    @SerializedName("forecasterId")
+    @Expose
+    private String forecasterId;
+
+    public String getForecasterId() {
+        return forecasterId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setForecasterId(String forecasterId) {
+        this.forecasterId = forecasterId;
     }
 
-    public String getCategory_type() {
-        return category_type;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCategory_type(String category_type) {
-        this.category_type = category_type;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public PaymentManagement(String date, String category_type) {
-        this.date = date;
-        this.category_type = category_type;
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
+
+    public List<Data> getData() {
+        return data;
+    }
+
+    public void setData(List<Data> data) {
+        this.data = data;
+    }
+
+    public String getLangCode() {
+        return langCode;
+    }
+
+    public void setLangCode(String langCode) {
+        this.langCode = langCode;
     }
 }
