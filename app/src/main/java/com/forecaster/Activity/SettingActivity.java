@@ -40,7 +40,6 @@ import com.forecaster.Modal.ForgotPassword;
 import com.forecaster.Modal.Login;
 import com.forecaster.Modal.Logout;
 import com.forecaster.Modal.Setting;
-import com.forecaster.Modal.Setting2;
 import com.forecaster.R;
 import com.forecaster.Retrofit.RetroInterface;
 import com.forecaster.Retrofit.RetrofitInit;
@@ -71,6 +70,7 @@ public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.contactus_cl) ConstraintLayout contactus_cl;
     @BindView(R.id.notification_im) ImageView notification_im;
     @BindView(R.id.touch_id_iv) ImageView touch_id_iv;
+    boolean notificationStatus;
     private ProgressDailogHelper dailogHelper;
     //change password Pop
     EditText oldpass_ed,newpass_ed,confirm_pass_ed;
@@ -96,7 +96,7 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         init();
-        boolean notificationStatus=SharedPreferenceWriter.getInstance(SettingActivity.this).getBoolean(GlobalVariables.notificationStatus);
+        notificationStatus=SharedPreferenceWriter.getInstance(SettingActivity.this).getBoolean(GlobalVariables.notificationStatus);
         if(notificationStatus)
         {
             notification_im.setImageDrawable(getDrawable(R.drawable.on));
@@ -105,6 +105,7 @@ public class SettingActivity extends AppCompatActivity {
         {
             notification_im.setImageDrawable(getDrawable(R.drawable.off));
         }
+
 
 
     }
@@ -129,11 +130,16 @@ public class SettingActivity extends AppCompatActivity {
             touch_id_iv.setImageResource(R.drawable.off);
         }
 
+
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+        Intent intent=new Intent(SettingActivity.this,CategorySelectionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("SettingActivity","Yes");
+        startActivity(intent);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -153,7 +159,11 @@ public class SettingActivity extends AppCompatActivity {
 
 
             case R.id.back_ll:
-                finish();
+                Intent intent1=new Intent(SettingActivity.this,CategorySelectionActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent1.putExtra("SettingActivity","Yes");
+                startActivity(intent1);
+
                 break;
 
             case R.id.logout_cl:
@@ -166,7 +176,7 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.notification_im:
-                boolean notificationStatus=SharedPreferenceWriter.getInstance(SettingActivity.this).getBoolean(GlobalVariables.notificationStatus);
+                notificationStatus=SharedPreferenceWriter.getInstance(SettingActivity.this).getBoolean(GlobalVariables.notificationStatus);
                 if(notificationStatus)
                 {
                     notification_im.setImageDrawable(getDrawable(R.drawable.off));
@@ -573,29 +583,48 @@ public class SettingActivity extends AppCompatActivity {
                     final int DRAWABLE_TOP = 1;
                     final int DRAWABLE_RIGHT = 2;
                     final int DRAWABLE_BOTTOM = 3;
+                    String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
+                    if (langCode.equalsIgnoreCase("ar")) {
 
-
-                    if(event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (oldpass_ed.getRight() - oldpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            if(clickcount3 % 2 ==0)
-                            {
-                                clickcount3=clickcount3+1;
+                        if (event.getRawX()  <= (oldpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+oldpass_ed.getPaddingLeft()+oldpass_ed.getPaddingRight()+oldpass_ed.getPaddingBottom()+oldpass_ed.getPaddingTop()+oldpass_ed.getPaddingEnd()+oldpass_ed.getPaddingEnd()) {
+                            if (clickcount3 % 2 == 0) {
+                                clickcount3 = clickcount3 + 1;
                                 oldpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                oldpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                oldpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon,0,0, 0);
                                 return true;
-                            }
-                            else
-                            {
-                                clickcount3=clickcount3+1;
+                            } else {
+                                clickcount3 = clickcount3 + 1;
                                 oldpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                oldpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                oldpass_ed.setCompoundDrawablesWithIntrinsicBounds( R.drawable.un_view_icon,0,0, 0);
                                 return true;
 
 
                             }
+                        }
 
+
+                        } else {
+                        if(event.getAction() == MotionEvent.ACTION_UP) {
+                            if (event.getRawX() >= (oldpass_ed.getRight() - oldpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                                if (clickcount3 % 2 == 0) {
+                                    clickcount3 = clickcount3 + 1;
+                                    oldpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                    oldpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                    return true;
+                                } else {
+                                    clickcount3 = clickcount3 + 1;
+                                    oldpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                    oldpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                    return true;
+
+
+                                }
+
+                            }
                         }
                     }
+
+
 
 
                     return false;
@@ -610,25 +639,53 @@ public class SettingActivity extends AppCompatActivity {
                     final int DRAWABLE_BOTTOM = 3;
 
 
+
                     if(event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (newpass_ed.getRight() - newpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            if(clickcount2 % 2 ==0)
-                            {
-                                clickcount2=clickcount2+1;
-                                newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                                return true;
+                        String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
+                        if(langCode.equalsIgnoreCase("ar"))
+                        {
+                            if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                                if(clickcount2 % 2 ==0)
+                                {
+                                    clickcount2=clickcount2+1;
+                                    newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                    newpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon,0,0, 0);
+                                    return true;
+                                }
+                                else
+                                {
+                                    clickcount2=clickcount2+1;
+                                    newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                    newpass_ed.setCompoundDrawablesWithIntrinsicBounds( R.drawable.un_view_icon,0,0, 0);
+                                    return true;
+
+
+                                }
+
                             }
-                            else
-                            {
-                                clickcount2=clickcount2+1;
-                                newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                                return true;
+                        }
 
+                        else
+                        {
+                            if (event.getRawX() >= (newpass_ed.getRight() - newpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                                if(clickcount2 % 2 ==0)
+                                {
+                                    clickcount2=clickcount2+1;
+                                    newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                    newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                    return true;
+                                }
+                                else
+                                {
+                                    clickcount2=clickcount2+1;
+                                    newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                    newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                    return true;
+
+
+                                }
 
                             }
-
                         }
                     }
 
@@ -647,25 +704,54 @@ public class SettingActivity extends AppCompatActivity {
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (confirm_pass_ed.getRight() - confirm_pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount4 % 2 ==0)
-                        {
-                            clickcount4=clickcount4+1;
-                            confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
+
+
+                    String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
+                    if(langCode.equalsIgnoreCase("ar"))
+                    {
+                        if (event.getRawX()  <= (confirm_pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+confirm_pass_ed.getPaddingLeft()+confirm_pass_ed.getPaddingRight()+confirm_pass_ed.getPaddingBottom()+confirm_pass_ed.getPaddingTop()+confirm_pass_ed.getPaddingEnd()+confirm_pass_ed.getPaddingEnd()) {
+                            if(clickcount4 % 2 ==0)
+                            {
+                                clickcount4=clickcount4+1;
+                                confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon,0,0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount4=clickcount4+1;
+                                confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds( R.drawable.un_view_icon,0,0, 0);
+                                return true;
+
+
+                            }
+
                         }
-                        else
-                        {
-                            clickcount4=clickcount4+1;
-                            confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
-
-
-                        }
-
                     }
+                    else
+                    {
+                        if (event.getRawX() >= (confirm_pass_ed.getRight() - confirm_pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if(clickcount4 % 2 ==0)
+                            {
+                                clickcount4=clickcount4+1;
+                                confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount4=clickcount4+1;
+                                confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
+
+
+                            }
+
+                        }
+                    }
+
                 }
 
 
@@ -678,20 +764,21 @@ public class SettingActivity extends AppCompatActivity {
 
     private boolean checkValidation() {
         boolean ret=true;
-        if(!Validation.hasText(oldpass_ed,getString(R.string.please_enter_oldpass))
-        || !Validation.hasText(newpass_ed,getString(R.string.please_enter_newpass))
-        || !Validation.hasText(confirm_pass_ed,getString(R.string.please_enter_confirm_password))
+        Validation validation=new Validation(this);
+        if(!validation.hasText(oldpass_ed,getString(R.string.please_enter_oldpass))
+        || !validation.hasText(newpass_ed,getString(R.string.please_enter_newpass))
+        || !validation.hasText(confirm_pass_ed,getString(R.string.please_enter_confirm_password))
         || !confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString()))
         {
-            if(!Validation.hasText(oldpass_ed,getString(R.string.please_enter_oldpass)))
+            if(!validation.hasText(oldpass_ed,getString(R.string.please_enter_oldpass)))
             {
                 ret=false;
                 oldpass_ed.requestFocus();
-            }else if(!Validation.hasText(newpass_ed,getString(R.string.please_enter_newpass)))
+            }else if(!validation.hasText(newpass_ed,getString(R.string.please_enter_newpass)))
             {
                 ret=false;
                 newpass_ed.requestFocus();
-            }else if(!Validation.hasText(confirm_pass_ed,getString(R.string.please_enter_confirm_password)))
+            }else if(!validation.hasText(confirm_pass_ed,getString(R.string.please_enter_confirm_password)))
             {
                 ret=false;
                 confirm_pass_ed.requestFocus();
@@ -780,7 +867,7 @@ public class SettingActivity extends AppCompatActivity {
         dailogHelper.showDailog();
         RetroInterface api_service=RetrofitInit.getConnect().createConnection();
         Logout logout=new Logout();
-        logout.setLangCode("en");
+        logout.setLangCode(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode));
         logout.setForecasterId(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables._id));
         Call<Logout> call=api_service.forecasterLogout(logout);
         call.enqueue(new Callback<Logout>() {
@@ -995,57 +1082,65 @@ public class SettingActivity extends AppCompatActivity {
         setting.setForecasterId(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables._id));
         setting.setLanguage(language);
         setting.setNotificationStatus(notificationStatus);
+        Log.e("language",language);
         if(language.equalsIgnoreCase("english"))
         {
             setting.setLangCode("en");
         }else if(language.equalsIgnoreCase("arabic"))
+        {
             setting.setLangCode("ar");
-        else
-            setting.setLangCode("ur");
+        }
 
-        Call<Setting2> call=api_service.updateForecasterSettings(setting,SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.jwtToken));
-        call.enqueue(new Callback<Setting2>() {
+        else {
+            setting.setLangCode("ur");
+        }
+
+        Call<Setting> call=api_service.updateForecasterSettings(setting,SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.jwtToken));
+        call.enqueue(new Callback<Setting>() {
             @Override
-            public void onResponse(Call<Setting2> call, Response<Setting2> response) {
+            public void onResponse(Call<Setting> call, Response<Setting> response) {
                 if(response.isSuccessful())
                 {
 
+                    Setting server_response=response.body();
 
-                    Locale locale=null;
-
-                    if(response.body().getData().getLanguage().equalsIgnoreCase("arabic"))
-                    {
-                        locale = new Locale("ar");
-
-                    }else if(response.body().getData().getLanguage().equalsIgnoreCase("english"))
-                    {
-                        locale = new Locale("en");
-                    }
-                    else if(response.body().getData().getLanguage().equalsIgnoreCase("urdu"))
-                    {
-                        locale = new Locale("ur");
-
-                    }
-
-                    Locale.setDefault(locale);
-                    Configuration config = new Configuration();
-                    config.locale = locale;
-                    getBaseContext().getResources().updateConfiguration(config,
-                    getBaseContext().getResources().getDisplayMetrics());
-
-                    Intent intent=new Intent(SettingActivity.this, SettingActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-
-
-                    Setting2 server_response=response.body();
 
 
                     if(server_response.getStatus().equalsIgnoreCase("SUCCESS"))
                     {
                         dailogHelper.dismissDailog();
-                       // Toast.makeText(SettingActivity.this,server_response.getResponseMessage(),Toast.LENGTH_LONG).show();
-//                        setPreferences(server_response);
+                        Locale locale=null;
+                       // SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.language,server_response.getData().getLanguage());
+
+
+                        if(response.body().getData().getLanguage().equalsIgnoreCase("arabic"))
+                        {
+                            locale = new Locale("ar");
+
+                        }else if(response.body().getData().getLanguage().equalsIgnoreCase("english"))
+                        {
+                            locale = new Locale("en");
+                        }
+                        else if(response.body().getData().getLanguage().equalsIgnoreCase("urdu"))
+                        {
+                            locale = new Locale("ur");
+
+                        }
+                        SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.langCode, String.valueOf(locale));
+
+
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+                        if(!SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.language).equalsIgnoreCase(server_response.getData().getLanguage())) {
+                            Intent intent = new Intent(SettingActivity.this, SettingActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+
+                        setPreferences(server_response);
                     }
                     else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
                     {
@@ -1079,7 +1174,7 @@ public class SettingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Setting2> call, Throwable t) {
+            public void onFailure(Call<Setting> call, Throwable t) {
 
             }
         });

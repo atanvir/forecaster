@@ -65,6 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
             dailogHelper.showDailog();
             Notification notification=new Notification();
             notification.setForecasterId(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables._id));
+            notification.setLangCode(SharedPreferenceWriter.getInstance(NotificationActivity.this).getString(GlobalVariables.langCode));
             RetroInterface api_service= RetrofitInit.getConnect().createConnection();
             Call<Notification> call=api_service.getNotificationList(notification);
             call.enqueue(new Callback<Notification>() {

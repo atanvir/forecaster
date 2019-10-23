@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +27,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,6 +45,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        Locale locale=new Locale(SharedPreferenceWriter.getInstance(SplashActivity.this).getString(GlobalVariables.langCode));
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         splash_pass=getIntent().getStringExtra("pass_splash");
 
 
@@ -145,6 +153,14 @@ public class SplashActivity extends AppCompatActivity {
                                                 intent.putExtra(GlobalVariables.profile,getIntent().getStringExtra("profile"));
                                                 startActivity(intent);
                                             }
+
+                                            else if(getIntent().getStringExtra("type").equalsIgnoreCase("booking"))
+                                            {
+                                                Intent intent = new Intent(SplashActivity.this, RequestManagementActivity.class);
+                                                finish();
+                                                startActivity(intent);
+
+                                            }
                                             else {
 
                                                 Intent intent = new Intent(SplashActivity.this, NotificationActivity.class);
@@ -160,6 +176,7 @@ public class SplashActivity extends AppCompatActivity {
                                     }
                                     else {
                                         Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                                        SharedPreferenceWriter.getInstance(SplashActivity.this).writeStringValue(GlobalVariables.langCode,"ar");
                                         finish();
                                         startActivity(intent);
                                     }

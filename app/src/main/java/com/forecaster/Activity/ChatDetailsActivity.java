@@ -242,19 +242,19 @@ public class ChatDetailsActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off("room join", onLogin);
-        mSocket.off("message", onNewMessage);
-
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//
+//        mSocket.disconnect();
+//        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+//        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+//        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+//        mSocket.off("room join", onLogin);
+//        mSocket.off("message", onNewMessage);
+//
+//    }
 
     private Emitter.Listener onLogin = new Emitter.Listener() {
         @Override
@@ -572,6 +572,19 @@ public class ChatDetailsActivity extends AppCompatActivity {
                 break;
             }
         }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSocket.disconnect();
+        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        mSocket.off("room join", onLogin);
+        mSocket.off("message", onNewMessage);
 
     }
 

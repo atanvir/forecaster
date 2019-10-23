@@ -70,7 +70,7 @@ public class RequestManagementActivity extends AppCompatActivity {
             RetroInterface api_service=RetrofitInit.getConnect().createConnection();
             RequestManagement management=new RequestManagement();
             management.setForecasterId(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables._id));
-            management.setLangCode("en");
+            management.setLangCode(SharedPreferenceWriter.getInstance(RequestManagementActivity.this).getString(GlobalVariables.langCode));
             Call<RequestManagement> call=api_service.getRequestList(management,SharedPreferenceWriter.getInstance(this).getString(GlobalVariables.jwtToken));
             call.enqueue(new Callback<RequestManagement>() {
                 @Override

@@ -1,6 +1,10 @@
 package com.forecaster.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.hardware.fingerprint.FingerprintManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -9,7 +13,12 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +53,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     @BindView(R.id.pause_iv) ImageView pause_iv;
     @BindView(R.id.recorded_audio_iv) ImageView recorded_audio_iv;
     @BindView(R.id.recorded_voice_txt) TextView recorded_voice_txt;
+    @BindView(R.id.chat_btn) Button chat_btn;
     MediaPlayer mediaPlayer;
     MediaRecorder mRecorder;
     boolean recording;
@@ -54,6 +64,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
     int medialast_position=0;
     boolean pause=false;
     ArrayList<Data> data;
+    boolean chatButton=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +84,7 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
         play_iv.setOnClickListener(this::OnClick);
         seekBar.setOnSeekBarChangeListener(this);
         pause_iv.setOnClickListener(this::OnClick);
+        chat_btn.setOnClickListener(this::OnClick);
     }
     
     
@@ -87,15 +99,47 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
                 gender_txt.setText(data.get(0).getDreamerData().getGender());
                 maritalStatus_txt.setText(data.get(0).getDreamerData().getMaritalStatus());
                 question_txt.setText(data.get(0).getQuestion());
-                audio_uri=Uri.parse(data.get(0).getVoiceNote());
+                if(data.get(0).getVoiceNote()!=null) {
+                    audio_uri = Uri.parse(data.get(0).getVoiceNote());
+                }
                 settingSekkbar(data);
+                if(data.get(0).getChatList().getChatCloseStatus() || data.get(0).getChatList().getLastMessage().equalsIgnoreCase("Say Hi to send Request"))
+                {
+                    chatButton=true;
+
+                }
+
+
         }
+
+
+    }
+
+    private void showPopup(String msg) {
+        Dialog dialog =new Dialog(DetailActivity.this,android.R.style.Theme_Black);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.error_pop_common);
+        TextView message_txt=dialog.findViewById(R.id.message_txt);
+        LinearLayout close_ll=dialog.findViewById(R.id.close_ll);
+        close_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        message_txt.setText(msg);
+        dialog.show();
+
+
 
 
     }
 
     private void settingSekkbar(ArrayList<Data> data) {
         if(audio_uri!=null) {
+            seekBar.setClickable(false);
             seekBar.setVisibility(View.VISIBLE);
             stop_iv.setVisibility(View.VISIBLE);
             play_iv.setVisibility(View.VISIBLE);
@@ -134,12 +178,11 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
 
     }
 
-    @OnClick({R.id.back_ll,R.id.chat_btn})
+    @OnClick({R.id.back_ll})
     void OnClick(View view)
     {
         switch (view.getId())
-        {
-            case R.id.back_ll:
+        {            case R.id.back_ll:
                 Intent intent=new Intent(DetailActivity.this,RequestManagementActivity.class);
                 finish();
                 startActivity(intent);
@@ -147,11 +190,17 @@ public class DetailActivity extends AppCompatActivity implements SeekBar.OnSeekB
 
 
             case R.id.chat_btn:
-                Intent intent1=new Intent(DetailActivity.this,ChatDetailsActivity.class);
-                intent1.putExtra("chat_details", data.get(0));
-                intent1.putExtra("DetailActivity","Yes");
-                Log.e("datac",data.get(0).toString());
-                startActivity(intent1);
+                if(!chatButton) {
+                    Intent intent1 = new Intent(DetailActivity.this, ChatDetailsActivity.class);
+                    intent1.putExtra("chat_details", data.get(0));
+                    intent1.putExtra("DetailActivity", "Yes");
+                    Log.e("datac", data.get(0).toString());
+                    startActivity(intent1);
+                }
+                else
+                {
+                    showPopup(getString(R.string.you_cannot_send_first_msg));
+                }
                 break;
                 
             case R.id.stop_iv:

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,11 +20,10 @@
 
         <ImageView
             android:id="@+id/back_im"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_12"
+
             android:src="@drawable/backbitmap"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -224,17 +225,17 @@
                         android:layout_height="@dimen/dp_60"
 
                         android:background="@drawable/edit_text_background"
+                        android:gravity="center|start"
                         android:hint="@string/phone_number"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:textColorHint="@color/black"
-                        android:gravity="center|start"
-                        android:textDirection="ltr"
-                        android:textAlignment="viewStart"
                         android:maxLength="10"
+                        android:textAlignment="viewStart"
+                        android:textColorHint="@color/black"
+                        android:textDirection="ltr"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/countrycode_txt"
+                        app:layout_constraintStart_toEndOf="@+id/ccode"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -245,11 +246,27 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
                         android:text="+91"
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dp_18"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        app:hideNameCode="true"
+                        android:gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:showFlag="false"
+                        app:textSize="14sp" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,9 +300,9 @@
                         android:hint="@string/password"
                         android:textColorHint="@color/black"
                         android:imeOptions="actionNext"
-                        android:drawableRight="@drawable/un_view_icon"
-                        android:paddingRight="@dimen/dp_10"
-                        android:paddingEnd = "10dp"
+                        android:drawableEnd="@drawable/un_view_icon"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:textAlignment="viewStart"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:inputType="textPassword"
@@ -326,12 +343,12 @@
                         android:hint="@string/confirm_password"
                         android:textColorHint="@color/black"
                         android:imeOptions="actionDone"
-                        android:paddingRight="@dimen/dp_10"
-                        android:paddingEnd = "10dp"
-                        android:drawableRight="@drawable/un_view_icon"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:drawableEnd="@drawable/un_view_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:inputType="textPassword"
+                        android:textAlignment="viewStart"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -370,19 +387,18 @@
 
             <com.forecaster.View.AvenirRegularTextView
                 android:id="@+id/textView3"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
 
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:gravity="left|center"
                 android:text="@string/agree_to_term"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_medium_large"
                 app:layout_constraintBottom_toBottomOf="@+id/check_im"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/check_im"
                 app:layout_constraintTop_toTopOf="@+id/check_im" />
 

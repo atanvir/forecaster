@@ -105,15 +105,24 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             if(monthdifference>0)
             {
-                holder.timing_txt.setText(monthdifference+" months ago");
+                holder.timing_txt.setText(monthdifference+" "+context.getString(R.string.months_ago));
             }
             else if(daysDifference>0)
             {
-                holder.timing_txt.setText(daysDifference+" days ago");
+                if(daysDifference==1)
+                {
+                    holder.timing_txt.setText(daysDifference+" "+context.getString(R.string.day_ago));
+
+                }else
+                {
+                    holder.timing_txt.setText(daysDifference+" "+context.getString(R.string.days_ago));
+                }
+
             }
+
             else if(hourdifference>0)
             {
-                holder.timing_txt.setText(hourdifference+" hour ago");
+                holder.timing_txt.setText(hourdifference+" "+context.getString(R.string.hour_ago));
             }
             else if(mindifference>0)
             {

@@ -248,7 +248,11 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         gender_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gender_txt.setText(genderlist.get(position));
+                if(position!=0)
+                {
+                    gender_txt.setText(genderlist.get(position));
+                }
+
             }
 
             @Override
@@ -260,6 +264,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         documenttype_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0)
                 documenttype_txt.setText(documentlist.get(position));
             }
 
@@ -271,13 +276,14 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         categorytype_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 2) {
-                    psychological_cv.setVisibility(View.VISIBLE);
-                } else {
-                    psychological_cv.setVisibility(View.GONE);
-                }
+                                  if (position == 2) {
+                       psychological_cv.setVisibility(View.VISIBLE);
+                   } else {
+                       psychological_cv.setVisibility(View.GONE);
+                   }
 
-                categorytype_txt.setText(categoryList.get(position));
+                   categorytype_txt.setText(categoryList.get(position));
+
             }
 
             @Override
@@ -290,6 +296,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         selectbank_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0)
                 selectbank_txt.setText(bankList.get(position));
             }
 
@@ -302,6 +309,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         psychological_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0)
                 psychological_txt.setText(psychologicalList.get(position));
 
             }
@@ -503,21 +511,23 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
 
     private boolean checkValidation() {
         boolean ret=true;
+        Validation validation=new Validation(this);
 
         if(profile_image==null
         || gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender))
-        || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
+        || !validation.hasText(dob_ed,getString(R.string.please_enter_dob))
         || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type))
         || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.psycho_counseling))
         || documenttype_txt.getText().toString().equalsIgnoreCase(getString(R.string.document_type))
         || attach_document==null
         || audio==null
         || video==null
-        || !Validation.hasText(about_us_ed,getString(R.string.write_about_yourself))
-        || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
+        || !validation.hasText(about_us_ed,getString(R.string.write_about_yourself))
+        || !validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
         || selectbank_txt.getText().toString().equalsIgnoreCase(getString(R.string.select_bank))
-        || !Validation.hasText2(account_holder_ed,getString(R.string.please_enter_holder_name))
-        || bank_number_ed.getText().toString().isEmpty() || bank_number_ed.getText().toString().length()!=16)
+        || !validation.hasText2(account_holder_ed,getString(R.string.please_enter_holder_name))
+        || bank_number_ed.getText().toString().isEmpty()
+        || bank_number_ed.getText().toString().length()<8)
         {
              if(profile_image==null)
             {
@@ -532,7 +542,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 gender_txt.setFocusable(true);
                 gender_txt.requestFocus();
             }
-            else if(!Validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
+            else if(!validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
             {
                 gender_txt.setError(null);
                 ret=false;
@@ -591,14 +601,14 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                 Toast.makeText(ProfileSetupActivity.this,getString(R.string.pls_upload_video),Toast.LENGTH_LONG).show();
             }
 
-            else if(!Validation.hasText(about_us_ed,getString(R.string.write_about_yourself)))
+            else if(!validation.hasText(about_us_ed,getString(R.string.write_about_yourself)))
             {
                 ret=false;
                 about_us_ed.requestFocusFromTouch();
 
             }
 
-            else if(!Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
+            else if(!validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
             {
                 ret=false;
                 price_per_ed.requestFocusFromTouch();
@@ -613,7 +623,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             }
 
 
-            else if(!Validation.hasText(account_holder_ed,getString(R.string.please_enter_holder_name)))
+            else if(!validation.hasText(account_holder_ed,getString(R.string.please_enter_holder_name)))
             {
                 ret=false;
                 account_holder_ed.requestFocusFromTouch();
@@ -629,8 +639,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                     bank_number_ed.requestFocusFromTouch();
 
                 }
-                else if(bank_number_ed.getText().toString().length()!=16)
+                else if(bank_number_ed.getText().toString().length()<8)
                 {
+
+
                     ret=false;
                     bank_number_ed.setError(getString(R.string.pls_enter_valid_accnum));
                     bank_number_ed.setFocusable(true);
@@ -870,7 +882,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
             mic_im.pauseAnimation();
         }else
         {
-            Toast.makeText(context1, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileSetupActivity.this, getString(R.string.please_play_audio_first), Toast.LENGTH_SHORT).show();
         }
        // attach_doc_txt.setText(audio.getName());
 
@@ -1081,7 +1093,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
                     e.printStackTrace();
                 }
                 Log.e("timer_stop","yes");
-                Toast.makeText(ProfileSetupActivity.this,"You can record upto 30 secounds",Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileSetupActivity.this,getString(R.string.upto_secounds),Toast.LENGTH_LONG).show();
                 }
             }
         }.start();
@@ -1191,10 +1203,10 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     private void PsychologicalSpinner() {
         psychologicalList = new ArrayList<>();
         psychologicalList.add(getString(R.string.please_select));
-        psychologicalList.add("Self Development Counselling");
-        psychologicalList.add("Family Counselling");
-        psychologicalList.add("Psychological Counselling");
-        psychologicalList.add("Parent Counselling");
+        psychologicalList.add(getString(R.string.self_development_counselling));
+        psychologicalList.add(getString(R.string.family_counselling));
+        psychologicalList.add(getString(R.string.psychological_counselling));
+        psychologicalList.add(getString(R.string.parent_counselling));
 
 
         ArrayAdapter genderArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, psychologicalList) {
@@ -1236,7 +1248,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         ImageView gallery = (ImageView) popupView.findViewById(R.id.gallery);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Upload photo");
+        alertDialog.setTitle(getString(R.string.upload_photo));
         alertDialog.setView(popupView);
         final AlertDialog dialog = alertDialog.show();
         alertDialog.setCancelable(true);
@@ -1356,8 +1368,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     private void CategorySpinner() {
         categoryList = new ArrayList<>();
         categoryList.add(getString(R.string.please_select));
-        categoryList.add("Dreamer");
-        categoryList.add("Psychological Counselling");
+        categoryList.add(getString(R.string.dreamer));
+        categoryList.add(getString(R.string.psychological_counselling));
 
 
 
@@ -1396,8 +1408,8 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
     private void GenderSpinner() {
         genderlist = new ArrayList<>();
         genderlist.add(getString(R.string.please_select));
-        genderlist.add("Male");
-        genderlist.add("Female");
+        genderlist.add(getString(R.string.male));
+        genderlist.add(getString(R.string.female));
 
         ArrayAdapter genderArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderlist) {
             @Override

@@ -32,11 +32,9 @@
 
                 <ImageView
                     android:id="@+id/back_im"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_12"
                     android:src="@drawable/backbitmap"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -163,7 +161,7 @@
             android:foregroundGravity="center"
             android:padding="@dimen/dp_8"
             android:paddingLeft="@dimen/dp_12"
-            android:src="@drawable/icon"
+            android:src="@drawable/send_bitmap"
             android:paddingStart = "12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

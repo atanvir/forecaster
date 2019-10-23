@@ -11,8 +11,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -38,13 +41,16 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.Locale;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.logging.SocketHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategorySelectionActivity extends AppCompatActivity implements View.OnClickListener {
+public class CategorySelectionActivity extends AppCompatActivity implements View.OnClickListener,Runnable {
 
     Toolbar toolbar;
     LinearLayout  itemMyChats,itemHomes,itemAboutApp,itemContactUs,itemSettings,itemTermConditions,itemShareApp;
@@ -59,6 +65,8 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
     private Activity activity;
     boolean onlineStatus;
     private ProgressDailogHelper dailogHelper;
+    private String Activity;
+
 
     private void init(Activity activity) {
         if(activity == null)
@@ -138,21 +146,37 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         init(activity);
     }
 
+    String langCode="";
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpLanguage();
         setContentView(R.layout.activity_main);
 
         SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin, "Yes");
+        langCode=SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode);
         init(activity);
         settingDailog();
+        Activity=getIntent().getStringExtra("SettingActivity");
         onlineStatus = SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getBoolean(GlobalVariables.onlineStatus);
         if (onlineStatus) {
             onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.on));
         } else {
             onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.off));
         }
+        if(Activity!=null)
+        {
+            if(Activity.equalsIgnoreCase("Yes"))
+            {
+                DrawerLayout drawer = findViewById(R.id.drawer);
+                drawer.openDrawer(GravityCompat.START);
+            }
+        }
+
+
+
     }
 
     private void settingDailog() {
@@ -160,10 +184,27 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    private void setUpLanguage() {
+        Locale locale=new Locale(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode));
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
         } else {
             super.onBackPressed();
         }
@@ -186,7 +227,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
 
          else if(view == itemSettings)
          {
-             getForecasterSettingsApi();
+             getForecasterSettingsApi(context);
          }
 
          else if(view == itemContactUs)
@@ -205,7 +246,17 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
          else if(view ==itemAboutApp)
          {
              Intent intent=new Intent(CategorySelectionActivity.this, WebviewAcitivity.class);
-             intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs");
+             intent.putExtra(GlobalVariables.title,context.getString(R.string.about_us));
+             if(langCode.equalsIgnoreCase("ar"))
+             {
+                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs1");
+
+             }
+             else
+             {
+                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs");
+             }
+
              startActivity(intent);
 
          }
@@ -213,7 +264,18 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
          else if(view==itemTermConditions)
          {
              Intent intent=new Intent(CategorySelectionActivity.this,WebviewAcitivity.class);
-             intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms");
+             intent.putExtra(GlobalVariables.title,context.getString(R.string.terms_and_conditions));
+             if(langCode.equalsIgnoreCase("ar"))
+             {
+                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms1");
+
+
+             }
+             else
+             {
+                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms");
+             }
+
              startActivity(intent);
 
          }
@@ -323,8 +385,8 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
 
     }
 
-    private void getForecasterSettingsApi() {
-        dailogHelper=new ProgressDailogHelper(this,"");
+    private void getForecasterSettingsApi(Context context) {
+        dailogHelper=new ProgressDailogHelper(context,"");
         dailogHelper.showDailog();
         RetroInterface api_service= RetrofitInit.getConnect().createConnection();
         Setting setting=new Setting();
@@ -342,6 +404,9 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                     {
                         dailogHelper.dismissDailog();
                         Intent intent=new Intent(context,SettingActivity.class);
+                        SharedPreferenceWriter.getInstance(context).writeStringValue(GlobalVariables.language,server_response.getData().getLanguage());
+
+
                         context.startActivity(intent);
                     }
                     else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))
@@ -377,6 +442,11 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                 Toast.makeText(CategorySelectionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    @Override
+    public void run() {
 
     }
 }

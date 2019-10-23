@@ -517,7 +517,7 @@ public class Data implements Parcelable {
         roomId=in.readString();
         senderId=in.readString();
         receiverId=in.readString();
-        chatList=in.readParcelable(Chatlist.class.getClassLoader());
+        chatList=in.readParcelable(ChatList.class.getClassLoader());
         forecasterId=in.readString();
     }
 

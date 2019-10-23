@@ -35,7 +35,7 @@
                 android:id="@+id/menu_ll"
                 android:layout_width="@dimen/dp_55"
                 android:layout_height="@dimen/dp_50"
-                android:gravity="left|center"
+                android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -212,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Date"
+                android:text="@string/date"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
@@ -229,7 +229,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Dreamer Name"
+                android:text="@string/dreamer_name"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
@@ -246,7 +246,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Category Type"
+                android:text="@string/category_type"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
@@ -263,7 +263,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Price"
+                android:text="@string/price"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />

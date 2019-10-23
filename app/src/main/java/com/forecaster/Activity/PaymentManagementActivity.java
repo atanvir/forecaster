@@ -62,7 +62,7 @@ public class PaymentManagementActivity extends AppCompatActivity {
             dailogHelper.showDailog();
             PaymentManagement paymentManagement=new PaymentManagement();
             paymentManagement.setForecasterId(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables._id));
-            paymentManagement.setLangCode("en");
+            paymentManagement.setLangCode(SharedPreferenceWriter.getInstance(PaymentManagementActivity.this).getString(GlobalVariables.langCode));
             RetroInterface api_service= RetrofitInit.getConnect().createConnection();
             Call<PaymentManagement> call=api_service.getForecasterTransactionList(paymentManagement,SharedPreferenceWriter.getInstance(PaymentManagementActivity.this).getString(GlobalVariables.jwtToken));
             call.enqueue(new Callback<PaymentManagement>() {

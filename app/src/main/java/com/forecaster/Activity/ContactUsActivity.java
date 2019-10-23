@@ -160,9 +160,35 @@ public class ContactUsActivity extends AppCompatActivity {
 
     private boolean checkValidation() {
         boolean ret=true;
-        if(!Validation.email(email_ed)) ret=false;
-        if(!Validation.hasText(concern_ed)) ret=false;
-        if(!Validation.hasText(message_ed)) ret=false;
+        Validation validation=new Validation(this);
+        if(!validation.email(email_ed,getString(R.string.not_valid_email))
+        || !validation.hasText(concern_ed,getString(R.string.enter_your_concern))
+        || !validation.hasText(message_ed,getString(R.string.enter_your_message))
+        )
+        {
+            if(!validation.email(email_ed,getString(R.string.not_valid_email)))
+            {
+
+                ret=false;
+                email_ed.requestFocus();
+
+
+            }
+            else if(!validation.hasText(concern_ed,getString(R.string.enter_your_concern)))
+            {
+                ret=false;
+                concern_ed.requestFocus();
+            }
+            else if(!validation.hasText(message_ed,getString(R.string.enter_your_message)))
+            {
+                ret=false;
+                message_ed.requestFocus();
+            }
+
+
+        }
+
+
         return ret;
 
     }

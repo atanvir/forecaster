@@ -10,6 +10,7 @@ import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -64,10 +65,12 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.hbb20.CountryCodePicker;
 import com.heetch.countrypicker.Country;
 import com.heetch.countrypicker.CountryPickerCallbacks;
 import com.heetch.countrypicker.CountryPickerDialog;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -96,11 +99,19 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
     @BindView(R.id.constraintLayout) ConstraintLayout constraintLayout;
     int height;
     int width;
+    Validation validation;
+    String langCode="";
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Locale locale=new Locale(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables.langCode));
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferenceWriter.getInstance(LoginActivity.this).writeStringValue(GlobalVariables.langCode, String.valueOf(locale));
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
@@ -122,25 +133,59 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (pass_ed.getRight() - pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount % 2 ==0)
-                        {
-                            clickcount=clickcount+1;
-                            pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
-                        }
-                        else
-                        {
-                            clickcount=clickcount+1;
-                            pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
+                    String langCode=SharedPreferenceWriter.getInstance(LoginActivity.this).getString(GlobalVariables.langCode);
+                    if(langCode.equalsIgnoreCase("ar"))
+                    {
+                        Log.e("X", String.valueOf(event.getX()));
 
+
+                     //   Log.e("where", String.valueOf(pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())-pass_ed.getPaddingLeft());
+
+                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+pass_ed.getPaddingLeft()+pass_ed.getPaddingRight()+pass_ed.getPaddingBottom()+pass_ed.getPaddingTop()+pass_ed.getPaddingEnd()+pass_ed.getPaddingEnd()) {
+                            if(clickcount % 2 ==0)
+                            {
+                                clickcount=clickcount+1;
+                                pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon, 0, 0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount=clickcount+1;
+                                pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.un_view_icon, 0, 0, 0);
+                                return true;
+
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+
+                        if (event.getRawX() >= (pass_ed.getRight() - pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if(clickcount % 2 ==0)
+                            {
+                                clickcount=clickcount+1;
+                                pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount=clickcount+1;
+                                pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
+
+
+                            }
 
                         }
 
                     }
+
                 }
 
 
@@ -158,6 +203,8 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
         loginBtn.setOnClickListener(this::OnClick);
         dailogHelper=new ProgressDailogHelper(this,"");
         constraintLayout.getViewTreeObserver().addOnGlobalLayoutListener(this);
+        validation=new Validation(this);
+        langCode=SharedPreferenceWriter.getInstance(this).getString(GlobalVariables.langCode);
     }
 
     @OnClick()
@@ -196,23 +243,20 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
         EditText phone_ed=dialog.findViewById(R.id.phone_ed);
         TextView countrycode_txt=dialog.findViewById(R.id.countrycode_txt);
         LinearLayout close_ll=dialog.findViewById(R.id.close_ll);
+        CountryCodePicker ccode=dialog.findViewById(R.id.ccode);
         Button submitbtn =dialog.findViewById(R.id.submitbtn);
-
-        countrycode_txt.setOnClickListener(new View.OnClickListener() {
+        ccode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
-            public void onClick(View v) {
-                CountryPickerDialog countryPicker = new CountryPickerDialog(LoginActivity.this, new CountryPickerCallbacks() {
-                    @Override
-                    public void onCountrySelected(Country country, int flagResId) {
-                        countrycode_txt.setText("+"+country.getDialingCode());
-                        countrycode=countrycode_txt.getText().toString();
-                        // TODO handle callback
-                    }
-                });
-                countryPicker.show();
-
+            public void onCountrySelected() {
+                countrycode_txt.setText("+"+ccode.getSelectedCountryCodeWithPlus());
+                countrycode=countrycode_txt.getText().toString();
             }
         });
+
+
+
+
+
 
         close_ll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +268,8 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
         submitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Validation.isPhoneNumber(phone_ed,true))
+
+                if(validation.isPhoneNumber(phone_ed,true))
                 {
                     dailogHelper.showDailog();
                     CheckMobileNumber number=new CheckMobileNumber();
@@ -561,25 +606,53 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (newpass_ed.getRight() - newpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount3 % 2 ==0)
-                        {
-                            clickcount3=clickcount3+1;
-                            newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
+                    if(langCode.equalsIgnoreCase("ar"))
+                    {
+                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                            if(clickcount3 % 2 ==0)
+                            {
+                                clickcount3=clickcount3+1;
+                                newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon, 0, 0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount3=clickcount3+1;
+                                newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.un_view_icon, 0, 0, 0);
+                                return true;
+
+
+                            }
+
                         }
-                        else
-                        {
-                            clickcount3=clickcount3+1;
-                            newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
-
-
-                        }
-
                     }
+
+                    else
+                    {
+                        if (event.getRawX() >= (newpass_ed.getRight() - newpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if(clickcount3 % 2 ==0)
+                            {
+                                clickcount3=clickcount3+1;
+                                newpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount3=clickcount3+1;
+                                newpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                newpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
+
+
+                            }
+
+                        }
+                    }
+
+
                 }
 
 
@@ -596,25 +669,54 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (confirm_pass_ed.getRight() - confirm_pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount2 % 2 ==0)
-                        {
-                            clickcount2=clickcount2+1;
-                            confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
+                    if(langCode.equalsIgnoreCase("ar"))
+                    {
+                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                            if(clickcount2 % 2 ==0)
+                            {
+                                clickcount2=clickcount2+1;
+                                confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon,0,0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount2=clickcount2+1;
+                                confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds( R.drawable.un_view_icon,0,0, 0);
+                                return true;
+
+
+                            }
+
+
+
                         }
-                        else
-                        {
-                            clickcount2=clickcount2+1;
-                            confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
-
-
-                        }
-
                     }
+                    else
+                    {
+                        if (event.getRawX() >= (confirm_pass_ed.getRight() - confirm_pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if(clickcount2 % 2 ==0)
+                            {
+                                clickcount2=clickcount2+1;
+                                confirm_pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount2=clickcount2+1;
+                                confirm_pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                confirm_pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
+
+
+                            }
+
+                        }
+                    }
+
+
                 }
 
 
@@ -626,18 +728,18 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
     private boolean checkValidationPassword() {
         boolean ret=true;
-
-        if(!Validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass))
-        || !Validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass))
+        Validation validation=new Validation(this);
+        if(!validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass))
+        || !validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass))
         || !confirm_pass_ed.getText().toString().equalsIgnoreCase(newpass_ed.getText().toString().trim())
         )
         {
-            if(!Validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass)))
+            if(!validation.hasText(newpass_ed,getResources().getString(R.string.enter_new_pass)))
             {
                 ret=false;
                 newpass_ed.requestFocus();
             }
-            else if(!Validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass)))
+            else if(!validation.hasText(confirm_pass_ed,getResources().getString(R.string.enter_confirm_pass)))
             {
                 ret=false;
                 confirm_pass_ed.requestFocus();
@@ -830,7 +932,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
          login.setUsername(username_ed.getText().toString().trim());
          login.setPassword(pass_ed.getText().toString().trim());
          login.setDeviceType(GlobalVariables.device_type);
-         login.setLangCode("en");
+         login.setLangCode(GlobalVariables.arabicCode);
          login.setDeviceToken(SharedPreferenceWriter.getInstance(LoginActivity.this).getString(GlobalVariables.deviceToken));
          Call<Login> call=api_service.forecasterLogin(login);
          call.enqueue(new Callback<Login>() {
@@ -841,7 +943,31 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
                      Login server_response=response.body();
                      if(server_response.getStatus().equalsIgnoreCase("SUCCESS")) {
                          dailogHelper.dismissDailog();
-                         LayoutInflater  layoutInflater= (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                         Locale locale=null;
+
+                         if(response.body().getData().getLanguage().equalsIgnoreCase(GlobalVariables.arabic))
+                         {
+                             locale = new Locale("ar");
+
+                         }else if(response.body().getData().getLanguage().equalsIgnoreCase(GlobalVariables.english))
+                         {
+                             locale = new Locale("en");
+                         }
+                         else if(response.body().getData().getLanguage().equalsIgnoreCase(GlobalVariables.urdu))
+                         {
+                             locale = new Locale("ur");
+
+                         }
+
+                         Locale.setDefault(locale);
+                         Configuration config = new Configuration();
+                         config.locale = locale;
+                         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                         SharedPreferenceWriter.getInstance(LoginActivity.this).writeStringValue(GlobalVariables.langCode, String.valueOf(locale));
+
+
+
+
                          setPreferences(server_response);
                          Intent intent=new Intent(LoginActivity.this,CategorySelectionActivity.class);
                          finish();
@@ -946,15 +1072,16 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
     private boolean checkValidation() {
         boolean ret=true;
-        if(!Validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name))
-        || !Validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
+        Validation validation=new Validation(this);
+        if(!validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name))
+        || !validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
         {
-            if(!Validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name)))
+            if(!validation.hasText(username_ed,this.getResources().getString(R.string.enter_user_name)))
             {
                 ret=false;
                 username_ed.requestFocus();
 
-            }else if(!Validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
+            }else if(!validation.hasText(pass_ed,getResources().getString(R.string.enter_password)))
             {
                 ret=false;
                 pass_ed.requestFocus();

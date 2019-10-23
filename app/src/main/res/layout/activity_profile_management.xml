@@ -49,7 +49,7 @@
             android:id="@+id/menu_ll"
             android:layout_width="@dimen/dp_55"
             android:layout_height="@dimen/dp_50"
-            android:gravity="left|center"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -344,11 +344,13 @@
             android:text="@string/gender"
             android:gravity="center_vertical"
             android:textSize="@dimen/dp_18"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:background="@drawable/edit_text_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
 
             <ImageView
             android:layout_width="0dp"
@@ -452,6 +454,7 @@
                         android:text="@string/category_type"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/dp_18"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -514,6 +517,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/psychological_counselling"
                         android:textSize="@dimen/dp_18"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

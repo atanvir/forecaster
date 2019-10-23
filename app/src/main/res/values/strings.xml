@@ -128,10 +128,9 @@
     <string name="pass_not_match">Confirm password does not match</string>
     <string name="psycho_counseling">Psychological Counselling</string>
     <string name="write_about_yourself">Please write about yourself</string>
-    <string name="select_bank">Select Bank</string>
     <string name="enter_profile_photo">Please Upload Profile Photo</string>
     <string name="pls_attach_doc">Please attach document</string>
-    <string name="pls_record_your_voice">Please record you voice</string>
+    <string name="pls_record_your_voice">Please record your voice</string>
     <string name="pls_upload_video">Please upload video</string>
     <string name="pls_select_bank">Please select bank</string>
     <string name="plz_enter_accnt_nmbr">Please enter account number</string>
@@ -139,6 +138,31 @@
     <string name="pls_enter_username">Please enter username</string>
     <string name="pls_enter_pass">Please enter password</string>
     <string name="please_check_terms_conditions">Please check the term and conditions check box</string>
-
+    <string name="you_cannot_send_first_msg">You cannot send first message</string>
+    <string name="self_development_counselling">Self Development Counselling</string>
+    <string name="family_counselling">Family Counselling</string>
+    <string name="parent_counselling">Parent Counselling</string>
+    <string name="dreamer">Dreamer</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="months_ago">months ago</string>
+    <string name="days_ago">days ago</string>
+    <string name="day_ago">day ago</string>
+    <string name="hour_ago">hour ago</string>
+    <string name="marital_status">Marital status</string>
+    <string name="details">Details</string>
+    <string name="questions">Questions</string>
+    <string name="recorded_voice">Recorded voice</string>
+    <string name="select_bank" >Select Bank</string>
+    <string name="upto_secounds">You can record upto 30 secounds</string>
+    <string name="six_digits">Your password must be at least of six digits</string>
+    <string name="max_eight_digits">Your password need not be maximum of eight digits</string>
+    <string name="password_need_not_be_same_username">Your password need not be same as username</string>
+    <string name="not_valid_email">Not a valid Email format eg: abc@domain.com</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="upload_photo">Upload photo</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="enter_your_concern">Please enter your concern</string>
 
 </resources>

@@ -46,6 +46,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.hbb20.CountryCodePicker;
 import com.heetch.countrypicker.Country;
 import com.heetch.countrypicker.CountryPickerCallbacks;
 import com.heetch.countrypicker.CountryPickerDialog;
@@ -70,6 +71,8 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.pass_ed) EditText pass_ed;
     @BindView(R.id.conpass_ed) EditText conpass_ed;
     @BindView(R.id.countrycode_txt) TextView countrycode_txt;
+    @BindView(R.id.ccode)
+    CountryCodePicker ccode;
     EditText first_ed,secound_ed,third_ed,fourth_ed,fifth_ed,sixth_ed;
     long clickcount11=0;
     int clickcount=0;
@@ -77,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth auth;
     String countrycode="";
     private ProgressDailogHelper dailogHelper;
+    String langCode="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,25 +107,53 @@ public class SignupActivity extends AppCompatActivity {
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (conpass_ed.getRight() - conpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount % 2 ==0)
-                        {
-                            clickcount=clickcount+1;
-                            conpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            conpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
-                        }
-                        else
-                        {
-                            clickcount=clickcount+1;
-                            conpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            conpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
+                    if(langCode.equalsIgnoreCase("ar"))
+                    {
+                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+conpass_ed.getPaddingLeft()+conpass_ed.getPaddingRight()+conpass_ed.getPaddingBottom()+conpass_ed.getPaddingTop()+conpass_ed.getPaddingEnd()+conpass_ed.getPaddingEnd()) {
+                            if(clickcount % 2 ==0)
+                            {
+                                clickcount=clickcount+1;
+                                conpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                conpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon, 0, 0, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount=clickcount+1;
+                                conpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                conpass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.un_view_icon, 0, 0, 0);
+                                return true;
 
+
+                            }
 
                         }
 
                     }
+                    else
+                    {
+                        if (event.getRawX() >= (conpass_ed.getRight() - conpass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if(clickcount % 2 ==0)
+                            {
+                                clickcount=clickcount+1;
+                                conpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                conpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            }
+                            else
+                            {
+                                clickcount=clickcount+1;
+                                conpass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                conpass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
+
+
+                            }
+
+                        }
+                    }
+
+
                 }
 
 
@@ -141,26 +173,44 @@ public class SignupActivity extends AppCompatActivity {
 
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (pass_ed.getRight() - pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        if(clickcount % 2 ==0)
-                        {
-                            clickcount=clickcount+1;
-                            pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
-                            return true;
+                    if (langCode.equalsIgnoreCase("ar")) {
+                        if (event.getRawX() <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width()) + pass_ed.getPaddingLeft() + pass_ed.getPaddingRight() + pass_ed.getPaddingBottom() + pass_ed.getPaddingTop() + pass_ed.getPaddingEnd() + pass_ed.getPaddingEnd()) {
+                            if (clickcount % 2 == 0) {
+                                clickcount = clickcount + 1;
+                                pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.view_icon, 0, 0, 0);
+                                return true;
+                            } else {
+                                clickcount = clickcount + 1;
+                                pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.un_view_icon, 0, 0, 0);
+                                return true;
+
+
+                            }
+
                         }
-                        else
-                        {
-                            clickcount=clickcount+1;
-                            pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
-                            return true;
+                    } else {
+                        if (event.getRawX() >= (pass_ed.getRight() - pass_ed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            if (clickcount % 2 == 0) {
+                                clickcount = clickcount + 1;
+                                pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.view_icon, 0);
+                                return true;
+                            } else {
+                                clickcount = clickcount + 1;
+                                pass_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                pass_ed.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.un_view_icon, 0);
+                                return true;
 
+
+                            }
 
                         }
-
                     }
                 }
+
+
 
 
                 return false;
@@ -176,6 +226,7 @@ public class SignupActivity extends AppCompatActivity {
         check_im.setOnClickListener(this::OnClick);
         countrycode_txt.setOnClickListener(this::OnClick);
         dailogHelper=new ProgressDailogHelper(this,"");
+        langCode=SharedPreferenceWriter.getInstance(SignupActivity.this).getString(GlobalVariables.langCode);
 
     }
 
@@ -218,19 +269,33 @@ public class SignupActivity extends AppCompatActivity {
                 break;
 
             case R.id.countrycode_txt:
-                CountryPickerDialog countryPicker = new CountryPickerDialog(SignupActivity.this, new CountryPickerCallbacks() {
+                ccode.performClick();
+//
+//                CountryPickerDialog countryPicker = new CountryPickerDialog(SignupActivity.this, new CountryPickerCallbacks() {
+//                    @Override
+//                    public void onCountrySelected(Country country, int flagResId) {
+//                        //country.toString();
+//                        countrycode_txt.setText("+"+country.getDialingCode());
+//                        countrycode=countrycode_txt.getText().toString();
+//
+//
+//                        // TODO handle callback
+//                    }
+//                });
+//                countryPicker.show();
+
+
+                break;
+
+            case R.id.ccode:
+                ccode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
                     @Override
-                    public void onCountrySelected(Country country, int flagResId) {
-                        //country.toString();
-                        countrycode_txt.setText("+"+country.getDialingCode());
+                    public void onCountrySelected() {
+                        countrycode_txt.setText(ccode.getSelectedCountryCodeWithPlus());
                         countrycode=countrycode_txt.getText().toString();
 
-
-                        // TODO handle callback
                     }
                 });
-                countryPicker.show();
-
 
                 break;
         }
@@ -708,42 +773,42 @@ public class SignupActivity extends AppCompatActivity {
 
     private boolean checkValidation() {
         boolean ret=true;
-
-        if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
-        || !Validation.hasText(username_ed,getString(R.string.pls_enter_username))
-        || !Validation.email(email_ed,getString(R.string.please_enter_email))
-        || !Validation.isPhoneNumber(phone_ed,true)
-        || !Validation.hasText(pass_ed,getString(R.string.pls_enter_pass))
-        || !Validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password))
+        Validation validation=new Validation(this);
+        if(!validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
+        || !validation.hasText(username_ed,getString(R.string.pls_enter_username))
+        || !validation.email(email_ed,getString(R.string.please_enter_email))
+        || !validation.isPhoneNumber(phone_ed,true)
+        || !validation.hasText(pass_ed,getString(R.string.pls_enter_pass))
+        || !validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password))
         || !conpass_ed.getText().toString().equalsIgnoreCase(pass_ed.getText().toString().trim())
         || clickcount%2==0)
         {
-            if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
+            if(!validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
             {
                 ret=false;
                 full_name_ed.requestFocus();
             }
-            else if(!Validation.hasText(username_ed,getString(R.string.pls_enter_username)))
+            else if(!validation.hasText(username_ed,getString(R.string.pls_enter_username)))
             {
                 ret=false;
                 username_ed.requestFocus();
             }
-            else if(!Validation.email(email_ed,getString(R.string.please_enter_email)))
+            else if(!validation.email(email_ed,getString(R.string.please_enter_email)))
             {
                 ret=false;
                 email_ed.requestFocus();
             }
-            else if(!Validation.isPhoneNumber(phone_ed,true))
+            else if(!validation.isPhoneNumber(phone_ed,true))
             {
                 ret=false;
                 phone_ed.requestFocus();
             }
-            else if(!Validation.hasText(pass_ed,getString(R.string.pls_enter_pass)))
+            else if(!validation.hasText(pass_ed,getString(R.string.pls_enter_pass)))
             {
                 ret=false;
                 pass_ed.requestFocus();
             }
-            else if(!Validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password)))
+            else if(!validation.hasText(conpass_ed,getString(R.string.please_enter_confirm_password)))
             {
                 ret=false;
                 conpass_ed.requestFocus();

@@ -32,6 +32,15 @@ public class ChatList implements Parcelable {
     @Expose
     private String senderId;
 
+    @SerializedName("chatCloseStatus")
+    @Expose
+    private Boolean chatCloseStatus;
+
+    @SerializedName("lastMessage")
+    @Expose
+    private String lastMessage;
+
+
     protected ChatList(Parcel in) {
         status = in.readString();
         responseMessage = in.readString();
@@ -39,10 +48,9 @@ public class ChatList implements Parcelable {
         forecasterId = in.readString();
         roomId = in.readString();
         senderId = in.readString();
-    }
-    public ChatList()
-    {
-
+        byte tmpChatCloseStatus = in.readByte();
+        chatCloseStatus = tmpChatCloseStatus == 0 ? null : tmpChatCloseStatus == 1;
+        lastMessage = in.readString();
     }
 
     public static final Creator<ChatList> CREATOR = new Creator<ChatList>() {
@@ -56,6 +64,31 @@ public class ChatList implements Parcelable {
             return new ChatList[size];
         }
     };
+
+    public Boolean getChatCloseStatus() {
+        return chatCloseStatus;
+    }
+
+    public void setChatCloseStatus(Boolean chatCloseStatus) {
+        this.chatCloseStatus = chatCloseStatus;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+
+
+    public ChatList()
+    {
+
+    }
+
+
 
     public String getRoomId() {
         return roomId;
@@ -105,6 +138,7 @@ public class ChatList implements Parcelable {
         this.data = data;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -118,5 +152,7 @@ public class ChatList implements Parcelable {
         dest.writeString(forecasterId);
         dest.writeString(roomId);
         dest.writeString(senderId);
+        dest.writeByte((byte) (chatCloseStatus == null ? 0 : chatCloseStatus ? 1 : 2));
+        dest.writeString(lastMessage);
     }
 }

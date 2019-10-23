@@ -56,7 +56,16 @@ public class GlobalVariables {
     public static String messageType="messageType";
     public static String profile="profile";
     public static String langCode="lang_code";
+    public static String englishCode="en";
+    public static String arabicCode="ar";
+    public static String urduCode="ur";
+
+
 
     public static String url="url";
     public static String type="type";
+    public static String arabic="arabic";
+    public static String english="english";
+    public static String urdu="urdu";
+    public static String title="title";
 }

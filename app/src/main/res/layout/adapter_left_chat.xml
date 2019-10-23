@@ -85,8 +85,6 @@
             android:layout_marginBottom="8dp"
             android:src="@drawable/stop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/seekBar2"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +110,7 @@
             app:layout_constraintEnd_toStartOf="@+id/timer_txt"
             app:layout_constraintStart_toEndOf="@+id/seekBar2"
             app:layout_constraintTop_toTopOf="@+id/seekBar2"
-            app:srcCompat="@drawable/media_play_symbol" />
+            app:srcCompat="@drawable/media_play_symbol_bitmap" />
 
 
         <ImageView

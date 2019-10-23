@@ -432,7 +432,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         }
         else
         {
-            Toast.makeText(this,"Please check your internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.check_internet),Toast.LENGTH_LONG).show();
 
 
         }
@@ -738,7 +738,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         }
         else
         {
-            Toast toast=Toast.makeText(this,"Please check your internet connection",Toast.LENGTH_LONG);
+            Toast toast=Toast.makeText(this,getString(R.string.check_internet),Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER,0,0);
             toast.show();
 
@@ -750,18 +750,18 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     private boolean checkValidation() {
         boolean ret=true;
-
-        if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
-        || !Validation.email(email_ed,getString(R.string.please_enter_email))
+        Validation validation=new Validation(this);
+        if(!validation.hasText(full_name_ed,getString(R.string.please_enter_fullname))
+        || !validation.email(email_ed,getString(R.string.please_enter_email))
         || gender_txt.getText().toString().equalsIgnoreCase(getString(R.string.gender))
-        || !Validation.hasText(dob_ed,getString(R.string.please_enter_dob))
+        || !validation.hasText(dob_ed,getString(R.string.please_enter_dob))
         || categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.category_type))
         || psychological_txt.getText().toString().equalsIgnoreCase(getString(R.string.please_select))
-        || !Validation.hasText(about_us_ed,getString(R.string.please_enter_about_us))
-        || !Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
+        || !validation.hasText(about_us_ed,getString(R.string.please_enter_about_us))
+        || !validation.hasText(price_per_ed,getString(R.string.please_enter_ppq))
         )
         {
-            if(!Validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
+            if(!validation.hasText(full_name_ed,getString(R.string.please_enter_fullname)))
             {
                 ret=false;
                 full_name_ed.requestFocus();
@@ -769,7 +769,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 categorytype_txt.setError(null);
 
             }
-            else if(!Validation.email(email_ed,getString(R.string.please_enter_email)))
+            else if(!validation.email(email_ed,getString(R.string.please_enter_email)))
             {
                 ret=false;
                 email_ed.requestFocus();
@@ -785,7 +785,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 psychological_txt.setError(null);
                 categorytype_txt.setError(null);
 
-            }else if(!Validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
+            }else if(!validation.hasText(dob_ed,getString(R.string.please_enter_dob)))
             {
                 ret=false;
                 gender_txt.setError(null);
@@ -808,14 +808,14 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                 psychological_txt.setFocusable(true);
                 psychological_txt.requestFocus();
 
-            }else if(!Validation.hasText(about_us_ed,getString(R.string.please_enter_about_us)))
+            }else if(!validation.hasText(about_us_ed,getString(R.string.please_enter_about_us)))
             {
                 ret=false;
                 about_us_ed.requestFocus();
                 psychological_txt.setError(null);
                 categorytype_txt.setError(null);
 
-            }else if(!Validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
+            }else if(!validation.hasText(price_per_ed,getString(R.string.please_enter_ppq)))
             {
                 ret=false;
                 price_per_ed.requestFocus();
@@ -831,11 +831,12 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     private void PsychologicalSpinner() {
         psychologicalList = new ArrayList<>();
-        psychologicalList.add("Please select");
-        psychologicalList.add("Self Development Counselling");
-        psychologicalList.add("Family Counselling");
-        psychologicalList.add("Psychological Counselling");
-        psychologicalList.add("Parent Counselling");
+
+        psychologicalList.add(getString(R.string.please_select));
+        psychologicalList.add(getString(R.string.self_development_counselling));
+        psychologicalList.add(getString(R.string.family_counselling));
+        psychologicalList.add(getString(R.string.psychological_counselling));
+        psychologicalList.add(getString(R.string.parent_counselling));
 
 
         ArrayAdapter genderArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, psychologicalList) {
@@ -872,7 +873,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     private void BankSpinner() {
         bankList = new ArrayList<>();
-        bankList.add("Please select");
+        bankList.add(getString(R.string.please_select));
         bankList.add("State Bank Of India");
         bankList.add("Punjab National Bank");
         bankList.add("ICIC Bank");
@@ -913,11 +914,9 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     private void CategorySpinner() {
         categoryList = new ArrayList<>();
-        categoryList.add("Please select");
-        categoryList.add("Dreamer");
-        categoryList.add("Psychological Counselling");
-
-
+        categoryList.add(getString(R.string.please_select));
+        categoryList.add(getString(R.string.dreamer));
+        categoryList.add(getString(R.string.psychological_counselling));
 
         ArrayAdapter genderArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categoryList) {
             @Override
@@ -955,9 +954,9 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
     private void GenderSpinner() {
         genderlist = new ArrayList<>();
-        genderlist.add("Please select");
-        genderlist.add("Male");
-        genderlist.add("Female");
+        genderlist.add(getString(R.string.please_select));
+        genderlist.add(getString(R.string.male));
+        genderlist.add(getString(R.string.female));
 
         ArrayAdapter genderArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderlist) {
             @Override
@@ -1138,7 +1137,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
         ImageView gallery = (ImageView) popupView.findViewById(R.id.gallery);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Upload photo");
+        alertDialog.setTitle(getString(R.string.upload_photo));
         alertDialog.setView(popupView);
         final AlertDialog dialog = alertDialog.show();
         alertDialog.setCancelable(true);
@@ -1497,7 +1496,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                     boolean readAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
 
                     if (cameraAccepted && writeAccepted && readAccepted) {
-                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show();
                         if(SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).getString("Camera").equalsIgnoreCase("Yes"))
                         {
                             profileBottomLayout();
@@ -1511,7 +1510,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
 
                     }else {
 
-                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -1530,7 +1529,7 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                     }
                     else
                     {
-                        Toast.makeText(ProfileManagementActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ProfileManagementActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
 
                     }
                 }

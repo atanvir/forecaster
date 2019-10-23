@@ -83,27 +83,41 @@
                 android:text="+91"
                 android:textAlignment="center"
                 android:textSize="@dimen/dp_18"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                app:hideNameCode="true"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:showFlag="false"
+                app:textSize="14sp" />
 
 
             <com.forecaster.View.AvenirRegularEditText
                 android:id="@+id/phone_ed"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:inputType="number"
-                android:hint="@string/phone_number"
-                android:gravity="center|start"
-                android:textDirection="ltr"
-                android:textAlignment="viewStart"
                 android:background="@android:color/transparent"
+                android:gravity="center|start"
+                android:hint="@string/phone_number"
+                android:inputType="number"
+                android:textAlignment="viewStart"
+                android:textDirection="ltr"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/countrycode_txt"
+                app:layout_constraintStart_toEndOf="@+id/ccode"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

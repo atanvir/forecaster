@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.forecaster.Activity.ChatDetailsActivity;
 import com.forecaster.Activity.NotificationActivity;
+import com.forecaster.Activity.RequestManagementActivity;
 import com.forecaster.Modal.Notification;
 import com.forecaster.R;
 import com.forecaster.Utility.GlobalVariables;
@@ -55,7 +56,17 @@ public class FirebaseMessageService extends FirebaseMessagingService {
                 Log.e("1","1");
                 sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
 
-            }else {
+            }else if(remoteMessage.getData().get("type").equalsIgnoreCase("booking"))
+             {
+                 Intent intent = new Intent("FCM");
+                 intent.putExtra("FCM", "Yes");
+                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                 Intent push = new Intent(this, RequestManagementActivity.class);
+                 sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
+
+             }
+
+             else {
                 Intent intent = new Intent("FCM");
                 intent.putExtra("FCM", "Yes");
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
@@ -87,6 +98,14 @@ public class FirebaseMessageService extends FirebaseMessagingService {
                 push.putExtra(GlobalVariables.name,remoteMessage.getData().get("name"));
                 push.putExtra(GlobalVariables.profile,remoteMessage.getData().get("profile"));
                 Log.e("3","3");
+                NotificationUtils.clearNotifications(this);
+          //      sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
+
+            }
+            else if(remoteMessage.getData().get("type").equalsIgnoreCase("booking"))
+            {
+
+                Intent push = new Intent(this, RequestManagementActivity.class);
                 sendNotification((dataMap.get("title") == null ? "Boushra" : dataMap.get("title")), dataMap.get("body"), push);
 
             }
