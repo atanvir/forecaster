@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
 
                      //   Log.e("where", String.valueOf(pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())-pass_ed.getPaddingLeft());
 
-                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+pass_ed.getPaddingLeft()+pass_ed.getPaddingRight()+pass_ed.getPaddingBottom()+pass_ed.getPaddingTop()+pass_ed.getPaddingEnd()+pass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+pass_ed.getPaddingLeft()+pass_ed.getPaddingRight()+pass_ed.getPaddingBottom()+pass_ed.getPaddingTop()+pass_ed.getPaddingEnd()) {
                             if(clickcount % 2 ==0)
                             {
                                 clickcount=clickcount+1;
@@ -608,7 +608,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(langCode.equalsIgnoreCase("ar"))
                     {
-                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()) {
                             if(clickcount3 % 2 ==0)
                             {
                                 clickcount3=clickcount3+1;
@@ -671,7 +671,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(langCode.equalsIgnoreCase("ar"))
                     {
-                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()) {
                             if(clickcount2 % 2 ==0)
                             {
                                 clickcount2=clickcount2+1;

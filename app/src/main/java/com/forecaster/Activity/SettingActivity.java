@@ -586,7 +586,7 @@ public class SettingActivity extends AppCompatActivity {
                     String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
                     if (langCode.equalsIgnoreCase("ar")) {
 
-                        if (event.getRawX()  <= (oldpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+oldpass_ed.getPaddingLeft()+oldpass_ed.getPaddingRight()+oldpass_ed.getPaddingBottom()+oldpass_ed.getPaddingTop()+oldpass_ed.getPaddingEnd()+oldpass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (oldpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+oldpass_ed.getPaddingLeft()+oldpass_ed.getPaddingRight()+oldpass_ed.getPaddingBottom()+oldpass_ed.getPaddingTop()+oldpass_ed.getPaddingEnd()) {
                             if (clickcount3 % 2 == 0) {
                                 clickcount3 = clickcount3 + 1;
                                 oldpass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -644,7 +644,7 @@ public class SettingActivity extends AppCompatActivity {
                         String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
                         if(langCode.equalsIgnoreCase("ar"))
                         {
-                            if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()+newpass_ed.getPaddingEnd()) {
+                            if (event.getRawX()  <= (newpass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+newpass_ed.getPaddingLeft()+newpass_ed.getPaddingRight()+newpass_ed.getPaddingBottom()+newpass_ed.getPaddingTop()+newpass_ed.getPaddingEnd()) {
                                 if(clickcount2 % 2 ==0)
                                 {
                                     clickcount2=clickcount2+1;
@@ -709,7 +709,7 @@ public class SettingActivity extends AppCompatActivity {
                     String langCode = SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode);
                     if(langCode.equalsIgnoreCase("ar"))
                     {
-                        if (event.getRawX()  <= (confirm_pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+confirm_pass_ed.getPaddingLeft()+confirm_pass_ed.getPaddingRight()+confirm_pass_ed.getPaddingBottom()+confirm_pass_ed.getPaddingTop()+confirm_pass_ed.getPaddingEnd()+confirm_pass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (confirm_pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+confirm_pass_ed.getPaddingLeft()+confirm_pass_ed.getPaddingRight()+confirm_pass_ed.getPaddingBottom()+confirm_pass_ed.getPaddingTop()+confirm_pass_ed.getPaddingEnd()) {
                             if(clickcount4 % 2 ==0)
                             {
                                 clickcount4=clickcount4+1;

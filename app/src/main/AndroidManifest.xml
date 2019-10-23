@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
+
     <uses-feature android:name="android.hardware.fingerprint"
         android:required="true"/>
 
@@ -100,7 +101,6 @@
         </activity>
         <activity android:name=".Activity.PinActivity" />
         <activity android:name=".Activity.WebviewAcitivity" />
-        <activity android:name=".Utility.Validation" />
 
 
         <service

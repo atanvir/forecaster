@@ -249,12 +249,12 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
              intent.putExtra(GlobalVariables.title,context.getString(R.string.about_us));
              if(langCode.equalsIgnoreCase("ar"))
              {
-                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs1");
+                 intent.putExtra(GlobalVariables.url,"http://bushraapp.com/aboutUsFar.html");
 
              }
              else
              {
-                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/aboutUs");
+                 intent.putExtra(GlobalVariables.url, "http://bushraapp.com/aboutUsFen.html");
              }
 
              startActivity(intent);
@@ -267,13 +267,13 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
              intent.putExtra(GlobalVariables.title,context.getString(R.string.terms_and_conditions));
              if(langCode.equalsIgnoreCase("ar"))
              {
-                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms1");
+                 intent.putExtra(GlobalVariables.url,"http://bushraapp.com/terms&conditionsFar.html");
 
 
              }
              else
              {
-                 intent.putExtra(GlobalVariables.url,"http://18.218.65.12:4002/terms");
+                 intent.putExtra(GlobalVariables.url,"http://bushraapp.com/terms&conditionsFen.html");
              }
 
              startActivity(intent);

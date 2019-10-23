@@ -109,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(langCode.equalsIgnoreCase("ar"))
                     {
-                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+conpass_ed.getPaddingLeft()+conpass_ed.getPaddingRight()+conpass_ed.getPaddingBottom()+conpass_ed.getPaddingTop()+conpass_ed.getPaddingEnd()+conpass_ed.getPaddingEnd()) {
+                        if (event.getRawX()  <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())+conpass_ed.getPaddingLeft()+conpass_ed.getPaddingRight()+conpass_ed.getPaddingBottom()+conpass_ed.getPaddingTop()+conpass_ed.getPaddingEnd()) {
                             if(clickcount % 2 ==0)
                             {
                                 clickcount=clickcount+1;
@@ -174,7 +174,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if (langCode.equalsIgnoreCase("ar")) {
-                        if (event.getRawX() <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width()) + pass_ed.getPaddingLeft() + pass_ed.getPaddingRight() + pass_ed.getPaddingBottom() + pass_ed.getPaddingTop() + pass_ed.getPaddingEnd() + pass_ed.getPaddingEnd()) {
+                        if (event.getRawX() <= (pass_ed.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width()) + pass_ed.getPaddingLeft() + pass_ed.getPaddingRight() + pass_ed.getPaddingBottom() + pass_ed.getPaddingTop() + pass_ed.getPaddingEnd()) {
                             if (clickcount % 2 == 0) {
                                 clickcount = clickcount + 1;
                                 pass_ed.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
