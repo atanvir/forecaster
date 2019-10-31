@@ -8,10 +8,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,8 +22,13 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -40,6 +48,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.hbb20.CountryCodePicker;
 
 import java.util.Locale;
 import java.util.logging.Handler;
@@ -71,7 +80,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
     private void init(Activity activity) {
         if(activity == null)
         {
-            NavigationView navigationView=  findViewById(R.id.nav_view);
+
             mDrawerLayout= findViewById(R.id.drawer);
             toolbar= findViewById(R.id.toolbar);
             burger= findViewById(R.id.burger);
@@ -107,7 +116,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         }
         else
         {
-            NavigationView navigationView=  activity.findViewById(R.id.nav_view);
             mDrawerLayout= activity.findViewById(R.id.drawer);
             burger= activity.findViewById(R.id.burger);
             itemHomes=activity.findViewById(R.id.itemHomes);
@@ -128,6 +136,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             itemSettings.setOnClickListener(this);
             itemTermConditions.setOnClickListener(this);
             itemShareApp.setOnClickListener(this);
+
         }
 
     }
@@ -146,7 +155,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         init(activity);
     }
 
-    String langCode="";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -154,12 +162,9 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setUpLanguage();
         setContentView(R.layout.activity_main);
-
         SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).writeStringValue(GlobalVariables.islogin, "Yes");
-        langCode=SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode);
         init(activity);
-        settingDailog();
-        Activity=getIntent().getStringExtra("SettingActivity");
+        Activity=getIntent().getStringExtra("Activity");
         onlineStatus = SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getBoolean(GlobalVariables.onlineStatus);
         if (onlineStatus) {
             onlineStatus_iv.setImageDrawable(getDrawable(R.drawable.on));
@@ -172,6 +177,8 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             {
                 DrawerLayout drawer = findViewById(R.id.drawer);
                 drawer.openDrawer(GravityCompat.START);
+                setUpLanguage();
+
             }
         }
 
@@ -179,23 +186,18 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
 
     }
 
-    private void settingDailog() {
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
 
     private void setUpLanguage() {
-        Locale locale=new Locale(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode));
+        Locale locale=new Locale(SharedPreferenceWriter.getInstance(context).getString(GlobalVariables.langCode));
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
     }
 
 
@@ -206,7 +208,27 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             drawer.closeDrawer(GravityCompat.START);
 
         } else {
-            super.onBackPressed();
+            Dialog dialog = new Dialog(context, android.R.style.Theme_Black);
+            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.exit_popup);
+            Button yesBtn=dialog.findViewById(R.id.yesBtn);
+            Button noBtn=dialog.findViewById(R.id.noBtn);
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
         }
     }
 
@@ -238,14 +260,14 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
          }
          else if(view ==requestmtLL)
          {
-
              Intent intent=new Intent(CategorySelectionActivity.this, RequestManagementActivity.class);
              finish();
              startActivity(intent);
          }
          else if(view ==itemAboutApp)
          {
-             Intent intent=new Intent(CategorySelectionActivity.this, WebviewAcitivity.class);
+             Intent intent=new Intent(context, WebviewAcitivity.class);
+             String langCode=SharedPreferenceWriter.getInstance(context).getString(GlobalVariables.langCode);
              intent.putExtra(GlobalVariables.title,context.getString(R.string.about_us));
              if(langCode.equalsIgnoreCase("ar"))
              {
@@ -257,26 +279,25 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                  intent.putExtra(GlobalVariables.url, "http://bushraapp.com/aboutUsFen.html");
              }
 
-             startActivity(intent);
+             context.startActivity(intent);
 
          }
 
          else if(view==itemTermConditions)
          {
-             Intent intent=new Intent(CategorySelectionActivity.this,WebviewAcitivity.class);
+
+             Intent intent=new Intent(context,WebviewAcitivity.class);
              intent.putExtra(GlobalVariables.title,context.getString(R.string.terms_and_conditions));
+             String langCode=SharedPreferenceWriter.getInstance(context).getString(GlobalVariables.langCode);
              if(langCode.equalsIgnoreCase("ar"))
              {
                  intent.putExtra(GlobalVariables.url,"http://bushraapp.com/terms&conditionsFar.html");
-
-
              }
              else
              {
                  intent.putExtra(GlobalVariables.url,"http://bushraapp.com/terms&conditionsFen.html");
              }
-
-             startActivity(intent);
+            context.startActivity(intent);
 
          }
          else if(view ==paymentmtLL)
@@ -331,7 +352,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
             UpdateStatus status=new UpdateStatus();
             status.setForecasterId(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables._id));
             status.setOnlineStatus(onlineStatus);
-            status.setLangCode("en");
+            status.setLangCode(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode));
             Call<UpdateStatus> call=api_service.updateOnlineStatus(status,SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.jwtToken));
             call.enqueue(new Callback<UpdateStatus>() {
                 @Override
@@ -391,7 +412,7 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
         RetroInterface api_service= RetrofitInit.getConnect().createConnection();
         Setting setting=new Setting();
         setting.setForecasterId(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables._id));
-        setting.setLangCode("en");
+        setting.setLangCode(SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.langCode));
         Call<Setting> call=api_service.getForecasterSettings(setting,SharedPreferenceWriter.getInstance(CategorySelectionActivity.this).getString(GlobalVariables.jwtToken));
         call.enqueue(new Callback<Setting>() {
             @Override
@@ -405,8 +426,6 @@ public class CategorySelectionActivity extends AppCompatActivity implements View
                         dailogHelper.dismissDailog();
                         Intent intent=new Intent(context,SettingActivity.class);
                         SharedPreferenceWriter.getInstance(context).writeStringValue(GlobalVariables.language,server_response.getData().getLanguage());
-
-
                         context.startActivity(intent);
                     }
                     else if(server_response.getStatus().equalsIgnoreCase("FAILURE"))

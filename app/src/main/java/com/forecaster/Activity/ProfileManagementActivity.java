@@ -355,6 +355,8 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
                             phone_ed.setText(server_response.getData().getMobileNumber());
                             gender_txt.setText(server_response.getData().getGender());
                             dob_ed.setText(server_response.getData().getDob());
+
+
                             if(server_response.getData().getCategoryName().equalsIgnoreCase("Dreamer"))
                             {
                                 psychological_cv.setVisibility(View.GONE);
@@ -637,6 +639,8 @@ public class ProfileManagementActivity extends AppCompatActivity implements Seek
             profile.setGender(gender_txt.getText().toString().trim());
             profile.setDob(dob_ed.getText().toString().trim());
             profile.setAboutUs(about_us_ed.getText().toString().trim());
+            profile.setLangCode(SharedPreferenceWriter.getInstance(ProfileManagementActivity.this).getString(GlobalVariables.langCode));
+
             if(categorytype_txt.getText().toString().equalsIgnoreCase("Dreamer"))
             {
                 profile.setCategoryName(categorytype_txt.getText().toString());

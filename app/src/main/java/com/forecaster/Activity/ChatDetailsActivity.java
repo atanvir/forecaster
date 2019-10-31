@@ -273,11 +273,11 @@ public class ChatDetailsActivity extends AppCompatActivity {
     private void getChatHistoryApi() {
         if(new InternetCheck(ChatDetailsActivity.this).isConnect())
         {
-
             dailogHelper.showDailog();
             RetroInterface api_service=RetrofitInit.getConnect().createConnection();
             ChatHistory history=new ChatHistory();
             history.setRoomId(chatData.getRoomId());
+            history.setLangCode(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables.langCode));
             Log.e("new_id",chatData.getRoomId());
             Call<ChatHistory> call=api_service.getchatHistory(history,SharedPreferenceWriter.getInstance(ChatDetailsActivity.this).getString(GlobalVariables.jwtToken));
             call.enqueue(new Callback<ChatHistory>() {
@@ -335,23 +335,27 @@ public class ChatDetailsActivity extends AppCompatActivity {
                     String server_data = args[0].toString();
                     Log.e("data",server_data);
                     JSONObject data = null;
-                    if (server_data.equalsIgnoreCase("You have been sent request already to forecaster. Please wait for forecaster reply")) {
+                    String arabic="";
 
+                    if (server_data.equalsIgnoreCase("You have been sent request already to forecaster. Please wait for forecaster reply")) {
                         try {
-                            setUpPopup(server_data);
+                            arabic="لقد قمت بارسال طلب لمفسر الاحلام ، الرجاء الانتظار حتى يقوم بالرد .";
+                            setUpPopup(arabic);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                     else if(server_data.equalsIgnoreCase("Maximum time finish so can not chat now"))
                     {
+                        arabic="الوقت المحدد انتهى لا يمكنك المحادثة الان ";
                        // Toast.makeText(ChatDetailsActivity.this, server_data, Toast.LENGTH_SHORT).show();
-                        setUpPopup(server_data);
+                        setUpPopup(arabic);
 
                     }
                     else if(server_data.equalsIgnoreCase("You can not send first message"))
                     {
-                        setUpPopup(server_data);
+                        arabic=getString(R.string.you_cannot_send_first_msg);
+                        setUpPopup(arabic);
                     }else {
                         try {
                             data = new JSONObject(args[0].toString());

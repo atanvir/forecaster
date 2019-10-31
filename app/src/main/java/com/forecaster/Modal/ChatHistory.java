@@ -20,6 +20,18 @@ public class ChatHistory {
     @Expose
     private  String roomId;
 
+    @SerializedName("langCode")
+    @Expose
+    private String langCode;
+
+    public String getLangCode() {
+        return langCode;
+    }
+
+    public void setLangCode(String langCode) {
+        this.langCode = langCode;
+    }
+
     public String getStatus() {
         return status;
     }

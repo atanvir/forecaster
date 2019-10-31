@@ -1,8 +1,11 @@
 package com.forecaster.Activity;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.forecaster.R;
 import com.forecaster.Utility.GlobalVariables;
+import com.forecaster.Utility.SharedPreferenceWriter;
+
+import java.nio.file.WatchEvent;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,22 +26,17 @@ public class WebviewAcitivity extends AppCompatActivity implements View.OnClickL
     @BindView(R.id.webView) WebView webView;
     @BindView(R.id.back_ll) LinearLayout back_ll;
     @BindView(R.id.title_txt) TextView title_txt;
+    @BindView(R.id.back_im) ImageView back_im;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
-        title_txt.setText(getIntent().getStringExtra(GlobalVariables.title));
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(getIntent().getStringExtra(GlobalVariables.url));
+        title_txt.setText(getIntent().getStringExtra(GlobalVariables.title));
         back_ll.setOnClickListener(this);
-
-
-
-
-
-
 
     }
 
@@ -44,7 +46,10 @@ public class WebviewAcitivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId())
         {
             case R.id.back_ll:
-                finish();
+                Intent intent=new Intent(WebviewAcitivity.this,CategorySelectionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("Activity","Yes");
+                startActivity(intent);
                 break;
 
         }
@@ -52,4 +57,11 @@ public class WebviewAcitivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(WebviewAcitivity.this,CategorySelectionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("Activity","Yes");
+        startActivity(intent);
+    }
 }

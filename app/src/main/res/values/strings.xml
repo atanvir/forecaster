@@ -115,7 +115,7 @@
     <string name="confirm_password_not_match">Confirm passcode does d match</string>
     <string name="use_passcode">Use passcode</string>
     <string name="password_not_match">Password not matched</string>
-    <string name="login_successfull">Login Sucessful</string>
+    <string name="login_successfull">Login Sucessfull</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="just_now">Just now</string>
@@ -164,5 +164,17 @@
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="enter_your_concern">Please enter your concern</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="device_not_support_fingerprint">Your device doesn\'t support fingerprint authentication</string>
+    <string name="please_enable_fingerprint_permission">Please enable the fingerprint permission</string>
+    <string name="no_finger_configured">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings</string>
+    <string name="please_enable_lockscreen_security">Please enable lockscreen security in your device\'s Settings</string>
+    <string name="username_already_exists">Username already exists</string>
+    <string name="email_already_exists">Email already exist</string>
+    <string name="mobile_number_already_exists">Mobile number already exist</string>
+    <string name="are_you_sure">Are you sure want to exit ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

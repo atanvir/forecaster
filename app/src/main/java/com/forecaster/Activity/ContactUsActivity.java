@@ -98,7 +98,7 @@ public class ContactUsActivity extends AppCompatActivity {
         contactUs.setEmail(email_ed.getText().toString().trim());
         contactUs.setSelectedConcern(concern_ed.getText().toString().trim());
         contactUs.setMessage(message_ed.getText().toString().trim());
-        contactUs.setLangCode("en");
+        contactUs.setLangCode(SharedPreferenceWriter.getInstance(ContactUsActivity.this).getString(GlobalVariables.langCode));
         RetroInterface api_service=RetrofitInit.getConnect().createConnection();
         Call<ContactUs> call=api_service.contactUs(contactUs,SharedPreferenceWriter.getInstance(ContactUsActivity.this).getString(GlobalVariables.jwtToken));
         call.enqueue(new Callback<ContactUs>() {
@@ -172,17 +172,18 @@ public class ContactUsActivity extends AppCompatActivity {
                 ret=false;
                 email_ed.requestFocus();
 
-
             }
             else if(!validation.hasText(concern_ed,getString(R.string.enter_your_concern)))
             {
                 ret=false;
                 concern_ed.requestFocus();
+
             }
             else if(!validation.hasText(message_ed,getString(R.string.enter_your_message)))
             {
                 ret=false;
                 message_ed.requestFocus();
+
             }
 
 

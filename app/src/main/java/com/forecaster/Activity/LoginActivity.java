@@ -248,8 +248,8 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
         ccode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
-                countrycode_txt.setText("+"+ccode.getSelectedCountryCodeWithPlus());
-                countrycode=countrycode_txt.getText().toString();
+              //  countrycode_txt.setText("+"+ccode.getSelectedCountryCodeWithPlus());
+                countrycode=ccode.getSelectedCountryCodeWithPlus();
             }
         });
 
@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
                     number.setMobileNumber(phone_ed.getText().toString().trim());
                     if(countrycode.equalsIgnoreCase(""))
                     {
-                        number.setCountryCode("+91");
+                        number.setCountryCode(ccode.getDefaultCountryCodeWithPlus());
                     }
                     else
                     {
@@ -284,7 +284,7 @@ public class LoginActivity extends AppCompatActivity implements ViewTreeObserver
                     }
 
                     number.setType("Forgot");
-                    number.setLangCode("en");
+                    number.setLangCode(SharedPreferenceWriter.getInstance(LoginActivity.this).getString(GlobalVariables.langCode));
 
                     RetroInterface api_service=RetrofitInit.getConnect().createConnection();
                     Call<CheckMobileNumber> call=api_service.checkForecasterMobileNumber(number,SharedPreferenceWriter.getInstance(LoginActivity.this).getString(GlobalVariables.jwtToken));

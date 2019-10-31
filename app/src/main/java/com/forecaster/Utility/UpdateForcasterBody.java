@@ -26,6 +26,8 @@ public class UpdateForcasterBody {
         requestBodyMap.put("categoryName",RequestBody.create(mediaType,profile.getCategoryName()));
         requestBodyMap.put("aboutUs",RequestBody.create(mediaType,profile.getAboutUs()));
         requestBodyMap.put("pricePerQues",RequestBody.create(mediaType, String.valueOf(profile.getPricePerQues())));
+        requestBodyMap.put("langCode",RequestBody.create(mediaType, profile.getLangCode()));
+
 //        requestBodyMap.put("bankName",RequestBody.create(mediaType,profile.getBankName()));
 //        requestBodyMap.put("accountHolderName",RequestBody.create(mediaType,profile.getAccountHolderName()));
 //        requestBodyMap.put("accountNumber",RequestBody.create(mediaType,profile.getAccountNumber()));

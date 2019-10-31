@@ -106,16 +106,16 @@
     <string name="please_enter_confirm_password">يُرجى إدخال تأكيد كلمة المرور</string>
     <string name="other_device_logged_in">تم تسجيل دخول المستخدم من جهاز آخر</string>
     <string name="touch_id">بصمة أصبعك</string>
-    <string name="create_passcode">Create passcode</string>
+    <string name="create_passcode">إنشاء رمز المرور الخاص بك</string>
     <string name="fingerprint_configured">تم تهيئة البصمة</string>
     <string name="create_your_passcode">إنشاء رمز المرور الخاص بك</string>
     <string name="please_reenter_confirm_password">يُرجى إعادة إدخال رمز المرور للتأكيد</string>
-    <string name="confirm_password_not_match">Confirm passcode does not match</string>
-    <string name="use_passcode">Use passcode</string>
-    <string name="password_not_match">Password not matched</string>
-    <string name="login_successfull">Login Sucessful</string>
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
+    <string name="confirm_password_not_match">تأكيد كلمة المرور غير متطابق</string>
+    <string name="use_passcode">استخدم رمز المرور</string>
+    <string name="password_not_match">كلمة السر غير مطابقة</string>
+    <string name="login_successfull">تم تسجيل الدخول بنجاح</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">أمس</string>
     <string name="just_now">حالاً</string>
     <string name="ok">حسنًا</string>
     <string name="enter_user_name">يُرجى إدخال اسم المستخدم</string>
@@ -129,7 +129,7 @@
     <string name="pls_record_your_voice">يرجى تسجيل صوتك</string>
     <string name="pls_upload_video">يرجى رفع الفيديو</string>
     <string name="pls_enter_valid_accnum">يُرجى إدخال رقم حساب صحيح</string>
-    <string name="pls_enter_username">Please enter username</string>
+    <string name="pls_enter_username">الرجاء إدخال اسم المستخدم</string>
     <string name="please_check_terms_conditions">يرجى وضع علامة في خانة الموافقة على الشروط والأحكام</string>
     <string name="self_development_counselling">استشارات تطوير الذات</string>
     <string name="family_counselling">الاستشارة العائلية</string>
@@ -162,6 +162,18 @@
     <string name="gallery">صالة عرض</string>
     <string name="camera">الة تصوير</string>
     <string name="enter_your_concern">يُرجى إدخال تسجيل الاهتمام</string>
+    <string name="english">الإنجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="device_not_support_fingerprint">جهازك لا يدعم المصادقة بالبصمة </string>
+    <string name="please_enable_fingerprint_permission">يُرجى تفعيل تصريح البصمة </string>
+    <string name="no_finger_configured">لم يتم تهيئة بصمة، يُرجى تسجيل بصمة واحدة على الأقل في إعدادات جهازك</string>
+    <string name="please_enable_lockscreen_security">يُرجى تفعيل تأمين شاشة الغلق في إعدادات جهازك</string>
+    <string name="username_already_exists">اسم المستخدم موجود بالفعل</string>
+    <string name="email_already_exists">البريد الالكتروني موجود مسبقا</string>
+    <string name="mobile_number_already_exists">رقم الجوال موجود بالفعل</string>
+    <string name="are_you_sure">هل ترغب فعلا بالخروج ؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
 
 
 </resources>

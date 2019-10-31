@@ -28,6 +28,7 @@ public class AddServiceBody
         requestBodyMap.put("accountHolderName",RequestBody.create(mediaType,profile.getAccountHolderName()));
         requestBodyMap.put("accountNumber",RequestBody.create(mediaType,profile.getAccountNumber()));
         requestBodyMap.put("documentType",RequestBody.create(mediaType,profile.getDocumentType()));
+        requestBodyMap.put("langCode",RequestBody.create(mediaType,profile.getLangCode()));
        // requestBodyMap.put("deviceType",RequestBody.create(mediaType,profile.getDeviceType()));
        // requestBodyMap.put("deviceToken",RequestBody.create(mediaType,profile.getDeviceToken()));
 

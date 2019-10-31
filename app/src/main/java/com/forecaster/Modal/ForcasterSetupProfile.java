@@ -81,6 +81,18 @@ public class ForcasterSetupProfile {
     @Expose
     private String Psychological_extra;
 
+    @SerializedName("langCode")
+    @Expose
+    private String langCode;
+
+
+    public String getLangCode() {
+        return langCode;
+    }
+
+    public void setLangCode(String langCode) {
+        this.langCode = langCode;
+    }
 
     public String getPsychological_extra() {
         return Psychological_extra;

@@ -259,6 +259,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             } finally {
+                                pause_iv.setVisibility(View.GONE);
                                 play_iv.setVisibility(View.VISIBLE);
                             }
 
@@ -267,10 +268,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
                         Log.e("position", String.valueOf(positiony));
 
-
+                        if(positiony!=getAdapterPosition())
+                        {
+                            play_iv.setVisibility(View.GONE);
+                            pause_iv.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            play_iv.setVisibility(View.VISIBLE);
+                            pause_iv.setVisibility(View.GONE);
+                        }
                         stop_iv.setVisibility(View.VISIBLE);
-                        pause_iv.setVisibility(View.VISIBLE);
-                        play_iv.setVisibility(View.GONE);
+
+
                         if (timer != null) {
                             timer.cancel();
                             timer.onFinish();
@@ -328,6 +338,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
                     }
                     finally {
                         play_iv.setVisibility(View.VISIBLE);
+                        pause_iv.setVisibility(View.GONE);
                     }
                 }
             });

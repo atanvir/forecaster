@@ -87,6 +87,7 @@ public class SettingActivity extends AppCompatActivity {
     int count_image=0;
     CountDownTimer timer;
     String code="";
+    Logout logout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -129,6 +130,7 @@ public class SettingActivity extends AppCompatActivity {
         {
             touch_id_iv.setImageResource(R.drawable.off);
         }
+        logout=new Logout();
 
 
     }
@@ -137,7 +139,7 @@ public class SettingActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent=new Intent(SettingActivity.this,CategorySelectionActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("SettingActivity","Yes");
+        intent.putExtra("Activity","Yes");
         startActivity(intent);
 
     }
@@ -161,7 +163,7 @@ public class SettingActivity extends AppCompatActivity {
             case R.id.back_ll:
                 Intent intent1=new Intent(SettingActivity.this,CategorySelectionActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent1.putExtra("SettingActivity","Yes");
+                intent1.putExtra("Activity","Yes");
                 startActivity(intent1);
 
                 break;
@@ -209,7 +211,7 @@ public class SettingActivity extends AppCompatActivity {
 
             if(!fingerprintManager.isHardwareDetected())
             {
-                settingPopup("Error","Your device doesn't support fingerprint authentication");
+                settingPopup("Error",getString(R.string.device_not_support_fingerprint));
                 touch_id_iv.setImageDrawable(getDrawable(R.drawable.off));
                 touch_id=false;
 
@@ -223,7 +225,7 @@ public class SettingActivity extends AppCompatActivity {
             }
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 // If your app doesn't have this permission, then display the following text//
-                settingPopup("Error","Please enable the fingerprint permission");
+                settingPopup("Error",getString(R.string.please_enable_fingerprint_permission));
 
                 touch_id_iv.setImageDrawable(getDrawable(R.drawable.off));
 
@@ -238,8 +240,8 @@ public class SettingActivity extends AppCompatActivity {
             }
             if (!fingerprintManager.hasEnrolledFingerprints()) {
                 // If the user hasn’t configured any fingerprints, then display the following message//
-                settingPopup("Error","No fingerprint configured. Please register at least one fingerprint in your device's Settings");
-//                        text.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
+                settingPopup("Error",getString(R.string.no_finger_configured));
+                //  text.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
                 touch_id_iv.setImageDrawable(getDrawable(R.drawable.off));
                 touch_id=false;
             }
@@ -804,7 +806,7 @@ public class SettingActivity extends AppCompatActivity {
         password.setPassword(oldpass_ed.getText().toString().trim());
         password.setNewPassword(newpass_ed.getText().toString().trim());
         password.setForecasterId(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables._id));
-        password.setLangCode("en");
+        password.setLangCode(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode));
         Call<ForgotPassword> call=api_service.forecasterChangePassword(password,SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.jwtToken));
         call.enqueue(new Callback<ForgotPassword>() {
             @Override
@@ -866,7 +868,7 @@ public class SettingActivity extends AppCompatActivity {
     private void logoutApi() {
         dailogHelper.showDailog();
         RetroInterface api_service=RetrofitInit.getConnect().createConnection();
-        Logout logout=new Logout();
+
         logout.setLangCode(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables.langCode));
         logout.setForecasterId(SharedPreferenceWriter.getInstance(SettingActivity.this).getString(GlobalVariables._id));
         Call<Logout> call=api_service.forecasterLogout(logout);
@@ -884,8 +886,9 @@ public class SettingActivity extends AppCompatActivity {
                         Intent intent=new Intent(SettingActivity.this,LoginActivity.class);
                         finish();
                         startActivity(intent);
-                        SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.islogin,"No");
                         SharedPreferenceWriter.getInstance(SettingActivity.this).clearPreferenceValues();
+                        SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.islogin,"No");
+                        SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.langCode,logout.getLangCode());
                         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                             @Override
                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
@@ -909,6 +912,8 @@ public class SettingActivity extends AppCompatActivity {
                             finish();
                             startActivity(new Intent(SettingActivity.this,LoginActivity.class));
                             SharedPreferenceWriter.getInstance(SettingActivity.this).clearPreferenceValues();
+                            SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.islogin,"No");
+                            SharedPreferenceWriter.getInstance(SettingActivity.this).writeStringValue(GlobalVariables.langCode,logout.getLangCode());
                             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<InstanceIdResult> task) {

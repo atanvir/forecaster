@@ -40,6 +40,22 @@ public class ChatList implements Parcelable {
     @Expose
     private String lastMessage;
 
+    @SerializedName("langCode")
+    @Expose
+    private String langCode;
+
+
+    public String getLangCode() {
+        return langCode;
+    }
+
+    public void setLangCode(String langCode) {
+        this.langCode = langCode;
+    }
+
+    public static Creator<ChatList> getCREATOR() {
+        return CREATOR;
+    }
 
     protected ChatList(Parcel in) {
         status = in.readString();

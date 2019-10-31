@@ -60,7 +60,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements CountryCodePicker.OnCountryChangeListener {
     @BindView(R.id.back_ll) LinearLayout back_ll;
     @BindView(R.id.signuptext) TextView signuptext;
     @BindView(R.id.check_im) ImageView check_im;
@@ -91,7 +91,6 @@ public class SignupActivity extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         settingPasswordVisibility();
         confirmPasswordVisibility();
-
 
 
     }
@@ -227,6 +226,7 @@ public class SignupActivity extends AppCompatActivity {
         countrycode_txt.setOnClickListener(this::OnClick);
         dailogHelper=new ProgressDailogHelper(this,"");
         langCode=SharedPreferenceWriter.getInstance(SignupActivity.this).getString(GlobalVariables.langCode);
+        ccode.setOnCountryChangeListener(this);
 
     }
 
@@ -287,17 +287,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.ccode:
-                ccode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-                    @Override
-                    public void onCountrySelected() {
-                        countrycode_txt.setText(ccode.getSelectedCountryCodeWithPlus());
-                        countrycode=countrycode_txt.getText().toString();
 
-                    }
-                });
-
-                break;
         }
     }
 
@@ -307,9 +297,9 @@ public class SignupActivity extends AppCompatActivity {
         Signup signup=new Signup();
         signup.setEmail(email_ed.getText().toString().trim());
         signup.setUsername(username_ed.getText().toString().trim());
-        signup.setLangCode("en");
+        signup.setLangCode(SharedPreferenceWriter.getInstance(SignupActivity.this).getString(GlobalVariables.langCode));
         if(countrycode.equalsIgnoreCase("")) {
-            signup.setCountryCode("+91");
+            signup.setCountryCode(ccode.getDefaultCountryCodeWithPlus());
         }
         else {
             signup.setCountryCode(countrycode);
@@ -358,16 +348,16 @@ public class SignupActivity extends AppCompatActivity {
                         dailogHelper.dismissDailog();
                         Toast.makeText(SignupActivity.this, server_response.getResponseMessage(), Toast.LENGTH_LONG).show();
                         if (server_response.getResponseMessage().equalsIgnoreCase("Username already exist")) {
-                            username_ed.setError(server_response.getResponseMessage());
+                            username_ed.setError(getString(R.string.username_already_exists));
                             username_ed.setFocusable(true);
                             username_ed.requestFocus();
                         } else if (server_response.getResponseMessage().equalsIgnoreCase("Email already exist")) {
-                            email_ed.setError(server_response.getResponseMessage());
+                            email_ed.setError(getString(R.string.email_already_exists));
                             email_ed.setFocusable(true);
                             email_ed.requestFocus();
 
                         } else if (server_response.getResponseMessage().equalsIgnoreCase("Mobile number already exist")) {
-                            phone_ed.setError(server_response.getResponseMessage());
+                            phone_ed.setError(getString(R.string.mobile_number_already_exists));
                             phone_ed.requestFocus();
                             phone_ed.requestFocus();
                         }
@@ -656,7 +646,7 @@ public class SignupActivity extends AppCompatActivity {
                             signup.setName(full_name_ed.getText().toString().trim());
                             signup.setDeviceType(GlobalVariables.device_type);
                             signup.setDeviceToken(SharedPreferenceWriter.getInstance(SignupActivity.this).getString(GlobalVariables.deviceToken));
-                            signup.setLangCode("en");
+                            signup.setLangCode(SharedPreferenceWriter.getInstance(SignupActivity.this).getString(GlobalVariables.langCode));
                             Call<Signup> call=api_service.forecasterSignup(signup);
                             call.enqueue(new Callback<Signup>() {
                                 @Override
@@ -837,5 +827,13 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    public void onCountrySelected() {
+        countrycode_txt.setText(ccode.getSelectedCountryCodeWithPlus());
+        countrycode=ccode.getSelectedCountryCodeWithPlus();
+
+
     }
 }

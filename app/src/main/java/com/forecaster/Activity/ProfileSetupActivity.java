@@ -675,6 +675,7 @@ public class ProfileSetupActivity extends AppCompatActivity implements SeekBar.O
         profile.setForecasterId(SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).getString(GlobalVariables._id));
         profile.setGender(gender_txt.getText().toString());
         profile.setDob(dob_ed.getText().toString());
+        profile.setLangCode(SharedPreferenceWriter.getInstance(ProfileSetupActivity.this).getString(GlobalVariables.langCode));
         if(categorytype_txt.getText().toString().equalsIgnoreCase(getString(R.string.psychological_counselling)))
         {
             profile.setCategoryName(psychological_txt.getText().toString());

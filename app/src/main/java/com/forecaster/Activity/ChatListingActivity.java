@@ -52,6 +52,7 @@ public class ChatListingActivity extends AppCompatActivity {
             dailogHelper.showDailog();
             ChatList chatlist=new ChatList();
             chatlist.setForecasterId(SharedPreferenceWriter.getInstance(ChatListingActivity.this).getString(GlobalVariables._id));
+            chatlist.setLangCode(SharedPreferenceWriter.getInstance(this).getString(GlobalVariables.langCode));
             RetroInterface api_service= RetrofitInit.getConnect().createConnection();
             Call<ChatList> call= api_service.getchatList(chatlist);
             call.enqueue(new Callback<ChatList>() {

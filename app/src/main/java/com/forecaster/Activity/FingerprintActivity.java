@@ -75,7 +75,7 @@ public class FingerprintActivity extends AppCompatActivity implements View.OnCli
             //Check whether the device has a fingerprint sensor//
             if (!fingerprintManager.isHardwareDetected()) {
                 // If a fingerprint sensor isn’t available, then inform the user that they’ll be unable to use your app’s fingerprint functionality//
-                textView.setText("Your device doesn't support fingerprint authentication");
+                textView.setText(this.getString(R.string.device_not_support_fingerprint));
                 imageView.setImageResource(R.drawable.error_icon);
 
 
@@ -83,27 +83,26 @@ public class FingerprintActivity extends AppCompatActivity implements View.OnCli
             //Check whether the user has granted your app the USE_FINGERPRINT permission//
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 // If your app doesn't have this permission, then display the following text//
-                textView.setText("Please enable the fingerprint permission");
+                textView.setText(this.getString(R.string.please_enable_fingerprint_permission));
                 imageView.setImageResource(R.drawable.error_icon);
             }
 
             //Check that the user has registered at least one fingerprint//
             if (!fingerprintManager.hasEnrolledFingerprints()) {
                 // If the user hasn’t configured any fingerprints, then display the following message//
-                textView.setText("No fingerprint configured. Please register at least one fingerprint in your device's Settings");
+                textView.setText(this.getString(R.string.no_finger_configured));
                 imageView.setImageResource(R.drawable.error_icon);
             }
 
             //Check that the lockscreen is secured//
             if (!keyguardManager.isKeyguardSecure()) {
                 // If the user hasn’t secured their lockscreen with a PIN password or pattern, then display the following text//
-                textView.setText("Please enable lockscreen security in your device's Settings");
+                textView.setText(this.getString(R.string.please_enable_lockscreen_security));
 //                imageView.setImageResource(R.drawable.error_icon);
             } else {
 
                 try {
-
-
+                    
                     generateKey();
                 } catch (FingerprintException e) {
                     e.printStackTrace();
