@@ -114,7 +114,7 @@
             app:srcCompat="@drawable/photo_camra" />
 
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/forcaster_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.forecaster.View.AvenirRegularTextView
+            <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/gender_txt"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -216,7 +216,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster.View.AvenirRegularEditText
+            <com.Bforecaster.View.AvenirRegularEditText
             android:id="@+id/dob_ed"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -265,7 +265,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.forecaster.View.AvenirRegularTextView
+            <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/categorytype_txt"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -336,7 +336,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.forecaster.View.AvenirRegularTextView
+            <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/psychological_txt"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -400,7 +400,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.forecaster.View.AvenirRegularTextView
+            <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/documenttype_txt"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -468,7 +468,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView12" />
 
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/attach_doc_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -499,7 +499,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attach_doc_im" />
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/record_audio_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -680,7 +680,7 @@
             app:layout_constraintStart_toStartOf="@+id/videoview_rl"
             app:layout_constraintTop_toTopOf="@+id/videoview_rl" />
 
-            <com.forecaster.View.AvenirDemiButton
+            <com.Bforecaster.View.AvenirDemiButton
             android:id="@+id/upload_video_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -699,7 +699,7 @@
             app:layout_constraintTop_toBottomOf="@+id/videoview_rl" />
 
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -735,7 +735,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster.View.AvenirRegularEditText
+            <com.Bforecaster.View.AvenirRegularEditText
             android:id="@+id/about_us_ed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -786,7 +786,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.forecaster.View.AvenirRegularEditText
+            <com.Bforecaster.View.AvenirRegularEditText
             android:id="@+id/price_per_ed"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_60"
@@ -841,7 +841,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.forecaster.View.AvenirRegularTextView
+            <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/selectbank_txt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
@@ -860,7 +860,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            </com.forecaster.View.AvenirRegularTextView>
+            </com.Bforecaster.View.AvenirRegularTextView>
 
             <ImageView
             android:layout_width="wrap_content"
@@ -909,7 +909,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.forecaster.View.AvenirRegularEditText
+            <com.Bforecaster.View.AvenirRegularEditText
             android:id="@+id/account_holder_ed"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
@@ -957,7 +957,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.forecaster.View.AvenirRegularEditText
+            <com.Bforecaster.View.AvenirRegularEditText
             android:id="@+id/bank_number_ed"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
@@ -984,7 +984,7 @@
             </androidx.cardview.widget.CardView>
 
 
-            <com.forecaster.View.AvenirDemiButton
+            <com.Bforecaster.View.AvenirDemiButton
             android:id="@+id/save_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"

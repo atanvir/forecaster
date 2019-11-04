@@ -42,7 +42,7 @@
 
 
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/setting"
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6">
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view7">
 
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView200"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v">
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view13">
 
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/avenirRegularTextView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -346,7 +346,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view14">
 
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -387,7 +387,7 @@
 
 
 
-    <!--<com.forecaster.View.AvenirRegularTextView-->
+    <!--<AvenirRegularTextView-->
         <!--android:id="@+id/avenirRegularTextView17"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -427,7 +427,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/imageView15" />-->
 
 
-    <!--<com.forecaster.View.AvenirRegularTextView-->
+    <!--<AvenirRegularTextView-->
         <!--android:id="@+id/avenirRegularTextView18"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -468,7 +468,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView18" />-->
 
 
-    <!--<com.forecaster.View.AvenirRegularTextView-->
+    <!--<AvenirRegularTextView-->
         <!--android:id="@+id/changeLanguagetext"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -510,7 +510,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/changeLanguagetext" />-->
 
 
-    <!--<com.forecaster.View.AvenirRegularTextView-->
+    <!--<AvenirRegularTextView-->
         <!--android:id="@+id/logout_txt"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->

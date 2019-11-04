@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:67087892306:android:fc4df6ff021ae56269c48b",
+        "mobilesdk_app_id": "1:67087892306:android:decc9bd2cd10e06e69c48b",
         "android_client_info": {
-          "package_name": "com.forecaster"
+          "package_name": "com.Bforecaster"
         }
       },
       "oauth_client": [
         {
-          "client_id": "67087892306-tbpa4ltl0r999um92r6gm9ba2pb9h2gb.apps.googleusercontent.com",
+          "client_id": "67087892306-jr1klhhp5mvaegpfdetl12j4j99o2kag.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.forecaster",
+            "package_name": "com.Bforecaster",
             "certificate_hash": "08561f48d48529013d401677ccd19c50d668e1b9"
           }
         },

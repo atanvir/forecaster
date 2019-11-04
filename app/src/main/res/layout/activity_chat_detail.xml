@@ -42,7 +42,7 @@
             </LinearLayout>
 
 
-            <com.forecaster.View.AvenirDemiTextView
+            <com.Bforecaster.View.AvenirDemiTextView
                 android:id="@+id/username_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

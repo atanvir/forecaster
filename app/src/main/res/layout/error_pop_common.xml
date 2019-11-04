@@ -38,7 +38,7 @@
         </LinearLayout>
 
 
-        <com.forecaster.View.AvenirRegularTextView
+        <com.Bforecaster.View.AvenirRegularTextView
             android:id="@+id/message_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/close_ll" />
 
 
-        <com.forecaster.View.AvenirDemiButton
+        <com.Bforecaster.View.AvenirDemiButton
             android:id="@+id/okbtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"

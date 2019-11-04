@@ -53,7 +53,7 @@
             </LinearLayout>
 
 
-            <com.forecaster.View.AvenirBoldTextView
+            <com.Bforecaster.View.AvenirBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -110,7 +110,7 @@
         <!--app:layout_constraintStart_toStartOf="parent"-->
         <!--app:layout_constraintTop_toBottomOf="@+id/view3">-->
 
-        <!--<com.forecaster.View.AvenirBoldTextView-->
+        <!--<AvenirBoldTextView-->
             <!--android:id="@+id/avenirRegularTextView"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="match_parent"-->
@@ -128,7 +128,7 @@
             <!--app:layout_constraintTop_toTopOf="parent" />-->
 
 
-        <!--<com.forecaster.View.AvenirBoldTextView-->
+        <!--<AvenirBoldTextView-->
             <!--android:id="@+id/avenirRegularTextView2"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="match_parent"-->
@@ -147,7 +147,7 @@
             <!--app:layout_constraintTop_toTopOf="parent"-->
             <!--app:layout_constraintVertical_bias="1.0" />-->
 
-        <!--<com.forecaster.View.AvenirBoldTextView-->
+        <!--<AvenirBoldTextView-->
             <!--android:id="@+id/avenirRegularTextView3"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="match_parent"-->
@@ -166,7 +166,7 @@
             <!--app:layout_constraintTop_toTopOf="parent"-->
             <!--app:layout_constraintVertical_bias="0.0" />-->
 
-        <!--<com.forecaster.View.AvenirBoldTextView-->
+        <!--<AvenirBoldTextView-->
             <!--android:id="@+id/avenirRegularTextView4"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="match_parent"-->
@@ -208,7 +208,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.1">
 
-            <com.forecaster.View.AvenirBoldTextView
+            <com.Bforecaster.View.AvenirBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -225,7 +225,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.9">
 
-            <com.forecaster.View.AvenirBoldTextView
+            <com.Bforecaster.View.AvenirBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -242,7 +242,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.9">
 
-            <com.forecaster.View.AvenirBoldTextView
+            <com.Bforecaster.View.AvenirBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -259,7 +259,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.1">
 
-            <com.forecaster.View.AvenirBoldTextView
+            <com.Bforecaster.View.AvenirBoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.forecaster">
+    package="com.Bforecaster">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -37,26 +37,26 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.forecaster"
+            android:authorities="com.Bforecaster"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name="com.forecaster.Utility.TakeImage"
+        <activity android:name="com.Bforecaster.Utility.TakeImage"
             android:screenOrientation="portrait"
             />
 
-        <activity android:name="com.forecaster.Activity.ChatListingActivity"
+        <activity android:name="com.Bforecaster.Activity.ChatListingActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name="com.forecaster.Activity.PaymentManagementActivity"
+        <activity android:name="com.Bforecaster.Activity.PaymentManagementActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.RequestManagementActivity"
+        <activity android:name="com.Bforecaster.Activity.RequestManagementActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.CategorySelectionActivity"
+        <activity android:name="com.Bforecaster.Activity.CategorySelectionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.SplashActivity"
+        <activity android:name="com.Bforecaster.Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,46 +65,46 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="com.forecaster.Activity.LoginActivity"
+        <activity android:name="com.Bforecaster.Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <activity android:name="com.forecaster.Activity.ProfileManagementActivity"
+        <activity android:name="com.Bforecaster.Activity.ProfileManagementActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <activity android:name="com.forecaster.Activity.SignupActivity"
+        <activity android:name="com.Bforecaster.Activity.SignupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name="com.forecaster.Activity.ChatDetailsActivity"
+        <activity android:name="com.Bforecaster.Activity.ChatDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.SettingActivity"
+        <activity android:name="com.Bforecaster.Activity.SettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.ContactUsActivity"
+        <activity android:name="com.Bforecaster.Activity.ContactUsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.NotificationActivity"
+        <activity android:name="com.Bforecaster.Activity.NotificationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.forecaster.Activity.ProfileSetupActivity"
+        <activity android:name="com.Bforecaster.Activity.ProfileSetupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
-        <activity android:name="com.forecaster.Activity.DetailActivity"
+        <activity android:name="com.Bforecaster.Activity.DetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".Activity.FullScreenVideoActivity"
+        <activity android:name="com.Bforecaster.Activity.FullScreenVideoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.ProfileManagementFullScreenVideoActivity"
+        <activity android:name="com.Bforecaster.Activity.ProfileManagementFullScreenVideoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.FingerprintActivity"
+        <activity android:name="com.Bforecaster.Activity.FingerprintActivity"
             android:screenOrientation="portrait">
 
 
 
         </activity>
-        <activity android:name=".Activity.PinActivity" />
-        <activity android:name=".Activity.WebviewAcitivity" />
+        <activity android:name="com.Bforecaster.Activity.PinActivity" />
+        <activity android:name="com.Bforecaster.Activity.WebviewAcitivity" />
 
 
         <service
-            android:name="com.forecaster.Firebase.FirebaseMessageService"
+            android:name="com.Bforecaster.Firebase.FirebaseMessageService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

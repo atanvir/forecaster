@@ -7,7 +7,8 @@
     android:background="@color/blurgrey2">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_main_cl"
@@ -47,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview" />
 
-        <com.forecaster.View.AvenirDemiTextView
+        <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,21 +58,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="Touch the fingerprint sensor"
+            android:text="@string/touch_the_sensor"
             android:textSize="@dimen/dp_17"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
-        <com.forecaster.View.AvenirDemiTextView
+        <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/cancel_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="24dp"
-            android:text="Cancel"
+            android:text="@string/cancel"
+            android:paddingEnd="10dp"
             android:textAllCaps="true"
             android:textColor="@color/green"
             android:textSize="18dp"
@@ -80,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text" />
 
 
-        <com.forecaster.View.AvenirDemiTextView
+        <com.Bforecaster.View.AvenirDemiTextView
             android:id="@+id/passcode_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

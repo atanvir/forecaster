@@ -176,5 +176,7 @@
     <string name="are_you_sure">Are you sure want to exit ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="touch_the_sensor">Touch the fingerprint sensor</string>
 
 </resources>
